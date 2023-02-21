@@ -265,7 +265,7 @@ ggplot(world_map2, aes(x=long,y=lat,group=group,fill=country)) +
   xlab(" ") + 
   ylab(" ") + 
   guides(fill="none") +
-  ggtitle("Figure 1. Choropleth map showing the mean anticipated poulation-level reductions in diet-attributable water use for each of the 133 included countries.") +
+  ggtitle("Figure 1. Choropleth map showing the mean anticipated poulation-level \nreductions in diet-attributable water use for each of the 133 included countries.") +
   theme(panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.ticks=element_blank(),axis.text=element_blank(),panel.grid=element_blank())
 ```
 
@@ -280,7 +280,7 @@ ggplot(world_map2, aes(x=long,y=lat,group=group,fill=country)) +
     xlab(" ") + 
     ylab(" ") + 
     guides(fill="none") +
-    ggtitle("Figure 2. Choropleth map showing the mean anticipated country-level reductions in diet-attributable emissions for each of the 133 included countries.") +
+    ggtitle("Figure 2. Choropleth map showing the mean anticipated country-level \nreductions in diet-attributable emissions for each of the 133 included countries.") +
     theme(panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.ticks=element_blank(),axis.text=element_blank(),panel.grid=element_blank())
 ```
 
