@@ -1,0 +1,27 @@
+---
+title: "HW3 Annotations"
+output: html_document
+date: "2023-02-21"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Q1
+
+This map shows the anticipated reductions in diet-attributable water use resulting from shifting 133 tertiary-enrolled populations toward more plant-rich diets. More specifically, it accomplishes this by averaging the water savings associated with seven increasingly ambitious scenarios.
+
+## Q2
+
+The data sources used to generate this figure were taken from two principal data sources [linked below]. Tertiary enrollment data was provided by the EdStats Database of the World Bank while annual per capita dietary footprint data was provided by the Center for a Livable Future.
+
+*	https://data.mendeley.com/datasets/g8n8w8snmj/3
+* https://datatopics.worldbank.org/education/
+
+## Q3
+
+The coordinate system used for the projection was the World Feodetic System 1984. While this system has disadvantages for mapping spatial distance, it is useful at making clear depictions of global scale.
+
+
+
