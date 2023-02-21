@@ -2,18 +2,20 @@ HW3 Annotations
 ================
 2023-02-21
 
-## Q1
+## q1
 
 This map shows the anticipated reductions in diet-attributable water use
 resulting from shifting 133 tertiary-enrolled populations toward more
 plant-rich diets. More specifically, it accomplishes this by averaging
-the water savings associated with seven increasingly ambitious
-scenarios.
+the expected water savings across the seven modeled dietary scenarios
+for each country. While a large proportion of the countries with the
+highest impact potential are designated as high income by the World Bank
+Group, there are several notable exceptions.
 
-## Q2
+## q2
 
-The data sources used to generate this figure were taken from two
-principal data sources \[linked below\]. Tertiary enrollment data was
+The data used to inform this figure were taken from two principal
+sources, each of which are linked below. Tertiary enrollment data was
 provided by the EdStats Database of the World Bank while annual per
 capita dietary footprint data was provided by the Center for a Livable
 Future.
@@ -21,8 +23,33 @@ Future.
 -   <https://data.mendeley.com/datasets/g8n8w8snmj/3>
 -   <https://datatopics.worldbank.org/education/>
 
-## Q3
+## q3
 
-The coordinate system used for the projection was the World Feodetic
-System 1984. While this system has disadvantages for mapping spatial
-distance, it is useful at making clear depictions of global scale.
+I used the World Geodetic System 1984 (WGS84) as my coordinate system
+for this project. While this system has some disadvantages in tracking
+spatial distance, it provides a familiar visual representation of
+relative global position. Because my subsequent analyses will be more
+concerned about adjacency (and possibly regional groupings), I did not
+feel the need to substitute this system with a more spatially accurate
+alternative.
+
+## q4
+
+Green-blue palettes were used to represent reductions in water use while
+red-yellow palettes were used to represent reductions in
+diet-attributable emissions. These palettes were meant to both contrast
+each other and reflect normative color associations, with warmer colors
+reflecting the implications of these interventions on global warming and
+cooler colors reflecting the implications of these interventions on
+water scarcity. Class intervals (bins) were decided using Sturge’s rule.
+
+## q5
+
+I’m not entirely satisfied with the generated map, namely because it
+does not incorporate all of the elements that I’d like to present. Part
+of the motivation of this project was to visually demonstrate how
+economic designations alone provide an incomplete means of
+characterizing the impact potential of population-level dietary change
+interventions. For the next iteration of this map, I’d like to add map
+textures to show how these ecological impacts map on to these
+designations, particularly among high-income countries.
