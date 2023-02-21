@@ -1,4 +1,4 @@
-figure-script
+Visuals
 ================
 2023-02-21
 
@@ -243,3 +243,35 @@ world_map2 <- world_map2 %>%
   select(-subregion) %>% 
   tibble()
 ```
+
+## Mapping choropleths for each primary outcome variable
+
+Mean population-level water footprint dividends:
+
+``` r
+ggplot(world_map2, aes(x=long,y=lat,group=group,fill=country)) + 
+  geom_polygon(color="black",alpha=.8,linewidth=.1) + 
+  scale_fill_manual(values=c("lightcyan1","lightcyan2","lightcyan3","white","white","white","white","white","lightcyan1","paleturquoise4","lightcyan2","white","white","lightcyan4","lightcyan2","lightcyan2","white","white","white","white","lightcyan2","lightcyan2","lightcyan2","lightcyan2","lightcyan2","lightcyan2","white","white","white","lightcyan2","lightcyan1","darkslategray","lightcyan2","lightcyan2","lightcyan2","white","lightcyan2","lightcyan2","lightcyan3","white","lightcyan1","white","lightcyan1","white","white","lightcyan2","darkslategray","white","white","lightcyan1","white","lightcyan1","white","white","lightcyan2","lightcyan1","lightcyan2","white","white","lightcyan2","lightcyan2","lightcyan2","white","white","white","lightcyan1","paleturquoise4","lightcyan1","white","white","lightcyan2","white","lightcyan1","white","white","lightcyan2","lightcyan2","lightcyan4","white","white","white","white","lightcyan2","lightcyan1","lightcyan4","lightcyan2","lightcyan3","white","white","white","white","lightcyan1","white","white","white","lightcyan2","white","white","lightcyan1","lightcyan2","lightcyan2","lightcyan2","lightcyan1","lightcyan1","lightcyan4","white","lightcyan2","white","lightcyan2","lightcyan4","lightcyan2","lightcyan2","white","lightcyan2","lightcyan3","lightcyan1","white","white","lightcyan2","lightcyan2","white","lightcyan2","lightcyan2","white","white","white","white","lightcyan2","lightcyan2","lightcyan2","lightcyan1","white","lightcyan2","lightcyan2","lightcyan2","lightcyan2","lightcyan2","white","white","lightcyan2","lightcyan2","white","paleturquoise4","white","lightcyan1","white","white","lightcyan2","white","lightcyan3","white","white","lightcyan1","white","lightcyan2","lightcyan2","white","lightcyan2","lightcyan1","lightcyan2","white","white","white","white","lightcyan2","white","lightcyan2","lightcyan2","lightcyan1","white","white","lightcyan2","white","lightcyan2","lightcyan2","lightcyan1","white","lightcyan3","lightcyan2","white","white","white","lightcyan2","cadetblue4","lightcyan1","white","white","white","white","white","white","white","lightcyan1","lightcyan3","lightcyan1","lightcyan2","white","white","white","white","white","white","lightcyan1","lightcyan2","white","white","lightcyan2","white","lightcyan4","white","white","lightcyan4","lightcyan1","white","white","white","white","lightcyan2","lightcyan2","lightcyan2","white","lightcyan2","white","lightcyan1","lightcyan2","white","lightcyan1","white","white","lightcyan2","darkslategray","white","white","lightcyan1","lightcyan2","white","lightcyan3","darkslategray","lightcyan2","white","lightcyan2","white","lightcyan3","white","white","white","white","lightcyan1","lightcyan1","lightcyan1")) +
+  xlab(" ") + 
+  ylab(" ") + 
+  guides(fill="none") +
+  ggtitle("Figure 1. Choropleth map showing the mean anticipated poulation-level reductions in diet-attributable water use for each of the 133 included countries.") +
+  theme(panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.ticks=element_blank(),axis.text=element_blank(),panel.grid=element_blank())
+```
+
+![](figure-script_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+
+Mean population-level carbon footprint dividends:
+
+``` r
+ggplot(world_map2, aes(x=long,y=lat,group=group,fill=country)) + 
+    geom_polygon(color="black",alpha=.8,linewidth=.1) + 
+    scale_fill_manual(values=c("papayawhip","peachpuff2","peachpuff2","white","white","white","white","white","peachpuff2","firebrick4","peachpuff2","white","white","salmon3","peachpuff2","peachpuff2","white","white","white","white","peachpuff2","peachpuff2","peachpuff2","peachpuff2","peachpuff2","peachpuff2","white","white","white","peachpuff2","papayawhip","firebrick4","peachpuff2","peachpuff2","peachpuff2","white","peachpuff2","peachpuff2","lightsalmon1","white","peachpuff2","white","peachpuff2","white","white","salmon3","firebrick4","white","white","peachpuff2","white","papayawhip","white","white","peachpuff2","papayawhip","peachpuff2","white","white","peachpuff2","peachpuff2","peachpuff2","white","white","white","peachpuff2","lightsalmon1","peachpuff2","white","white","peachpuff2","white","peachpuff2","white","white","peachpuff2","peachpuff2","salmon3","white","white","white","white","papayawhip","peachpuff2","lightsalmon3","peachpuff2","peachpuff2","white","white","white","white","peachpuff2","white","white","white","peachpuff2","white","white","peachpuff2","peachpuff2","peachpuff2","peachpuff2","papayawhip","papayawhip","lightsalmon1","white","peachpuff2","white","peachpuff2","lightsalmon1","peachpuff2","lightsalmon1","white","peachpuff2","peachpuff2","peachpuff2","white","white","peachpuff2","peachpuff2","white","peachpuff2","peachpuff2","white","white","white","white","peachpuff2","peachpuff2","peachpuff2","papayawhip","white","peachpuff2","peachpuff2","peachpuff2","peachpuff2","peachpuff2","white","white","peachpuff2","peachpuff2","white","salmon3","white","papayawhip","white","white","peachpuff2","white","peachpuff2","white","white","papayawhip","white","peachpuff2","peachpuff2","white","peachpuff2","peachpuff2","peachpuff2","white","white","white","white","peachpuff2","white","peachpuff2","peachpuff2","peachpuff2","white","white","peachpuff2","white","lightsalmon1","peachpuff2","peachpuff2","white","peachpuff2","peachpuff2","white","white","white","peachpuff2","tomato4","papayawhip","white","white","white","white","white","white","white","papayawhip","peachpuff2","papayawhip","peachpuff2","white","white","white","white","white","white","peachpuff2","peachpuff2","white","white","peachpuff2","white","lightsalmon3","white","white","lightsalmon1","papayawhip","white","white","white","white","peachpuff2","peachpuff2","peachpuff2","white","peachpuff2","white","papayawhip","peachpuff2","white","papayawhip","white","white","peachpuff2","salmon4","white","white","papayawhip","peachpuff2","white","lightsalmon3","firebrick4","peachpuff2","white","papayawhip","white","lightsalmon3","white","white","white","white","papayawhip","papayawhip","papayawhip")) +
+    xlab(" ") + 
+    ylab(" ") + 
+    guides(fill="none") +
+    ggtitle("Figure 2. Choropleth map showing the mean anticipated country-level reductions in diet-attributable emissions for each of the 133 included countries.") +
+    theme(panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.ticks=element_blank(),axis.text=element_blank(),panel.grid=element_blank())
+```
+
+![](figure-script_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
