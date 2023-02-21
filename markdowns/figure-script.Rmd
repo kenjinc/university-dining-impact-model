@@ -1,0 +1,25 @@
+---
+title: "figure-script"
+output: github_document
+date: "2023-02-21"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Required Packages
+
+```{r}
+library(tidyverse)
+library(dplyr)
+library(ggpattern)
+```
+
+## Data Loading
+
+```{r}
+
+```
+
+
