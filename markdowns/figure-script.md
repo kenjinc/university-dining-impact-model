@@ -290,11 +290,11 @@ ggplot(world_map2, aes(x=long,y=lat,group=group,fill=country)) +
 if (require("magick")) 
   {
   ggplot(world_map2, aes(x=long,y=lat,group=group,fill=country)) + 
-    geom_polygon_pattern(pattern_scale=1,linewidth=.1,alpha=.8,pattern="magick",pattern_fill="orange",pattern_scale=3,pattern_aspect_ratio=1.75,fill="white",color="black") +
+    geom_polygon_pattern(linewidth=.1,alpha=.8,pattern="stripe",pattern_fill="orange",pattern_color="firebrick",pattern_aspect_ratio=.15,fill="white",color="black") +
     guides(fill=FALSE) + 
     xlab("") +
     ylab("") +
-    theme(panel.grid=element_blank(),axis.text=element_blank(),axis.ticks=element_blank()) 
+    theme(panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),panel.grid=element_blank(),axis.text=element_blank(),axis.ticks=element_blank()) 
   }
 ```
 
@@ -303,8 +303,6 @@ if (require("magick"))
     ## Linking to ImageMagick 6.9.12.3
     ## Enabled features: cairo, fontconfig, freetype, heic, lcms, pango, raw, rsvg, webp
     ## Disabled features: fftw, ghostscript, x11
-
-    ## Warning: Duplicated aesthetics after name standardisation: pattern_scale
 
     ## Warning: The `<scale>` argument of `guides()` cannot be `FALSE`. Use "none" instead as
     ## of ggplot2 3.3.4.
