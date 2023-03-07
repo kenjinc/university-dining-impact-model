@@ -286,34 +286,27 @@ ggplot(world_map2, aes(x=long,y=lat,group=group,fill=country)) +
 
 ![](figure-script_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
 
-## Trying out ggpattern
-
 ``` r
-pattern_map <- map_data("world")
+if (require("magick")) 
+  {
+  ggplot(world_map2, aes(x=long,y=lat,group=group,fill=country)) + 
+    geom_polygon_pattern(pattern_scale=1,linewidth=.1,alpha=.8,pattern="magick",pattern_fill="orange",pattern_scale=3,pattern_aspect_ratio=1.75,fill="white",color="black") +
+    guides(fill=FALSE) + 
+    xlab("") +
+    ylab("") +
+    theme(panel.grid=element_blank(),axis.text=element_blank(),axis.ticks=element_blank()) 
+  }
 ```
 
-``` r
-ggplot(world_map2, aes(map_id=country)) +
-    geom_map_pattern(
-      aes(
-        pattern_fill    = "black",
-        pattern_spacing = country,
-        pattern_density = country,
-        pattern_angle   = country,
-        pattern         = country
-      ),
-      fill   = 'white',
-      colour = 'black',
-      pattern_aspect_ratio = 1.8,
-      map    = pattern_map
-    ) +
-    expand_limits(x = pattern_map$long, y = pattern_map$lat) +
-    coord_map() +
-    theme_bw(18) +
-    labs(title = "ggpattern::geom_map_pattern()") + 
-    scale_pattern_density_discrete(range = c(0.01, 0.3)) + 
-    scale_pattern_spacing_discrete(range = c(0.01, 0.03)) + 
-    theme(legend.position = 'none')
-```
+    ## Loading required package: magick
 
-![](figure-script_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+    ## Linking to ImageMagick 6.9.12.3
+    ## Enabled features: cairo, fontconfig, freetype, heic, lcms, pango, raw, rsvg, webp
+    ## Disabled features: fftw, ghostscript, x11
+
+    ## Warning: Duplicated aesthetics after name standardisation: pattern_scale
+
+    ## Warning: The `<scale>` argument of `guides()` cannot be `FALSE`. Use "none" instead as
+    ## of ggplot2 3.3.4.
+
+![](figure-script_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
