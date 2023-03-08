@@ -287,11 +287,19 @@ ggplot(world_map2, aes(x=long,y=lat,group=group,fill=country)) +
 ![](figure-script_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
 
 ``` r
+world_map3 <- world_map2
+```
+
+``` r
 if (require("magick")) 
   {
-  ggplot(world_map2, aes(x=long,y=lat,group=group,fill=country)) + 
-    geom_polygon_pattern(linewidth=.1,alpha=.8,pattern="stripe",pattern_fill="orange",pattern_color="firebrick",pattern_aspect_ratio=.15,fill="white",color="black") +
-    guides(fill=FALSE) + 
+  ggplot(world_map2,aes(x=long,y=lat,group=group,fill=country)) + 
+    geom_polygon(color="black",alpha=.8,linewidth=.1) + 
+    scale_fill_manual(values=c("papayawhip","peachpuff2","peachpuff2","white","white","white","white","white","peachpuff2","firebrick4","peachpuff2","white","white","salmon3","peachpuff2","peachpuff2","white","white","white","white","peachpuff2","peachpuff2","peachpuff2","peachpuff2","peachpuff2","peachpuff2","white","white","white","peachpuff2","papayawhip","firebrick4","peachpuff2","peachpuff2","peachpuff2","white","peachpuff2","peachpuff2","lightsalmon1","white","peachpuff2","white","peachpuff2","white","white","salmon3","firebrick4","white","white","peachpuff2","white","papayawhip","white","white","peachpuff2","papayawhip","peachpuff2","white","white","peachpuff2","peachpuff2","peachpuff2","white","white","white","peachpuff2","lightsalmon1","peachpuff2","white","white","peachpuff2","white","peachpuff2","white","white","peachpuff2","peachpuff2","salmon3","white","white","white","white","papayawhip","peachpuff2","lightsalmon3","peachpuff2","peachpuff2","white","white","white","white","peachpuff2","white","white","white","peachpuff2","white","white","peachpuff2","peachpuff2","peachpuff2","peachpuff2","papayawhip","papayawhip","lightsalmon1","white","peachpuff2","white","peachpuff2","lightsalmon1","peachpuff2","lightsalmon1","white","peachpuff2","peachpuff2","peachpuff2","white","white","peachpuff2","peachpuff2","white","peachpuff2","peachpuff2","white","white","white","white","peachpuff2","peachpuff2","peachpuff2","papayawhip","white","peachpuff2","peachpuff2","peachpuff2","peachpuff2","peachpuff2","white","white","peachpuff2","peachpuff2","white","salmon3","white","papayawhip","white","white","peachpuff2","white","peachpuff2","white","white","papayawhip","white","peachpuff2","peachpuff2","white","peachpuff2","peachpuff2","peachpuff2","white","white","white","white","peachpuff2","white","peachpuff2","peachpuff2","peachpuff2","white","white","peachpuff2","white","lightsalmon1","peachpuff2","peachpuff2","white","peachpuff2","peachpuff2","white","white","white","peachpuff2","tomato4","papayawhip","white","white","white","white","white","white","white","papayawhip","peachpuff2","papayawhip","peachpuff2","white","white","white","white","white","white","peachpuff2","peachpuff2","white","white","peachpuff2","white","lightsalmon3","white","white","lightsalmon1","papayawhip","white","white","white","white","peachpuff2","peachpuff2","peachpuff2","white","peachpuff2","white","papayawhip","peachpuff2","white","papayawhip","white","white","peachpuff2","salmon4","white","white","papayawhip","peachpuff2","white","lightsalmon3","firebrick4","peachpuff2","white","papayawhip","white","lightsalmon3","white","white","white","white","papayawhip","papayawhip","papayawhip")) +
+    geom_polygon_pattern(linewidth=.1,alpha=.8,pattern_fill="brown",pattern_color="firebrick",pattern_aspect_ratio=.15,fill=NA,color="black") +
+    scale_pattern_manual(values=c("stripe","stripe","stripe","none","none","none","none","none","stripe","stripe","stripe","none","none","stripe","stripe","stripe","none","none","none","none","stripe","stripe","stripe","stripe","stripe","stripe","none","none","none","stripe","stripe","stripe","stripe","stripe","stripe","none","stripe","stripe","stripe","none","stripe","none","stripe","none","none","stripe","stripe","none","none","stripe","none","stripe","none","none","stripe","stripe","stripe","none","none","stripe","stripe","stripe","none","none","none","stripe","stripe","stripe","none","none","stripe","none","stripe","none","none","stripe","stripe","salmon3","none","none","none","none","stripe","stripe","stripe","stripe","stripe","none","none","none","none","stripe","none","none","none","stripe","none","none","stripe","stripe","stripe","stripe","stripe","stripe","stripe","none","stripe","none","stripe","stripe","stripe","stripe","none","stripe","stripe","stripe","none","none","stripe","stripe","none","stripe","stripe","none","none","none","none","stripe","stripe","stripe","stripe","none","stripe","stripe","stripe","stripe","stripe","none","none","stripe","stripe","none","stripe","none","stripe","none","none","stripe","none","stripe","none","none","stripe","none","stripe","stripe","none","stripe","stripe","stripe","none","none","none","none","stripe","none","stripe","stripe","stripe","none","none","stripe","none","stripe","stripe","stripe","none","stripe","stripe","none","none","none","stripe","stripe","stripe","none","none","none","none","none","none","none","stripe","stripe","stripe","stripe","none","none","none","none","none","none","stripe","stripe","none","none","stripe","none","stripe","none","none","stripe","stripe","none","none","none","none","stripe","stripe","stripe","none","stripe","none","stripe","stripe","none","stripe","none","none","stripe","stripe","none","none","stripe","stripe","none","stripe","stripe","stripe","none","stripe","none","stripe","none","none","none","none","stripe","stripe","stripe")) +
+    ggtitle("Figure 2. Choropleth map showing the mean anticipated country-level \nreductions in diet-attributable emissions for each of the 133 included countries.") +
+    guides(fill="none") + 
     xlab("") +
     ylab("") +
     theme(panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),panel.grid=element_blank(),axis.text=element_blank(),axis.ticks=element_blank()) 
@@ -304,7 +312,6 @@ if (require("magick"))
     ## Enabled features: cairo, fontconfig, freetype, heic, lcms, pango, raw, rsvg, webp
     ## Disabled features: fftw, ghostscript, x11
 
-    ## Warning: The `<scale>` argument of `guides()` cannot be `FALSE`. Use "none" instead as
-    ## of ggplot2 3.3.4.
+![](figure-script_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
 
-![](figure-script_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+pattern=“stripe”
