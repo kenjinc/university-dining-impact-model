@@ -9,20 +9,28 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Required Packages 
 
-```{r}
+```{r, message=FALSE}
 library(tidyverse)
 library(RColorBrewer)
 ```
 
-### Loading in the Map/Shapefile Data
+### Loading in the Map Data
 
-First, 
+Before we can synthesize the relevant variables from the two parent datasets into a single matrix (i.e., one that will service both our analytical and visualtion needs), we will first need to perform a spatial join. 
 
-```{r}
-map_data("world") %>%
+To prepare for this step, we will begin by reading in the shapefile data local to the `maps` package within `tidyverse.` In particular, we will need to specify `map_data("world")`, which will allow us to establish nation-states as our primary unit of analysis.
+
+```{r, message=TRUE}
+map_data <- map_data("world") 
+map_data %>%
   head(5)
 ```
 
+Because the directory of nation-states native to the `maps` package does not use ISO country codes, we will need to perform several updates manually in order to more closely align our shapefile data with the data provided in our two parent datasaets. Using the steps laid out by Thomas Haslam in his [2021 *RPubs* entry](https://rpubs.com/Thom_JH/798825), we can create greater consistency in the countries that are included and (2) the naming conventions that are used across our three data sources. 
+
+```{r}
+
+```
 
 ### Loading in the Original Datasets
 
