@@ -117,13 +117,12 @@ With these steps complete, the designated countries within our shapefile data ar
 map_data_iso %>% distinct(country)
 ```
 
-
 ## Spatially Joining Our Dietary Footprint Data
 
-First, we will read in the two original datasets from the `parent-datasets` folder local to this project repository. 
+To join the relevant columns from our dietary footprint data to our shapefile data, we will need to first read in the corresponding data file from the `parent-datasets` folder of this project's repository. 
 
 ```{r}
-read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/dietary_footprint_data.csv") %>%
+dietary_footprint_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/dietary_footprint_data.csv") %>%
   head(5)
 ```
 
