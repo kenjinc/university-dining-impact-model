@@ -8,16 +8,12 @@ library(tidyverse)
 library(RColorBrewer)
 ```
 
-## Loading in the Map Data
+## Loading in Our Shapefile Data
 
 Before we can synthesize the relevant variables from our two identified
-data sources into a single matrix, we will first need to perform a
-spatial join.
-
-To prepare for this step, we will have to read in the shapefile data
-local to the `maps` package within `tidyverse.` In particular, are going
-to specify `map_data("world")`, which will establish nation-states as
-our primary unit of analysis.
+data sources into a single matrix, we will need to first read in the
+nation-state shapefile data local to the `maps` package within
+`tidyverse`.
 
 ``` r
 map_data <- map_data("world") 
@@ -32,19 +28,24 @@ map_data %>%
     ## 4 -70.00415 12.50049     1     4  Aruba      <NA>
     ## 5 -70.06612 12.54697     1     5  Aruba      <NA>
 
-Because the directory of nation-states used in the `maps` package does
-not align with the conventions laid out by the ISO, we will need to
-perform several updates manually in order to align our shapefile data
-with the data provided in our two parent datasaets.
+Because the directory of nation-states used in this package does not
+adhere to the conventions laid out by the International Organization for
+Standardization (ISO), we will need to make a series of manual changes
+to better align our shapefile data with our university-enrollment and
+dietary-footprint data.
 
 Using the instructions laid out by Thomas Haslam in his 2021 [*RPubs*
-entry](https://rpubs.com/Thom_JH/798825), we will begin by addressing
+entry](https://rpubs.com/Thom_JH/798825), we can begin by addressing
 what he refers to as the “easy cases.”
 
-Of the 21 total instances he identified, the “easy cases” refer to the
-13 more simple straightforward mismatches, whereby the names of the
-`regions` listed in the `maps` dataset and the `countries` listed in the
-`gapminder` dataset were inconsistent.
+In the mentioned [*RPubs* entry](https://rpubs.com/Thom_JH/798825)
+entry, Haslam identifies a total of 21 differences between the
+nation-states listed in the `maps` package and countries listed by
+[Gapminder](gapminder.org).
+
+The “easy cases,” then, refer to the 13 instances where the names of the
+`regions` listed in the `maps` package and the countries listed by
+Gapminder are incongruent.
 
 ``` r
 map_data_iso <- map_data %>% 
@@ -65,9 +66,10 @@ map_data_iso <- map_data %>%
                         TRUE~country))
 ```
 
-The second group of cases, which he refers to as the `island nations`
-all involve combining the relevant `region` designations in the `maps`
-dataset to the appropriate `country` designation in `gapminder`.
+The second group of instances, which he refers to as the “island
+nations”, refer to the 8 cases where discrete island `region` need to be
+aggregated to match the related `country` designations provided by
+[Gapminder](gapminder.org) and the ISO.
 
 ``` r
 island_nations <- c("Antigua","Barbuda","Nevis", 
@@ -124,11 +126,11 @@ map_data_iso <- map_data_iso %>%
   tibble()
 ```
 
-Now, we move onto what Haslam refers to as the cases of “subregion
-promotion”. Here, we take Macao and Hong Kong, both of which are Special
-Administrative Regions of China and designated at subregions in the
-`maps` dataset, and assign them as countries, as is convention when
-conducting global studies research.
+Now, we move onto the final 2 cases that we will be addressing. Haslam
+refers to these as the instances of “subregion promotion”. Here, we take
+Macao and Hong Kong, Special Administrative Regions of China designated
+as subregions in the `maps` package, and assign them as countries, as is
+convention for global studies research.
 
 ``` r
 sra_names <- c("Hong Kong","Macao")
@@ -148,8 +150,8 @@ map_data_iso <- map_data_iso %>%
   tibble()
 ```
 
-With these steps complete, the designated countries within our shapefile
-data are now as follows:
+With these each of these steps complete, the regions accounted for
+within our shapefile data are now as follows:
 
 ``` r
 map_data_iso %>% distinct(country)
@@ -170,13 +172,37 @@ map_data_iso %>% distinct(country)
     ## 10 Antigua and Barbuda
     ## # … with 248 more rows
 
-## Spatially Joining Our Dietary Footprint Data
+## Loading in Our Dietary Footprint Data
 
-To join the relevant columns from our dietary footprint data to our
-shapefile data, we will need to first read in the corresponding data
-file from the `parent-datasets` folder of this project’s repository.
+Before we can spatially join the relevant columns from our dietary
+footprint data with our updated shapefile data, we will need to first
+read in the corresponding file from the `parent-datasets` folder in our
+repository.
 
 ``` r
-dietary_footprint_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/dietary_footprint_data.csv") %>%
-  head(5)
+dietary_footprint_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/dietary_footprint_data.csv")
 ```
+
+Because this dataset is not currently formatted in a way that aligns
+with the demands of our analysis, we will need to make several changes
+in preparation for our spatial join.
+
+For each country listed, we need to extract the values corresponding to
+the `value`, `centile_up`, and `centile_down` columns for each of the
+following attributes:`kg_co2e_excl_luc`, `kg_co2e_total`,
+`l_blue_wf_total`, `l_green_wf`, and `l_blue_green_wf.` This needs to be
+repeated for each of the 9 dietary conditions of interest: `2/3_vegan`,
+`baseline`, `lacto_ovo_vegetarian`, `low_red_meat`, `meatless_day`,
+`no_dairy`, `no_red_meat`, and `vegan`.
+
+In addition, we will also need to perform the necessary checks to ensure
+that country names are consistent across the map and dietary footprint
+data.
+
+## Spatially Joining Our Dietary Footprint Data
+
+## Loading in Our University Enrollment Data
+
+## Spatially Joining Our University Enrollment Data
+
+## Writing the Final Data File
