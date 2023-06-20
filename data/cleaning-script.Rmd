@@ -123,19 +123,116 @@ Before we can spatially join the relevant columns from our dietary footprint dat
 
 ```{r}
 dietary_footprint_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/dietary_footprint_data.csv")
+dietary_footprint_data %>%
+  head(6)
 ```
 
 Because this dataset is not currently formatted in a way that aligns with the demands of our analysis, we will need to make several changes in preparation for our spatial join. 
 
-For each country listed, we need to extract the values corresponding to the `value`, `centile_up`, and `centile_down` columns for each of the following attributes:`kg_co2e_excl_luc`, `kg_co2e_total`, `l_blue_wf_total`, `l_green_wf`, and `l_blue_green_wf.` This needs to be repeated for each of the 9 dietary conditions of interest: `2/3_vegan`, `baseline`, `lacto_ovo_vegetarian`, `low_red_meat`, `meatless_day`, `no_dairy`, `no_red_meat`, and `vegan`.
+For each country listed, we need to wrangle the baseline data such that there is a column corresponding to the quantities listed in the `value`, `centile_up`, and `centile_down` for each of the following attributes:`kg_co2e_excl_luc`, `kg_co2e_total`, `l_blue_wf_total`, `l_green_wf`, and `l_blue_green_wf`. In addition, this process needs to be repeated for each of the 8 remaining dietary conditions of interest: `2/3_vegan`, `baseline`, `lacto_ovo_vegetarian`, `low_red_meat`, `meatless_day`, `no_dairy`, `no_red_meat`, and `vegan`.
 
-In addition, we will also need to perform the necessary checks to ensure that country names are consistent across the map and dietary footprint data.
+To adjust for these requirements, we will first select out the relevant variables.
+
+```{r}
+dietary_footprint_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/dietary_footprint_data.csv") %>%
+  select(country,diet,attribute,value)
+dietary_footprint_data %>%
+  head(6)
+```
+
+With this accomplished, we will continue the wrangling process by pivoting to a wider format. We will achieve this by assigning the different dietary scenarios and attributes designated under the `diet` and `attribute` columns, respectively, as variables rather than observations.
+
+```{r}
+dietary_footprint_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/dietary_footprint_data.csv") %>%
+  select(country,diet,attribute,value) %>%
+  pivot_wider(names_from=c(diet,attribute),
+              values_from="value")
+dietary_footprint_data %>%
+  head(6)
+```
+
+Finally, with these new variables generated we will, again, select out the combinations of dietary scenarios and attributes relevant to our analyses. 
+
+```{r}
+dietary_footprint_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/dietary_footprint_data.csv") %>%
+  select(country,diet,attribute,value) %>%
+  pivot_wider(names_from=c(diet,attribute),
+              values_from="value") %>%
+  select(country,
+  "baseline_kg_co2e_excl_luc",
+  "baseline_kg_co2e_total",
+  "baseline_l_blue_green_wf",
+  "baseline_l_blue_wf_total",
+  "baseline_l_green_wf",
+  "meatless_day_kg_co2e_excl_luc",
+  "meatless_day_kg_co2e_total",
+  "meatless_day_l_blue_green_wf",
+  "meatless_day_l_blue_wf_total",
+  "meatless_day_l_green_wf",
+  "no_dairy_kg_co2e_excl_luc",
+  "no_dairy_kg_co2e_total",
+  "no_dairy_l_blue_green_wf",
+  "no_dairy_l_blue_wf_total",
+  "no_dairy_l_green_wf",
+  "low_red_meat_kg_co2e_excl_luc",
+  "low_red_meat_kg_co2e_total",
+  "low_red_meat_l_blue_green_wf",
+  "low_red_meat_l_blue_wf_total",
+  "low_red_meat_l_green_wf",
+  "no_red_meat_kg_co2e_excl_luc",
+  "no_red_meat_kg_co2e_total",
+  "no_red_meat_l_blue_green_wf",
+  "no_red_meat_l_blue_wf_total",
+  "no_red_meat_l_green_wf",
+  "pescetarian_kg_co2e_excl_luc",
+  "pescetarian_kg_co2e_total",
+  "pescetarian_l_blue_green_wf",
+  "pescetarian_l_blue_wf_total",
+  "pescetarian_l_green_wf",
+  "lacto_ovo_vegetarian_kg_co2e_excl_luc",
+  "lacto_ovo_vegetarian_kg_co2e_total",
+  "lacto_ovo_vegetarian_l_blue_green_wf",
+  "lacto_ovo_vegetarian_l_blue_wf_total",
+  "lacto_ovo_vegetarian_l_green_wf",
+  "2/3_vegan_kg_co2e_excl_luc",
+  "2/3_vegan_kg_co2e_total",
+  "2/3_vegan_l_blue_green_wf",
+  "2/3_vegan_l_blue_wf_total",
+  "2/3_vegan_l_green_wf",
+  "vegan_kg_co2e_excl_luc",
+  "vegan_kg_co2e_total",
+  "vegan_l_blue_green_wf",
+  "vegan_l_blue_wf_total",
+  "vegan_l_green_wf")
+dietary_footprint_data %>%
+  head(6)
+```
+
+Finally, we will need to perform the necessary checks to ensure that country names are consistent across the data sources used for our map and dietary footprint variables.
+
+We will also eventually need to use the `mutate` function to generate averages across scenarios.
 
 ## Spatially Joining Our Dietary Footprint Data
 
+map gap
 
 ## Loading in Our University Enrollment Data
 
+As we did for our dietary footprint data, we will need to read in and wrangle the university enrollment data found in the `parent-datasets` folder of our repository.
+
+
+```{r}
+university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/university_enrollment_data.csv")
+university_enrollment_data %>%
+  head(6)
+```
+
+Before we can spatially join the relevant variables from this data source to our aggregated dataset, we will need to make it so that each row represents a single country, and that there is a column designated for each of the following variables of interest: (1) the total number of students enrolled in ISCED 6 programs, (2) the total number of students enrolled in ISCED 7 programs, (3) the total number of students enrolled in ISCED 8 programs, (4) the total number of people living within the country, and (5) the concatenation of the reference years used for each of these variables.
+
 ## Spatially Joining Our University Enrollment Data
 
+map gap
+
 ## Writing the Final Data File
+
+
