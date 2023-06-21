@@ -222,13 +222,54 @@ As we did for our dietary footprint data, we will need to read in and wrangle th
 
 
 ```{r}
-university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/university_enrollment_data.csv")
+university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/university_enrollment_data.csv") %>%
+  as_tibble()
 university_enrollment_data %>%
   head(6)
 ```
 
-Before we can spatially join the relevant variables from this data source to our aggregated dataset, we will need to make it so that each row represents a single country, and that there is a column designated for each of the following variables of interest: (1) the total number of students enrolled in ISCED 6 programs, (2) the total number of students enrolled in ISCED 7 programs, (3) the total number of students enrolled in ISCED 8 programs, (4) the total number of people living within the country, and (5) the concatenation of the reference years used for each of these variables.
+Before we can spatially join the relevant variables from this data source to our aggregated dataset, we will need to make it so that each row represents a single country, and that there is a column designated for each of the following variables of interest: (1) the total number of students enrolled in ISCED 6 programs, (2) the total number of students enrolled in ISCED 7 programs, (3) the total number of students enrolled in ISCED 8 programs, (4) the total number of people living within the country, and (5) the reference year being used for each of these variables.
 
+We will begin this process by selecting out the `country.code` and `series.code` columns and renaming the `country.name`, `series`, and reference year variables.
+
+```{r}
+university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/university_enrollment_data.csv") %>%
+  select(-Country.Code,-Series.Code) %>%
+   as_tibble(university_enrollment_data) %>%
+  rename(country=Country.Name,series=Series,yr2000=YR2000,yr2001=YR2001,yr2002=YR2002,yr2003=YR2003,yr2004=YR2004,yr2005=YR2005,yr2006=YR2006,yr2007=YR2007,yr2008=YR2008,yr2009=YR2009,yr2010=YR2010,yr2011=YR2011,yr2012=YR2012,yr2013=YR2013,yr2014=YR2014,yr2015=YR2015,yr2016=YR2016,yr2017=YR2017,yr2018=YR2018,yr2019=YR2019,yr2020=YR2020)
+university_enrollment_data %>%
+  head(6)
+```
+With this complete, we now need to convert the reference year columns from character strings (`chr`) to doubles (`dbl`), which will coincidently convert the default `--` entries to `NA` values.
+
+```{r}
+university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/university_enrollment_data.csv") %>%
+  select(-Country.Code,-Series.Code) %>%
+   as_tibble(university_enrollment_data) %>%
+  rename(country=Country.Name,series=Series,yr2000=YR2000,yr2001=YR2001,yr2002=YR2002,yr2003=YR2003,yr2004=YR2004,yr2005=YR2005,yr2006=YR2006,yr2007=YR2007,yr2008=YR2008,yr2009=YR2009,yr2010=YR2010,yr2011=YR2011,yr2012=YR2012,yr2013=YR2013,yr2014=YR2014,yr2015=YR2015,yr2016=YR2016,yr2017=YR2017,yr2018=YR2018,yr2019=YR2019,yr2020=YR2020) %>%
+  mutate_at(c("yr2000","yr2001","yr2002","yr2003","yr2004","yr2005","yr2006","yr2007","yr2008","yr2009","yr2010","yr2011","yr2012","yr2013","yr2014","yr2015","yr2016","yr2017","yr2018","yr2019","yr2020"),as.double)
+university_enrollment_data %>%
+  head(6)
+```
+
+Because we want to use the available data from the most recently provided record, we will need to construct two new columns: one that pulls the numeric quantity of students enrolled from each class of ISCED programs and a second documenting the reference year being used. In order to do so, we will first need to convert all `NA` values to `0`.
+
+```{r}
+university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/university_enrollment_data.csv") %>%
+  select(-Country.Code,-Series.Code) %>%
+   as_tibble(university_enrollment_data) %>%
+  rename(country=Country.Name,series=Series,yr2000=YR2000,yr2001=YR2001,yr2002=YR2002,yr2003=YR2003,yr2004=YR2004,yr2005=YR2005,yr2006=YR2006,yr2007=YR2007,yr2008=YR2008,yr2009=YR2009,yr2010=YR2010,yr2011=YR2011,yr2012=YR2012,yr2013=YR2013,yr2014=YR2014,yr2015=YR2015,yr2016=YR2016,yr2017=YR2017,yr2018=YR2018,yr2019=YR2019,yr2020=YR2020) %>%
+  mutate_at(c("yr2000","yr2001","yr2002","yr2003","yr2004","yr2005","yr2006","yr2007","yr2008","yr2009","yr2010","yr2011","yr2012","yr2013","yr2014","yr2015","yr2016","yr2017","yr2018","yr2019","yr2020"),as.double) %>%
+  mutate(across(where(is.numeric),coalesce,0)) %>%
+  mutate(enrollment_total="yr2020")
+university_enrollment_data %>%
+  head(6)
+```
+
+
+%>%
+    mutate(enrollment_total=case_when(yr2020!=0))
+    
 ## Spatially Joining Our University Enrollment Data
 
 map gap

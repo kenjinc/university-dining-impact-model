@@ -364,60 +364,26 @@ wrangle the university enrollment data found in the `parent-datasets`
 folder of our repository.
 
 ``` r
-university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/university_enrollment_data.csv")
+university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/university_enrollment_data.csv") %>%
+  as_tibble()
 university_enrollment_data %>%
   head(6)
 ```
 
-    ##   Country.Name Country.Code
-    ## 1  Afghanistan          AFG
-    ## 2  Afghanistan          AFG
-    ## 3  Afghanistan          AFG
-    ## 4  Afghanistan          AFG
-    ## 5      Albania          ALB
-    ## 6      Albania          ALB
-    ##                                                                     Series
-    ## 1 Enrolment in tertiary education, ISCED 6 programmes, both sexes (number)
-    ## 2     Enrolment in tertiary education, all programmes, both sexes (number)
-    ## 3 Enrolment in tertiary education, ISCED 7 programmes, both sexes (number)
-    ## 4 Enrolment in tertiary education, ISCED 8 programmes, both sexes (number)
-    ## 5 Enrolment in tertiary education, ISCED 6 programmes, both sexes (number)
-    ## 6     Enrolment in tertiary education, all programmes, both sexes (number)
-    ##   Series.Code X2000..YR2000. X2001..YR2001. X2002..YR2002. X2003..YR2003.
-    ## 1     UIS.E.6             ..             ..             ..             ..
-    ## 2 SE.TER.ENRL             ..             ..             ..          26211
-    ## 3     UIS.E.7             ..             ..             ..             ..
-    ## 4     UIS.E.8             ..             ..             ..             ..
-    ## 5     UIS.E.6             ..             ..             ..             ..
-    ## 6 SE.TER.ENRL          40125          40859          42160          43600
-    ##   X2004..YR2004. X2005..YR2005. X2006..YR2006. X2007..YR2007. X2008..YR2008.
-    ## 1             ..             ..             ..             ..             ..
-    ## 2          27648             ..             ..             ..             ..
-    ## 3             ..             ..             ..             ..             ..
-    ## 4             ..             ..             ..             ..             ..
-    ## 5             ..             ..             ..             ..             ..
-    ## 6          53014          63257          74747          86863          90606
-    ##   X2009..YR2009. X2010..YR2010. X2011..YR2011. X2012..YR2012. X2013..YR2013.
-    ## 1             ..             ..             ..             ..             ..
-    ## 2          95185             ..          97504             ..             ..
-    ## 3             ..             ..             ..             ..             ..
-    ## 4             ..             ..              0             ..             ..
-    ## 5             ..             ..             ..             ..         123302
-    ## 6          93139         122326         134877         160839         174851
-    ##   X2014..YR2014. X2015..YR2015. X2016..YR2016. X2017..YR2017. X2018..YR2018.
-    ## 1         260330             ..             ..             ..         365982
-    ## 2         262874             ..             ..             ..         370610
-    ## 3           2525             ..             ..             ..           4600
-    ## 4             19             ..             ..             ..             28
-    ## 5         121519         110159          99485          94527          84629
-    ## 6         176003         162659         148597         141850         131833
-    ##   X2019..YR2019. X2020..YR2020.
-    ## 1             ..             ..
-    ## 2             ..             ..
-    ## 3             ..             ..
-    ## 4             ..             ..
-    ## 5          89231             ..
-    ## 6         139043             ..
+    ## # A tibble: 6 × 25
+    ##   Country.Name Countr…¹ Series Serie…² YR2000 YR2001 YR2002 YR2003 YR2004 YR2005
+    ##   <chr>        <chr>    <chr>  <chr>   <chr>  <chr>  <chr>  <chr>  <chr>  <chr> 
+    ## 1 Afghanistan  AFG      Popul… SP.POP… 20779… 21606… 22600… 23680… 24726… 25654…
+    ## 2 Afghanistan  AFG      Enrol… UIS.E.6 ..     ..     ..     ..     ..     ..    
+    ## 3 Afghanistan  AFG      Enrol… UIS.E.7 ..     ..     ..     ..     ..     ..    
+    ## 4 Afghanistan  AFG      Enrol… UIS.E.8 ..     ..     ..     ..     ..     ..    
+    ## 5 Albania      ALB      Popul… SP.POP… 30890… 30601… 30510… 30396… 30269… 30114…
+    ## 6 Albania      ALB      Enrol… UIS.E.6 ..     ..     ..     ..     ..     ..    
+    ## # … with 15 more variables: YR2006 <chr>, YR2007 <chr>, YR2008 <chr>,
+    ## #   YR2009 <chr>, YR2010 <chr>, YR2011 <chr>, YR2012 <chr>, YR2013 <chr>,
+    ## #   YR2014 <chr>, YR2015 <chr>, YR2016 <chr>, YR2017 <chr>, YR2018 <chr>,
+    ## #   YR2019 <chr>, YR2020 <chr>, and abbreviated variable names ¹​Country.Code,
+    ## #   ²​Series.Code
 
 Before we can spatially join the relevant variables from this data
 source to our aggregated dataset, we will need to make it so that each
@@ -426,8 +392,185 @@ for each of the following variables of interest: (1) the total number of
 students enrolled in ISCED 6 programs, (2) the total number of students
 enrolled in ISCED 7 programs, (3) the total number of students enrolled
 in ISCED 8 programs, (4) the total number of people living within the
-country, and (5) the concatenation of the reference years used for each
-of these variables.
+country, and (5) the reference year being used for each of these
+variables.
+
+We will begin this process by selecting out the `country.code` and
+`series.code` columns and renaming the `country.name`, `series`, and
+reference year variables.
+
+``` r
+university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/university_enrollment_data.csv") %>%
+  select(-Country.Code,-Series.Code) %>%
+   as_tibble(university_enrollment_data) %>%
+  rename(country=Country.Name,series=Series,yr2000=YR2000,yr2001=YR2001,yr2002=YR2002,yr2003=YR2003,yr2004=YR2004,yr2005=YR2005,yr2006=YR2006,yr2007=YR2007,yr2008=YR2008,yr2009=YR2009,yr2010=YR2010,yr2011=YR2011,yr2012=YR2012,yr2013=YR2013,yr2014=YR2014,yr2015=YR2015,yr2016=YR2016,yr2017=YR2017,yr2018=YR2018,yr2019=YR2019,yr2020=YR2020)
+university_enrollment_data %>%
+  head(6)
+```
+
+    ## # A tibble: 6 × 23
+    ##   country  series yr2000 yr2001 yr2002 yr2003 yr2004 yr2005 yr2006 yr2007 yr2008
+    ##   <chr>    <chr>  <chr>  <chr>  <chr>  <chr>  <chr>  <chr>  <chr>  <chr>  <chr> 
+    ## 1 Afghani… Popul… 20779… 21606… 22600… 23680… 24726… 25654… 26433… 27100… 27722…
+    ## 2 Afghani… Enrol… ..     ..     ..     ..     ..     ..     ..     ..     ..    
+    ## 3 Afghani… Enrol… ..     ..     ..     ..     ..     ..     ..     ..     ..    
+    ## 4 Afghani… Enrol… ..     ..     ..     ..     ..     ..     ..     ..     ..    
+    ## 5 Albania  Popul… 30890… 30601… 30510… 30396… 30269… 30114… 29925… 29700… 29473…
+    ## 6 Albania  Enrol… ..     ..     ..     ..     ..     ..     ..     ..     ..    
+    ## # … with 12 more variables: yr2009 <chr>, yr2010 <chr>, yr2011 <chr>,
+    ## #   yr2012 <chr>, yr2013 <chr>, yr2014 <chr>, yr2015 <chr>, yr2016 <chr>,
+    ## #   yr2017 <chr>, yr2018 <chr>, yr2019 <chr>, yr2020 <chr>
+
+With this complete, we now need to convert the reference year columns
+from character strings (`chr`) to doubles (`dbl`), which will
+coincidently convert the default `--` entries to `NA` values.
+
+``` r
+university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/university_enrollment_data.csv") %>%
+  select(-Country.Code,-Series.Code) %>%
+   as_tibble(university_enrollment_data) %>%
+  rename(country=Country.Name,series=Series,yr2000=YR2000,yr2001=YR2001,yr2002=YR2002,yr2003=YR2003,yr2004=YR2004,yr2005=YR2005,yr2006=YR2006,yr2007=YR2007,yr2008=YR2008,yr2009=YR2009,yr2010=YR2010,yr2011=YR2011,yr2012=YR2012,yr2013=YR2013,yr2014=YR2014,yr2015=YR2015,yr2016=YR2016,yr2017=YR2017,yr2018=YR2018,yr2019=YR2019,yr2020=YR2020) %>%
+  mutate_at(c("yr2000","yr2001","yr2002","yr2003","yr2004","yr2005","yr2006","yr2007","yr2008","yr2009","yr2010","yr2011","yr2012","yr2013","yr2014","yr2015","yr2016","yr2017","yr2018","yr2019","yr2020"),as.double)
+```
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+``` r
+university_enrollment_data %>%
+  head(6)
+```
+
+    ## # A tibble: 6 × 23
+    ##   country series  yr2000  yr2001  yr2002  yr2003  yr2004  yr2005  yr2006  yr2007
+    ##   <chr>   <chr>    <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
+    ## 1 Afghan… Popul…  2.08e7  2.16e7  2.26e7  2.37e7  2.47e7  2.57e7  2.64e7  2.71e7
+    ## 2 Afghan… Enrol… NA      NA      NA      NA      NA      NA      NA      NA     
+    ## 3 Afghan… Enrol… NA      NA      NA      NA      NA      NA      NA      NA     
+    ## 4 Afghan… Enrol… NA      NA      NA      NA      NA      NA      NA      NA     
+    ## 5 Albania Popul…  3.09e6  3.06e6  3.05e6  3.04e6  3.03e6  3.01e6  2.99e6  2.97e6
+    ## 6 Albania Enrol… NA      NA      NA      NA      NA      NA      NA      NA     
+    ## # … with 13 more variables: yr2008 <dbl>, yr2009 <dbl>, yr2010 <dbl>,
+    ## #   yr2011 <dbl>, yr2012 <dbl>, yr2013 <dbl>, yr2014 <dbl>, yr2015 <dbl>,
+    ## #   yr2016 <dbl>, yr2017 <dbl>, yr2018 <dbl>, yr2019 <dbl>, yr2020 <dbl>
+
+Because we want to use the available data from the most recently
+provided record, we will need to construct two new columns: one that
+pulls the numeric quantity of students enrolled from each class of ISCED
+programs and a second documenting the reference year being used. In
+order to do so, we will first need to convert all `NA` values to `0`.
+
+``` r
+university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/university_enrollment_data.csv") %>%
+  select(-Country.Code,-Series.Code) %>%
+   as_tibble(university_enrollment_data) %>%
+  rename(country=Country.Name,series=Series,yr2000=YR2000,yr2001=YR2001,yr2002=YR2002,yr2003=YR2003,yr2004=YR2004,yr2005=YR2005,yr2006=YR2006,yr2007=YR2007,yr2008=YR2008,yr2009=YR2009,yr2010=YR2010,yr2011=YR2011,yr2012=YR2012,yr2013=YR2013,yr2014=YR2014,yr2015=YR2015,yr2016=YR2016,yr2017=YR2017,yr2018=YR2018,yr2019=YR2019,yr2020=YR2020) %>%
+  mutate_at(c("yr2000","yr2001","yr2002","yr2003","yr2004","yr2005","yr2006","yr2007","yr2008","yr2009","yr2010","yr2011","yr2012","yr2013","yr2014","yr2015","yr2016","yr2017","yr2018","yr2019","yr2020"),as.double) %>%
+  mutate(across(where(is.numeric),coalesce,0)) %>%
+  mutate(enrollment_total="yr2020")
+```
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+``` r
+university_enrollment_data %>%
+  head(6)
+```
+
+    ## # A tibble: 6 × 24
+    ##   country  series yr2000 yr2001 yr2002 yr2003 yr2004 yr2005 yr2006 yr2007 yr2008
+    ##   <chr>    <chr>   <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>
+    ## 1 Afghani… Popul… 2.08e7 2.16e7 2.26e7 2.37e7 2.47e7 2.57e7 2.64e7 2.71e7 2.77e7
+    ## 2 Afghani… Enrol… 0      0      0      0      0      0      0      0      0     
+    ## 3 Afghani… Enrol… 0      0      0      0      0      0      0      0      0     
+    ## 4 Afghani… Enrol… 0      0      0      0      0      0      0      0      0     
+    ## 5 Albania  Popul… 3.09e6 3.06e6 3.05e6 3.04e6 3.03e6 3.01e6 2.99e6 2.97e6 2.95e6
+    ## 6 Albania  Enrol… 0      0      0      0      0      0      0      0      0     
+    ## # … with 13 more variables: yr2009 <dbl>, yr2010 <dbl>, yr2011 <dbl>,
+    ## #   yr2012 <dbl>, yr2013 <dbl>, yr2014 <dbl>, yr2015 <dbl>, yr2016 <dbl>,
+    ## #   yr2017 <dbl>, yr2018 <dbl>, yr2019 <dbl>, yr2020 <dbl>,
+    ## #   enrollment_total <chr>
+
+%\>% mutate(enrollment_total=case_when(yr2020!=0))
 
 ## Spatially Joining Our University Enrollment Data
 
