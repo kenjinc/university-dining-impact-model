@@ -278,7 +278,7 @@ university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-din
   mutate_at(c("yr2000","yr2001","yr2002","yr2003","yr2004","yr2005","yr2006","yr2007","yr2008","yr2009","yr2010","yr2011","yr2012","yr2013","yr2014","yr2015","yr2016","yr2017","yr2018","yr2019","yr2020"),as.double) %>%
   replace(is.na(.),0) %>%
   distinct() %>%
-  mutate(series=str_replace(series,"isced6","Enrolment in tertiary education, ISCED 6 programmes, both sexes (number) "))
+  mutate(series=str_replace(series,"tot_pop","Population, total"))
 university_enrollment_data %>%
   head(6)
 ```
