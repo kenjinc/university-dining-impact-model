@@ -106,16 +106,16 @@ island_nations_match <- island_nations_match %>%
 
 ``` r
 island_nations_match %>%
-  distinct(country) %>%
-  knitr::kable()
+  distinct(country) 
 ```
 
-| country                        |
-|:-------------------------------|
-| Antigua and Barbuda            |
-| St. Kitts and Nevis            |
-| Trinidad and Tobago            |
-| St. Vincent and the Grenadines |
+    ## # A tibble: 4 × 1
+    ##   country                       
+    ##   <chr>                         
+    ## 1 Antigua and Barbuda           
+    ## 2 St. Kitts and Nevis           
+    ## 3 Trinidad and Tobago           
+    ## 4 St. Vincent and the Grenadines
 
 ``` r
 map_data_iso <- map_data_iso %>%
@@ -386,17 +386,16 @@ university_enrollment_data %>%
     ## #   ²​Series.Code
 
 Before we can spatially join the relevant variables from this data
-source to our aggregated dataset, we will need to make it so that each
-row represents a single country, and that there is a column designated
-for each of the following variables of interest: (1) the total number of
-students enrolled in ISCED 6 programs, (2) the total number of students
-enrolled in ISCED 7 programs, (3) the total number of students enrolled
-in ISCED 8 programs, (4) the total number of people living within the
-country, and (5) the reference year being used for each of these
-variables.
+source, we will need to make it so that the data associated with each
+included country is captured in a single row, and each subsequent column
+captures the following: (1) the total number of students enrolled in
+ISCED 6 programs, (2) the total number of students enrolled in ISCED 7
+programs, (3) the total number of students enrolled in ISCED 8 programs,
+(4) the total number of people living within the country, and (5) the
+reference year being used for each of these variables.
 
-We will begin this process by selecting out the `country.code` and
-`series.code` columns and renaming the `country.name`, `series`, and
+We will begin this process by selecting out the `Country.Code` and
+`Series.Code` columns and renaming the `Country.Name`, `Series`, and
 reference year variables.
 
 ``` r
@@ -422,7 +421,7 @@ university_enrollment_data %>%
     ## #   yr2017 <chr>, yr2018 <chr>, yr2019 <chr>, yr2020 <chr>
 
 With this complete, we now need to convert the reference year columns
-from character strings (`chr`) to doubles (`dbl`), which will
+from character strings (`chr`) to double strings (`dbl`), which will
 coincidently convert the default `--` entries to `NA` values.
 
 ``` r
@@ -493,11 +492,9 @@ university_enrollment_data %>%
     ## #   yr2011 <dbl>, yr2012 <dbl>, yr2013 <dbl>, yr2014 <dbl>, yr2015 <dbl>,
     ## #   yr2016 <dbl>, yr2017 <dbl>, yr2018 <dbl>, yr2019 <dbl>, yr2020 <dbl>
 
-Because we want to use the available data from the most recently
-provided record, we will need to construct two new columns: one that
-pulls the numeric quantity of students enrolled from each class of ISCED
-programs and a second documenting the reference year being used. In
-order to do so, we will first need to convert all `NA` values to `0`.
+We will now turn all of the NA variables in the reference year columns
+from `NA` values to zero in order to more easily set up our conditional
+rules for pulling the most recent year with recorded data.
 
 ``` r
 university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/university_enrollment_data.csv") %>%
@@ -505,8 +502,7 @@ university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-din
    as_tibble(university_enrollment_data) %>%
   rename(country=Country.Name,series=Series,yr2000=YR2000,yr2001=YR2001,yr2002=YR2002,yr2003=YR2003,yr2004=YR2004,yr2005=YR2005,yr2006=YR2006,yr2007=YR2007,yr2008=YR2008,yr2009=YR2009,yr2010=YR2010,yr2011=YR2011,yr2012=YR2012,yr2013=YR2013,yr2014=YR2014,yr2015=YR2015,yr2016=YR2016,yr2017=YR2017,yr2018=YR2018,yr2019=YR2019,yr2020=YR2020) %>%
   mutate_at(c("yr2000","yr2001","yr2002","yr2003","yr2004","yr2005","yr2006","yr2007","yr2008","yr2009","yr2010","yr2011","yr2012","yr2013","yr2014","yr2015","yr2016","yr2017","yr2018","yr2019","yr2020"),as.double) %>%
-  mutate(across(where(is.numeric),coalesce,0)) %>%
-  mutate(enrollment_total="yr2020")
+  replace(is.na(.),0)
 ```
 
     ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
@@ -556,7 +552,7 @@ university_enrollment_data %>%
   head(6)
 ```
 
-    ## # A tibble: 6 × 24
+    ## # A tibble: 6 × 23
     ##   country  series yr2000 yr2001 yr2002 yr2003 yr2004 yr2005 yr2006 yr2007 yr2008
     ##   <chr>    <chr>   <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>
     ## 1 Afghani… Popul… 2.08e7 2.16e7 2.26e7 2.37e7 2.47e7 2.57e7 2.64e7 2.71e7 2.77e7
@@ -565,12 +561,96 @@ university_enrollment_data %>%
     ## 4 Afghani… Enrol… 0      0      0      0      0      0      0      0      0     
     ## 5 Albania  Popul… 3.09e6 3.06e6 3.05e6 3.04e6 3.03e6 3.01e6 2.99e6 2.97e6 2.95e6
     ## 6 Albania  Enrol… 0      0      0      0      0      0      0      0      0     
-    ## # … with 13 more variables: yr2009 <dbl>, yr2010 <dbl>, yr2011 <dbl>,
+    ## # … with 12 more variables: yr2009 <dbl>, yr2010 <dbl>, yr2011 <dbl>,
     ## #   yr2012 <dbl>, yr2013 <dbl>, yr2014 <dbl>, yr2015 <dbl>, yr2016 <dbl>,
-    ## #   yr2017 <dbl>, yr2018 <dbl>, yr2019 <dbl>, yr2020 <dbl>,
-    ## #   enrollment_total <chr>
+    ## #   yr2017 <dbl>, yr2018 <dbl>, yr2019 <dbl>, yr2020 <dbl>
 
-%\>% mutate(enrollment_total=case_when(yr2020!=0))
+Now, we will pivot our dataframe so that the different variables of
+interest currently captured in the `series` column are instead
+represented as their own variables.
+
+``` r
+university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/university_enrollment_data.csv") %>%
+  select(-Country.Code,-Series.Code) %>%
+   as_tibble(university_enrollment_data) %>%
+  rename(country=Country.Name,series=Series,yr2000=YR2000,yr2001=YR2001,yr2002=YR2002,yr2003=YR2003,yr2004=YR2004,yr2005=YR2005,yr2006=YR2006,yr2007=YR2007,yr2008=YR2008,yr2009=YR2009,yr2010=YR2010,yr2011=YR2011,yr2012=YR2012,yr2013=YR2013,yr2014=YR2014,yr2015=YR2015,yr2016=YR2016,yr2017=YR2017,yr2018=YR2018,yr2019=YR2019,yr2020=YR2020) %>%
+  mutate_at(c("yr2000","yr2001","yr2002","yr2003","yr2004","yr2005","yr2006","yr2007","yr2008","yr2009","yr2010","yr2011","yr2012","yr2013","yr2014","yr2015","yr2016","yr2017","yr2018","yr2019","yr2020"),as.double) %>%
+  replace(is.na(.),0) %>%
+  group_by(country) %>%
+  mutate(row=row_number()) %>%
+  pivot_wider(names_from="series",
+              values_from=c("yr2020","yr2019"))
+```
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+``` r
+university_enrollment_data %>%
+  head(6)
+```
+
+    ## # A tibble: 6 × 31
+    ## # Groups:   country [2]
+    ##   country  yr2000 yr2001 yr2002 yr2003 yr2004 yr2005 yr2006 yr2007 yr2008 yr2009
+    ##   <chr>     <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>
+    ## 1 Afghani… 2.08e7 2.16e7 2.26e7 2.37e7 2.47e7 2.57e7 2.64e7 2.71e7 2.77e7 2.84e7
+    ## 2 Afghani… 0      0      0      0      0      0      0      0      0      0     
+    ## 3 Afghani… 0      0      0      0      0      0      0      0      0      0     
+    ## 4 Afghani… 0      0      0      0      0      0      0      0      0      0     
+    ## 5 Albania  3.09e6 3.06e6 3.05e6 3.04e6 3.03e6 3.01e6 2.99e6 2.97e6 2.95e6 2.93e6
+    ## 6 Albania  0      0      0      0      0      0      0      0      0      0     
+    ## # … with 20 more variables: yr2010 <dbl>, yr2011 <dbl>, yr2012 <dbl>,
+    ## #   yr2013 <dbl>, yr2014 <dbl>, yr2015 <dbl>, yr2016 <dbl>, yr2017 <dbl>,
+    ## #   yr2018 <dbl>, row <int>, `yr2020_Population, total` <dbl>,
+    ## #   `yr2020_Enrolment in tertiary education, ISCED 6 programmes, both sexes (number)` <dbl>,
+    ## #   `yr2020_Enrolment in tertiary education, ISCED 7 programmes, both sexes (number)` <dbl>,
+    ## #   `yr2020_Enrolment in tertiary education, ISCED 8 programmes, both sexes (number)` <dbl>,
+    ## #   yr2020_ <dbl>, `yr2019_Population, total` <dbl>, …
+
+Because we want to use the available data from the most recently
+provided record, we will need to construct two new columns: one that
+pulls the numeric quantity of students enrolled from each class of ISCED
+programs and a second documenting the reference year being used.
 
 ## Spatially Joining Our University Enrollment Data
 
