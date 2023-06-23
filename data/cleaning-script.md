@@ -395,27 +395,28 @@ programs, (3) the total number of students enrolled in ISCED 8 programs,
 reference year being used for each of these variables.
 
 We will begin this process by selecting out the `Country.Code` and
-`Series.Code` columns and renaming the `Country.Name`, `Series`, and
-reference year variables.
+`Series.Code` columns, slicing out the 5 bottommost rows, and renaming
+the `Country.Name`, `Series`, and reference year variables.
 
 ``` r
 university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/university_enrollment_data.csv") %>%
   select(-Country.Code,-Series.Code) %>%
-   as_tibble(university_enrollment_data) %>%
-  rename(country=Country.Name,series=Series,yr2000=YR2000,yr2001=YR2001,yr2002=YR2002,yr2003=YR2003,yr2004=YR2004,yr2005=YR2005,yr2006=YR2006,yr2007=YR2007,yr2008=YR2008,yr2009=YR2009,yr2010=YR2010,yr2011=YR2011,yr2012=YR2012,yr2013=YR2013,yr2014=YR2014,yr2015=YR2015,yr2016=YR2016,yr2017=YR2017,yr2018=YR2018,yr2019=YR2019,yr2020=YR2020)
+  as_tibble(university_enrollment_data) %>%
+  slice(1:(n()-5)) %>%
+  rename(country=Country.Name,series=Series,yr2000=YR2000,yr2001=YR2001,yr2002=YR2002,yr2003=YR2003,yr2004=YR2004,yr2005=YR2005,yr2006=YR2006,yr2007=YR2007,yr2008=YR2008,yr2009=YR2009,yr2010=YR2010,yr2011=YR2011,yr2012=YR2012,yr2013=YR2013,yr2014=YR2014,yr2015=YR2015,yr2016=YR2016,yr2017=YR2017,yr2018=YR2018,yr2019=YR2019,yr2020=YR2020) 
 university_enrollment_data %>%
-  head(6)
+  tail(6)
 ```
 
     ## # A tibble: 6 × 23
     ##   country  series yr2000 yr2001 yr2002 yr2003 yr2004 yr2005 yr2006 yr2007 yr2008
     ##   <chr>    <chr>  <chr>  <chr>  <chr>  <chr>  <chr>  <chr>  <chr>  <chr>  <chr> 
-    ## 1 Afghani… Popul… 20779… 21606… 22600… 23680… 24726… 25654… 26433… 27100… 27722…
-    ## 2 Afghani… Enrol… ..     ..     ..     ..     ..     ..     ..     ..     ..    
-    ## 3 Afghani… Enrol… ..     ..     ..     ..     ..     ..     ..     ..     ..    
-    ## 4 Afghani… Enrol… ..     ..     ..     ..     ..     ..     ..     ..     ..    
-    ## 5 Albania  Popul… 30890… 30601… 30510… 30396… 30269… 30114… 29925… 29700… 29473…
-    ## 6 Albania  Enrol… ..     ..     ..     ..     ..     ..     ..     ..     ..    
+    ## 1 Zambia   Enrol… ..     ..     ..     ..     ..     ..     ..     ..     ..    
+    ## 2 Zambia   Enrol… ..     ..     ..     ..     ..     ..     ..     ..     ..    
+    ## 3 Zimbabwe Popul… 11881… 11923… 11954… 11982… 12019… 12076… 12155… 12255… 12379…
+    ## 4 Zimbabwe Enrol… ..     ..     ..     ..     ..     ..     ..     ..     ..    
+    ## 5 Zimbabwe Enrol… ..     ..     ..     ..     ..     ..     ..     ..     ..    
+    ## 6 Zimbabwe Enrol… ..     ..     ..     ..     ..     ..     ..     ..     ..    
     ## # … with 12 more variables: yr2009 <chr>, yr2010 <chr>, yr2011 <chr>,
     ## #   yr2012 <chr>, yr2013 <chr>, yr2014 <chr>, yr2015 <chr>, yr2016 <chr>,
     ## #   yr2017 <chr>, yr2018 <chr>, yr2019 <chr>, yr2020 <chr>
@@ -427,7 +428,8 @@ coincidently convert the default `--` entries to `NA` values.
 ``` r
 university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/university_enrollment_data.csv") %>%
   select(-Country.Code,-Series.Code) %>%
-   as_tibble(university_enrollment_data) %>%
+  as_tibble(university_enrollment_data) %>%
+  slice(1:(n()-5)) %>%
   rename(country=Country.Name,series=Series,yr2000=YR2000,yr2001=YR2001,yr2002=YR2002,yr2003=YR2003,yr2004=YR2004,yr2005=YR2005,yr2006=YR2006,yr2007=YR2007,yr2008=YR2008,yr2009=YR2009,yr2010=YR2010,yr2011=YR2011,yr2012=YR2012,yr2013=YR2013,yr2014=YR2014,yr2015=YR2015,yr2016=YR2016,yr2017=YR2017,yr2018=YR2018,yr2019=YR2019,yr2020=YR2020) %>%
   mutate_at(c("yr2000","yr2001","yr2002","yr2003","yr2004","yr2005","yr2006","yr2007","yr2008","yr2009","yr2010","yr2011","yr2012","yr2013","yr2014","yr2015","yr2016","yr2017","yr2018","yr2019","yr2020"),as.double)
 ```
@@ -499,7 +501,8 @@ rules for pulling the most recent year with recorded data.
 ``` r
 university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/university_enrollment_data.csv") %>%
   select(-Country.Code,-Series.Code) %>%
-   as_tibble(university_enrollment_data) %>%
+  as_tibble(university_enrollment_data) %>%
+  slice(1:(n()-5)) %>%
   rename(country=Country.Name,series=Series,yr2000=YR2000,yr2001=YR2001,yr2002=YR2002,yr2003=YR2003,yr2004=YR2004,yr2005=YR2005,yr2006=YR2006,yr2007=YR2007,yr2008=YR2008,yr2009=YR2009,yr2010=YR2010,yr2011=YR2011,yr2012=YR2012,yr2013=YR2013,yr2014=YR2014,yr2015=YR2015,yr2016=YR2016,yr2017=YR2017,yr2018=YR2018,yr2019=YR2019,yr2020=YR2020) %>%
   mutate_at(c("yr2000","yr2001","yr2002","yr2003","yr2004","yr2005","yr2006","yr2007","yr2008","yr2009","yr2010","yr2011","yr2012","yr2013","yr2014","yr2015","yr2016","yr2017","yr2018","yr2019","yr2020"),as.double) %>%
   replace(is.na(.),0)
@@ -567,19 +570,25 @@ university_enrollment_data %>%
 
 Now, we will pivot our dataframe so that the different variables of
 interest currently captured in the `series` column are instead
-represented as their own variables.
+represented as their own variables. Because the new column names will be
+a function of how our four observations are named, we will also add the
+necessary code to shorten these descriptions.
 
 ``` r
 university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/university_enrollment_data.csv") %>%
   select(-Country.Code,-Series.Code) %>%
-   as_tibble(university_enrollment_data) %>%
+  as_tibble(university_enrollment_data) %>%
+  slice(1:(n()-5)) %>%
   rename(country=Country.Name,series=Series,yr2000=YR2000,yr2001=YR2001,yr2002=YR2002,yr2003=YR2003,yr2004=YR2004,yr2005=YR2005,yr2006=YR2006,yr2007=YR2007,yr2008=YR2008,yr2009=YR2009,yr2010=YR2010,yr2011=YR2011,yr2012=YR2012,yr2013=YR2013,yr2014=YR2014,yr2015=YR2015,yr2016=YR2016,yr2017=YR2017,yr2018=YR2018,yr2019=YR2019,yr2020=YR2020) %>%
   mutate_at(c("yr2000","yr2001","yr2002","yr2003","yr2004","yr2005","yr2006","yr2007","yr2008","yr2009","yr2010","yr2011","yr2012","yr2013","yr2014","yr2015","yr2016","yr2017","yr2018","yr2019","yr2020"),as.double) %>%
   replace(is.na(.),0) %>%
-  group_by(country) %>%
-  mutate(row=row_number()) %>%
+  distinct() %>%
+  mutate(across("series",str_replace, fixed("Enrolment in tertiary education, ISCED 6 programmes, both sexes (number)"),"isced6_enr")) %>%
+  mutate(across("series",str_replace, fixed("Enrolment in tertiary education, ISCED 7 programmes, both sexes (number)"),"isced7_enr")) %>%
+  mutate(across("series",str_replace, fixed("Enrolment in tertiary education, ISCED 8 programmes, both sexes (number)"),"isced8_enr")) %>%
+  mutate(across("series",str_replace, fixed("Population, total"),"nat_pop")) %>%
   pivot_wider(names_from="series",
-              values_from=c("yr2020","yr2019"))
+              values_from=c("yr2020","yr2019","yr2018","yr2017","yr2016","yr2015","yr2014","yr2013","yr2012","yr2011","yr2010","yr2009","yr2008","yr2007","yr2006","yr2005","yr2004","yr2003","yr2002","yr2001","yr2000"))
 ```
 
     ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
@@ -629,28 +638,232 @@ university_enrollment_data %>%
   head(6)
 ```
 
-    ## # A tibble: 6 × 31
-    ## # Groups:   country [2]
-    ##   country  yr2000 yr2001 yr2002 yr2003 yr2004 yr2005 yr2006 yr2007 yr2008 yr2009
-    ##   <chr>     <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>
-    ## 1 Afghani… 2.08e7 2.16e7 2.26e7 2.37e7 2.47e7 2.57e7 2.64e7 2.71e7 2.77e7 2.84e7
-    ## 2 Afghani… 0      0      0      0      0      0      0      0      0      0     
-    ## 3 Afghani… 0      0      0      0      0      0      0      0      0      0     
-    ## 4 Afghani… 0      0      0      0      0      0      0      0      0      0     
-    ## 5 Albania  3.09e6 3.06e6 3.05e6 3.04e6 3.03e6 3.01e6 2.99e6 2.97e6 2.95e6 2.93e6
-    ## 6 Albania  0      0      0      0      0      0      0      0      0      0     
-    ## # … with 20 more variables: yr2010 <dbl>, yr2011 <dbl>, yr2012 <dbl>,
-    ## #   yr2013 <dbl>, yr2014 <dbl>, yr2015 <dbl>, yr2016 <dbl>, yr2017 <dbl>,
-    ## #   yr2018 <dbl>, row <int>, `yr2020_Population, total` <dbl>,
-    ## #   `yr2020_Enrolment in tertiary education, ISCED 6 programmes, both sexes (number)` <dbl>,
-    ## #   `yr2020_Enrolment in tertiary education, ISCED 7 programmes, both sexes (number)` <dbl>,
-    ## #   `yr2020_Enrolment in tertiary education, ISCED 8 programmes, both sexes (number)` <dbl>,
-    ## #   yr2020_ <dbl>, `yr2019_Population, total` <dbl>, …
+    ## # A tibble: 6 × 85
+    ##   country        yr202…¹ yr202…² yr202…³ yr202…⁴ yr201…⁵ yr201…⁶ yr201…⁷ yr201…⁸
+    ##   <chr>            <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
+    ## 1 Afghanistan          0       0       0       0  3.80e7      0        0     0  
+    ## 2 Albania              0       0       0       0  2.87e6  89231    43749  1865  
+    ## 3 Algeria              0       0       0       0  4.31e7      0        0     0  
+    ## 4 American Samoa       0       0       0       0  5.5 e4      0        0     0  
+    ## 5 Andorra              0       0       0       0  7.7 e4    554.      35    23.5
+    ## 6 Angola               0       0       0       0  3.18e7      0        0     0  
+    ## # … with 76 more variables: yr2018_nat_pop <dbl>, yr2018_isced6_enr <dbl>,
+    ## #   yr2018_isced7_enr <dbl>, yr2018_isced8_enr <dbl>, yr2017_nat_pop <dbl>,
+    ## #   yr2017_isced6_enr <dbl>, yr2017_isced7_enr <dbl>, yr2017_isced8_enr <dbl>,
+    ## #   yr2016_nat_pop <dbl>, yr2016_isced6_enr <dbl>, yr2016_isced7_enr <dbl>,
+    ## #   yr2016_isced8_enr <dbl>, yr2015_nat_pop <dbl>, yr2015_isced6_enr <dbl>,
+    ## #   yr2015_isced7_enr <dbl>, yr2015_isced8_enr <dbl>, yr2014_nat_pop <dbl>,
+    ## #   yr2014_isced6_enr <dbl>, yr2014_isced7_enr <dbl>, …
 
-Because we want to use the available data from the most recently
-provided record, we will need to construct two new columns: one that
-pulls the numeric quantity of students enrolled from each class of ISCED
-programs and a second documenting the reference year being used.
+We are now left with a format that is closer to our desired
+specifications, where the data associated with each included country
+corresponds to one row, with concatenated column titles representing a
+population total and the reference year being used.
+
+For each country, we want to use the most recent year that there is
+recorded data for both our national population variable (which is
+collected more consistently) and each of our stratified ISCED enrollment
+population variables (which are collected less consistently).
+
+The challenge now is to find a way to conditionally mutate five new
+columns: (1) one that captures the number of people living with the
+country, (2) one that captures the number of people in that country
+enrolled in ISCED 6 programs, (3) one that captures the number of people
+in that country enrolled in ISCED 7 programs, (4) one that captures the
+number of people in that country enrolled in ISCED 8 programs, and,
+finally, (5) another that notes the reference year being used across the
+four constructed variables.
+
+For this last variable, we will need to first create a column for the
+number of ISCED 6, ISCED 7, and ISCED 8 enrollees, as well as for the
+national population variable, to evaluate how to coalesce onto the same
+reference year.
+
+``` r
+university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/university_enrollment_data.csv") %>%
+  select(-Country.Code,-Series.Code) %>%
+  as_tibble(university_enrollment_data) %>%
+  slice(1:(n()-5)) %>%
+  rename(country=Country.Name,series=Series,yr2000=YR2000,yr2001=YR2001,yr2002=YR2002,yr2003=YR2003,yr2004=YR2004,yr2005=YR2005,yr2006=YR2006,yr2007=YR2007,yr2008=YR2008,yr2009=YR2009,yr2010=YR2010,yr2011=YR2011,yr2012=YR2012,yr2013=YR2013,yr2014=YR2014,yr2015=YR2015,yr2016=YR2016,yr2017=YR2017,yr2018=YR2018,yr2019=YR2019,yr2020=YR2020) %>%
+  mutate_at(c("yr2000","yr2001","yr2002","yr2003","yr2004","yr2005","yr2006","yr2007","yr2008","yr2009","yr2010","yr2011","yr2012","yr2013","yr2014","yr2015","yr2016","yr2017","yr2018","yr2019","yr2020"),as.double) %>%
+  replace(is.na(.),0) %>%
+  distinct() %>%
+  mutate(across("series",str_replace, fixed("Enrolment in tertiary education, ISCED 6 programmes, both sexes (number)"),"isced6_enr")) %>%
+  mutate(across("series",str_replace, fixed("Enrolment in tertiary education, ISCED 7 programmes, both sexes (number)"),"isced7_enr")) %>%
+  mutate(across("series",str_replace, fixed("Enrolment in tertiary education, ISCED 8 programmes, both sexes (number)"),"isced8_enr")) %>%
+  mutate(across("series",str_replace, fixed("Population, total"),"nat_pop")) %>%
+  pivot_wider(names_from="series",
+              values_from=c("yr2020","yr2019","yr2018","yr2017","yr2016","yr2015","yr2014","yr2013","yr2012","yr2011","yr2010","yr2009","yr2008","yr2007","yr2006","yr2005","yr2004","yr2003","yr2002","yr2001","yr2000")) %>%
+  mutate(isced6_ref_year=ifelse(yr2020_isced6_enr>0,2020,ifelse(yr2019_isced6_enr>0,2019,ifelse(yr2018_isced6_enr>0,2018,ifelse(yr2017_isced6_enr>0,2017,ifelse(yr2016_isced6_enr>0,2016,ifelse(yr2015_isced6_enr>0,2015,ifelse(yr2014_isced6_enr>0,2014,ifelse(yr2013_isced6_enr>0,2013,ifelse(yr2012_isced6_enr>0,2012,ifelse(yr2011_isced6_enr>0,2011,ifelse(yr2010_isced6_enr>0,2010,ifelse(yr2009_isced6_enr>0,2009,ifelse(yr2008_isced6_enr>0,2008,ifelse(yr2007_isced6_enr>0,2007,ifelse(yr2006_isced6_enr>0,2006,ifelse(yr2005_isced6_enr>0,2005,ifelse(yr2004_isced6_enr>0,2004,ifelse(yr2003_isced6_enr>0,2003,ifelse(yr2002_isced6_enr>0,2002,ifelse(yr2001_isced6_enr>0,2001,ifelse(yr2000_isced6_enr>0,2000,0)))))))))))))))))))))) %>%
+  mutate(isced7_ref_yr=ifelse(yr2020_isced7_enr>0,2020,ifelse(yr2019_isced7_enr>0,2019,ifelse(yr2018_isced7_enr>0,2018,ifelse(yr2017_isced7_enr>0,2017,ifelse(yr2016_isced7_enr>0,2016,ifelse(yr2015_isced7_enr>0,2015,ifelse(yr2014_isced7_enr>0,2014,ifelse(yr2013_isced7_enr>0,2013,ifelse(yr2012_isced7_enr>0,2012,ifelse(yr2011_isced7_enr>0,2011,ifelse(yr2010_isced7_enr>0,2010,ifelse(yr2009_isced7_enr>0,2009,ifelse(yr2008_isced7_enr>0,2008,ifelse(yr2007_isced7_enr>0,2007,ifelse(yr2006_isced7_enr>0,2006,ifelse(yr2005_isced7_enr>0,2005,ifelse(yr2004_isced7_enr>0,2004,ifelse(yr2003_isced7_enr>0,2003,ifelse(yr2002_isced7_enr>0,2002,ifelse(yr2001_isced7_enr>0,2001,ifelse(yr2000_isced7_enr>0,2000,0)))))))))))))))))))))) %>%
+  mutate(isced8_ref_yr=ifelse(yr2020_isced8_enr>0,2020,ifelse(yr2019_isced8_enr>0,2019,ifelse(yr2018_isced8_enr>0,2018,ifelse(yr2017_isced8_enr>0,2017,ifelse(yr2016_isced8_enr>0,2016,ifelse(yr2015_isced8_enr>0,2015,ifelse(yr2014_isced8_enr>0,2014,ifelse(yr2013_isced8_enr>0,2013,ifelse(yr2012_isced8_enr>0,2012,ifelse(yr2011_isced8_enr>0,2011,ifelse(yr2010_isced8_enr>0,2010,ifelse(yr2009_isced8_enr>0,2009,ifelse(yr2008_isced8_enr>0,2008,ifelse(yr2007_isced8_enr>0,2007,ifelse(yr2006_isced8_enr>0,2006,ifelse(yr2005_isced8_enr>0,2005,ifelse(yr2004_isced8_enr>0,2004,ifelse(yr2003_isced8_enr>0,2003,ifelse(yr2002_isced8_enr>0,2002,ifelse(yr2001_isced8_enr>0,2001,ifelse(yr2000_isced8_enr>0,2000,0)))))))))))))))))))))) %>%
+  mutate(natpop_ref_yr=ifelse(yr2020_nat_pop>0,2020,ifelse(yr2019_nat_pop>0,2019,ifelse(yr2018_nat_pop>0,2018,ifelse(yr2017_nat_pop>0,2017,ifelse(yr2016_nat_pop>0,2016,ifelse(yr2015_nat_pop>0,2015,ifelse(yr2014_nat_pop>0,2014,ifelse(yr2013_nat_pop>0,2013,ifelse(yr2012_nat_pop>0,2012,ifelse(yr2011_nat_pop>0,2011,ifelse(yr2010_nat_pop>0,2010,ifelse(yr2009_nat_pop>0,2009,ifelse(yr2008_nat_pop>0,2008,ifelse(yr2007_nat_pop>0,2007,ifelse(yr2006_nat_pop>0,2006,ifelse(yr2005_nat_pop>0,2005,ifelse(yr2004_nat_pop>0,2004,ifelse(yr2003_nat_pop>0,2003,ifelse(yr2002_nat_pop>0,2002,ifelse(yr2001_nat_pop>0,2001,ifelse(yr2000_nat_pop>0,2000,0))))))))))))))))))))))
+```
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+``` r
+university_enrollment_data %>%
+  head(6)
+```
+
+    ## # A tibble: 6 × 89
+    ##   country        yr202…¹ yr202…² yr202…³ yr202…⁴ yr201…⁵ yr201…⁶ yr201…⁷ yr201…⁸
+    ##   <chr>            <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
+    ## 1 Afghanistan          0       0       0       0  3.80e7      0        0     0  
+    ## 2 Albania              0       0       0       0  2.87e6  89231    43749  1865  
+    ## 3 Algeria              0       0       0       0  4.31e7      0        0     0  
+    ## 4 American Samoa       0       0       0       0  5.5 e4      0        0     0  
+    ## 5 Andorra              0       0       0       0  7.7 e4    554.      35    23.5
+    ## 6 Angola               0       0       0       0  3.18e7      0        0     0  
+    ## # … with 80 more variables: yr2018_nat_pop <dbl>, yr2018_isced6_enr <dbl>,
+    ## #   yr2018_isced7_enr <dbl>, yr2018_isced8_enr <dbl>, yr2017_nat_pop <dbl>,
+    ## #   yr2017_isced6_enr <dbl>, yr2017_isced7_enr <dbl>, yr2017_isced8_enr <dbl>,
+    ## #   yr2016_nat_pop <dbl>, yr2016_isced6_enr <dbl>, yr2016_isced7_enr <dbl>,
+    ## #   yr2016_isced8_enr <dbl>, yr2015_nat_pop <dbl>, yr2015_isced6_enr <dbl>,
+    ## #   yr2015_isced7_enr <dbl>, yr2015_isced8_enr <dbl>, yr2014_nat_pop <dbl>,
+    ## #   yr2014_isced6_enr <dbl>, yr2014_isced7_enr <dbl>, …
+
+From a quick glance, we can see that for the countries with available
+data across multiple VOIs, that there are inconsistencies in when the
+most recent year with recorded data was. Therefore, the assumption that
+the collection of these ISCED enrollee estimatesoccur at the same
+intervals, and thus would have the same reference year, has been
+violated.
+
+While we figure out the best solution for dealing with this, we do know
+that for the countries that have `0` values across the newly generated
+`isced6_ref_yr`, `isced7_ref_yr`, and `isced8_ref_yr` columns can be
+removed, given that they do not have data available for university
+enrollment.
+
+Here, we list the countries that meet this condition, whereby the sum of
+`isced6_ref_yr`, `isced7_ref_yr`, and `isced8_ref_yr` is equivalent to
+`0`.
+
+``` r
+university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/university_enrollment_data.csv") %>%
+  select(-Country.Code,-Series.Code) %>%
+  as_tibble(university_enrollment_data) %>%
+  slice(1:(n()-5)) %>%
+  rename(country=Country.Name,series=Series,yr2000=YR2000,yr2001=YR2001,yr2002=YR2002,yr2003=YR2003,yr2004=YR2004,yr2005=YR2005,yr2006=YR2006,yr2007=YR2007,yr2008=YR2008,yr2009=YR2009,yr2010=YR2010,yr2011=YR2011,yr2012=YR2012,yr2013=YR2013,yr2014=YR2014,yr2015=YR2015,yr2016=YR2016,yr2017=YR2017,yr2018=YR2018,yr2019=YR2019,yr2020=YR2020) %>%
+  mutate_at(c("yr2000","yr2001","yr2002","yr2003","yr2004","yr2005","yr2006","yr2007","yr2008","yr2009","yr2010","yr2011","yr2012","yr2013","yr2014","yr2015","yr2016","yr2017","yr2018","yr2019","yr2020"),as.double) %>%
+  replace(is.na(.),0) %>%
+  distinct() %>%
+  mutate(across("series",str_replace, fixed("Enrolment in tertiary education, ISCED 6 programmes, both sexes (number)"),"isced6_enr")) %>%
+  mutate(across("series",str_replace, fixed("Enrolment in tertiary education, ISCED 7 programmes, both sexes (number)"),"isced7_enr")) %>%
+  mutate(across("series",str_replace, fixed("Enrolment in tertiary education, ISCED 8 programmes, both sexes (number)"),"isced8_enr")) %>%
+  mutate(across("series",str_replace, fixed("Population, total"),"nat_pop")) %>%
+  pivot_wider(names_from="series",
+              values_from=c("yr2020","yr2019","yr2018","yr2017","yr2016","yr2015","yr2014","yr2013","yr2012","yr2011","yr2010","yr2009","yr2008","yr2007","yr2006","yr2005","yr2004","yr2003","yr2002","yr2001","yr2000")) %>%
+  mutate(isced6_ref_yr=ifelse(yr2020_isced6_enr>0,2020,ifelse(yr2019_isced6_enr>0,2019,ifelse(yr2018_isced6_enr>0,2018,ifelse(yr2017_isced6_enr>0,2017,ifelse(yr2016_isced6_enr>0,2016,ifelse(yr2015_isced6_enr>0,2015,ifelse(yr2014_isced6_enr>0,2014,ifelse(yr2013_isced6_enr>0,2013,ifelse(yr2012_isced6_enr>0,2012,ifelse(yr2011_isced6_enr>0,2011,ifelse(yr2010_isced6_enr>0,2010,ifelse(yr2009_isced6_enr>0,2009,ifelse(yr2008_isced6_enr>0,2008,ifelse(yr2007_isced6_enr>0,2007,ifelse(yr2006_isced6_enr>0,2006,ifelse(yr2005_isced6_enr>0,2005,ifelse(yr2004_isced6_enr>0,2004,ifelse(yr2003_isced6_enr>0,2003,ifelse(yr2002_isced6_enr>0,2002,ifelse(yr2001_isced6_enr>0,2001,ifelse(yr2000_isced6_enr>0,2000,0)))))))))))))))))))))) %>%
+  mutate(isced7_ref_yr=ifelse(yr2020_isced7_enr>0,2020,ifelse(yr2019_isced7_enr>0,2019,ifelse(yr2018_isced7_enr>0,2018,ifelse(yr2017_isced7_enr>0,2017,ifelse(yr2016_isced7_enr>0,2016,ifelse(yr2015_isced7_enr>0,2015,ifelse(yr2014_isced7_enr>0,2014,ifelse(yr2013_isced7_enr>0,2013,ifelse(yr2012_isced7_enr>0,2012,ifelse(yr2011_isced7_enr>0,2011,ifelse(yr2010_isced7_enr>0,2010,ifelse(yr2009_isced7_enr>0,2009,ifelse(yr2008_isced7_enr>0,2008,ifelse(yr2007_isced7_enr>0,2007,ifelse(yr2006_isced7_enr>0,2006,ifelse(yr2005_isced7_enr>0,2005,ifelse(yr2004_isced7_enr>0,2004,ifelse(yr2003_isced7_enr>0,2003,ifelse(yr2002_isced7_enr>0,2002,ifelse(yr2001_isced7_enr>0,2001,ifelse(yr2000_isced7_enr>0,2000,0)))))))))))))))))))))) %>%
+  mutate(isced8_ref_yr=ifelse(yr2020_isced8_enr>0,2020,ifelse(yr2019_isced8_enr>0,2019,ifelse(yr2018_isced8_enr>0,2018,ifelse(yr2017_isced8_enr>0,2017,ifelse(yr2016_isced8_enr>0,2016,ifelse(yr2015_isced8_enr>0,2015,ifelse(yr2014_isced8_enr>0,2014,ifelse(yr2013_isced8_enr>0,2013,ifelse(yr2012_isced8_enr>0,2012,ifelse(yr2011_isced8_enr>0,2011,ifelse(yr2010_isced8_enr>0,2010,ifelse(yr2009_isced8_enr>0,2009,ifelse(yr2008_isced8_enr>0,2008,ifelse(yr2007_isced8_enr>0,2007,ifelse(yr2006_isced8_enr>0,2006,ifelse(yr2005_isced8_enr>0,2005,ifelse(yr2004_isced8_enr>0,2004,ifelse(yr2003_isced8_enr>0,2003,ifelse(yr2002_isced8_enr>0,2002,ifelse(yr2001_isced8_enr>0,2001,ifelse(yr2000_isced8_enr>0,2000,0)))))))))))))))))))))) %>%
+  mutate(natpop_ref_yr=ifelse(yr2020_nat_pop>0,2020,ifelse(yr2019_nat_pop>0,2019,ifelse(yr2018_nat_pop>0,2018,ifelse(yr2017_nat_pop>0,2017,ifelse(yr2016_nat_pop>0,2016,ifelse(yr2015_nat_pop>0,2015,ifelse(yr2014_nat_pop>0,2014,ifelse(yr2013_nat_pop>0,2013,ifelse(yr2012_nat_pop>0,2012,ifelse(yr2011_nat_pop>0,2011,ifelse(yr2010_nat_pop>0,2010,ifelse(yr2009_nat_pop>0,2009,ifelse(yr2008_nat_pop>0,2008,ifelse(yr2007_nat_pop>0,2007,ifelse(yr2006_nat_pop>0,2006,ifelse(yr2005_nat_pop>0,2005,ifelse(yr2004_nat_pop>0,2004,ifelse(yr2003_nat_pop>0,2003,ifelse(yr2002_nat_pop>0,2002,ifelse(yr2001_nat_pop>0,2001,ifelse(yr2000_nat_pop>0,2000,0)))))))))))))))))))))) %>%
+  filter(isced6_ref_yr+isced7_ref_yr+isced8_ref_yr==0)
+```
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+``` r
+university_enrollment_data %>%
+  select(country,isced6_ref_yr,isced7_ref_yr,isced8_ref_yr) 
+```
+
+    ## # A tibble: 52 × 4
+    ##    country                  isced6_ref_yr isced7_ref_yr isced8_ref_yr
+    ##    <chr>                            <dbl>         <dbl>         <dbl>
+    ##  1 American Samoa                       0             0             0
+    ##  2 Angola                               0             0             0
+    ##  3 Antigua and Barbuda                  0             0             0
+    ##  4 Bahamas, The                         0             0             0
+    ##  5 Bolivia                              0             0             0
+    ##  6 British Virgin Islands               0             0             0
+    ##  7 Cayman Islands                       0             0             0
+    ##  8 Central African Republic             0             0             0
+    ##  9 Channel Islands                      0             0             0
+    ## 10 Djibouti                             0             0             0
+    ## # … with 42 more rows
 
 ## Spatially Joining Our University Enrollment Data
 
