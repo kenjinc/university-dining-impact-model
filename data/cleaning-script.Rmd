@@ -4,7 +4,7 @@ output: github_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE,warning=FALSE,message=FALSE)
 ```
 
 ## Required Packages 
@@ -209,10 +209,6 @@ dietary_footprint_data %>%
 Finally, we will need to perform the necessary checks to ensure that country names are consistent across the data sources used for our map and dietary footprint variables.
 
 We will also eventually need to use the `mutate` function to generate averages across scenarios.
-
-## Spatially Joining Our Dietary Footprint Data
-
-map gap
 
 ## Cleaning Our University Enrollment Data
 
@@ -520,9 +516,37 @@ university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-din
 university_enrollment_data 
 ```
 
-## Spatially Joining Our University Enrollment Data
+## Spatially Joining Our Dietary Footprint and University Enrollment Data
 
-map gap
+Now that both of our parent datasets are in formats that align with the needs of our shapefile data, we can begin the necessary preparations for our spatial join. Before performing this operation, we will first need to identify all inconsistencies in the `region` and `country` designations between our three data sources.
+
+We will begin this process by investigating the differences between our university enrollment and dietary footprint data, first by examining the rows that exist in the former but not the latter and then by examining the rows that exist in the latter but not the former.
+
+
+```{r}
+anti_join(dietary_footprint_data,university_enrollment_data,by="country")
+```
+
+```{r}
+anti_join(university_enrollment_data,dietary_footprint_data,by="country")
+```
+
+From these two lists, we will need to construct a systematized process for reconciling two types of cases: countries that need to be adjusted and countries that will be removed from our analysis.
+
+We will first identify the instances where there are differences in the naming conventions between the two countries. 
+
+
+```{r}
+
+```
+
+
+We will then identify the instances where there is data for the country in one data source but not the other. 
+
+```{r}
+
+```
+
 
 ## Writing the Final Data File
 

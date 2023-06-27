@@ -352,10 +352,6 @@ and dietary footprint variables.
 We will also eventually need to use the `mutate` function to generate
 averages across scenarios.
 
-## Spatially Joining Our Dietary Footprint Data
-
-map gap
-
 ## Cleaning Our University Enrollment Data
 
 As we did for our dietary footprint data, we will need to read in and
@@ -431,51 +427,6 @@ university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-din
   slice(1:(n()-5)) %>%
   rename(country=Country.Name,series=Series,yr2000=YR2000,yr2001=YR2001,yr2002=YR2002,yr2003=YR2003,yr2004=YR2004,yr2005=YR2005,yr2006=YR2006,yr2007=YR2007,yr2008=YR2008,yr2009=YR2009,yr2010=YR2010,yr2011=YR2011,yr2012=YR2012,yr2013=YR2013,yr2014=YR2014,yr2015=YR2015,yr2016=YR2016,yr2017=YR2017,yr2018=YR2018,yr2019=YR2019,yr2020=YR2020) %>%
   mutate_at(c("yr2000","yr2001","yr2002","yr2003","yr2004","yr2005","yr2006","yr2007","yr2008","yr2009","yr2010","yr2011","yr2012","yr2013","yr2014","yr2015","yr2016","yr2017","yr2018","yr2019","yr2020"),as.double)
-```
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-``` r
 university_enrollment_data %>%
   head(6)
 ```
@@ -505,51 +456,6 @@ university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-din
   rename(country=Country.Name,series=Series,yr2000=YR2000,yr2001=YR2001,yr2002=YR2002,yr2003=YR2003,yr2004=YR2004,yr2005=YR2005,yr2006=YR2006,yr2007=YR2007,yr2008=YR2008,yr2009=YR2009,yr2010=YR2010,yr2011=YR2011,yr2012=YR2012,yr2013=YR2013,yr2014=YR2014,yr2015=YR2015,yr2016=YR2016,yr2017=YR2017,yr2018=YR2018,yr2019=YR2019,yr2020=YR2020) %>%
   mutate_at(c("yr2000","yr2001","yr2002","yr2003","yr2004","yr2005","yr2006","yr2007","yr2008","yr2009","yr2010","yr2011","yr2012","yr2013","yr2014","yr2015","yr2016","yr2017","yr2018","yr2019","yr2020"),as.double) %>%
   replace(is.na(.),0)
-```
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-``` r
 university_enrollment_data %>%
   head(6)
 ```
@@ -588,51 +494,6 @@ university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-din
   mutate(across("series",str_replace, fixed("Population, total"),"nat_pop")) %>%
   pivot_wider(names_from="series",
               values_from=c("yr2020","yr2019","yr2018","yr2017","yr2016","yr2015","yr2014","yr2013","yr2012","yr2011","yr2010","yr2009","yr2008","yr2007","yr2006","yr2005","yr2004","yr2003","yr2002","yr2001","yr2000"))
-```
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-``` r
 university_enrollment_data %>%
   head(6)
 ```
@@ -697,51 +558,6 @@ university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-din
   mutate(isced7_ref_yr=ifelse(yr2020_isced7_enr>0,2020,ifelse(yr2019_isced7_enr>0,2019,ifelse(yr2018_isced7_enr>0,2018,ifelse(yr2017_isced7_enr>0,2017,ifelse(yr2016_isced7_enr>0,2016,ifelse(yr2015_isced7_enr>0,2015,ifelse(yr2014_isced7_enr>0,2014,ifelse(yr2013_isced7_enr>0,2013,ifelse(yr2012_isced7_enr>0,2012,ifelse(yr2011_isced7_enr>0,2011,ifelse(yr2010_isced7_enr>0,2010,ifelse(yr2009_isced7_enr>0,2009,ifelse(yr2008_isced7_enr>0,2008,ifelse(yr2007_isced7_enr>0,2007,ifelse(yr2006_isced7_enr>0,2006,ifelse(yr2005_isced7_enr>0,2005,ifelse(yr2004_isced7_enr>0,2004,ifelse(yr2003_isced7_enr>0,2003,ifelse(yr2002_isced7_enr>0,2002,ifelse(yr2001_isced7_enr>0,2001,ifelse(yr2000_isced7_enr>0,2000,0)))))))))))))))))))))) %>%
   mutate(isced8_ref_yr=ifelse(yr2020_isced8_enr>0,2020,ifelse(yr2019_isced8_enr>0,2019,ifelse(yr2018_isced8_enr>0,2018,ifelse(yr2017_isced8_enr>0,2017,ifelse(yr2016_isced8_enr>0,2016,ifelse(yr2015_isced8_enr>0,2015,ifelse(yr2014_isced8_enr>0,2014,ifelse(yr2013_isced8_enr>0,2013,ifelse(yr2012_isced8_enr>0,2012,ifelse(yr2011_isced8_enr>0,2011,ifelse(yr2010_isced8_enr>0,2010,ifelse(yr2009_isced8_enr>0,2009,ifelse(yr2008_isced8_enr>0,2008,ifelse(yr2007_isced8_enr>0,2007,ifelse(yr2006_isced8_enr>0,2006,ifelse(yr2005_isced8_enr>0,2005,ifelse(yr2004_isced8_enr>0,2004,ifelse(yr2003_isced8_enr>0,2003,ifelse(yr2002_isced8_enr>0,2002,ifelse(yr2001_isced8_enr>0,2001,ifelse(yr2000_isced8_enr>0,2000,0)))))))))))))))))))))) %>%
   mutate(natpop_ref_yr=ifelse(yr2020_nat_pop>0,2020,ifelse(yr2019_nat_pop>0,2019,ifelse(yr2018_nat_pop>0,2018,ifelse(yr2017_nat_pop>0,2017,ifelse(yr2016_nat_pop>0,2016,ifelse(yr2015_nat_pop>0,2015,ifelse(yr2014_nat_pop>0,2014,ifelse(yr2013_nat_pop>0,2013,ifelse(yr2012_nat_pop>0,2012,ifelse(yr2011_nat_pop>0,2011,ifelse(yr2010_nat_pop>0,2010,ifelse(yr2009_nat_pop>0,2009,ifelse(yr2008_nat_pop>0,2008,ifelse(yr2007_nat_pop>0,2007,ifelse(yr2006_nat_pop>0,2006,ifelse(yr2005_nat_pop>0,2005,ifelse(yr2004_nat_pop>0,2004,ifelse(yr2003_nat_pop>0,2003,ifelse(yr2002_nat_pop>0,2002,ifelse(yr2001_nat_pop>0,2001,ifelse(yr2000_nat_pop>0,2000,0))))))))))))))))))))))
-```
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-``` r
 university_enrollment_data %>%
   head(6)
 ```
@@ -800,51 +616,6 @@ university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-din
   mutate(isced8_ref_yr=ifelse(yr2020_isced8_enr>0,2020,ifelse(yr2019_isced8_enr>0,2019,ifelse(yr2018_isced8_enr>0,2018,ifelse(yr2017_isced8_enr>0,2017,ifelse(yr2016_isced8_enr>0,2016,ifelse(yr2015_isced8_enr>0,2015,ifelse(yr2014_isced8_enr>0,2014,ifelse(yr2013_isced8_enr>0,2013,ifelse(yr2012_isced8_enr>0,2012,ifelse(yr2011_isced8_enr>0,2011,ifelse(yr2010_isced8_enr>0,2010,ifelse(yr2009_isced8_enr>0,2009,ifelse(yr2008_isced8_enr>0,2008,ifelse(yr2007_isced8_enr>0,2007,ifelse(yr2006_isced8_enr>0,2006,ifelse(yr2005_isced8_enr>0,2005,ifelse(yr2004_isced8_enr>0,2004,ifelse(yr2003_isced8_enr>0,2003,ifelse(yr2002_isced8_enr>0,2002,ifelse(yr2001_isced8_enr>0,2001,ifelse(yr2000_isced8_enr>0,2000,0)))))))))))))))))))))) %>%
   mutate(natpop_ref_yr=ifelse(yr2020_nat_pop>0,2020,ifelse(yr2019_nat_pop>0,2019,ifelse(yr2018_nat_pop>0,2018,ifelse(yr2017_nat_pop>0,2017,ifelse(yr2016_nat_pop>0,2016,ifelse(yr2015_nat_pop>0,2015,ifelse(yr2014_nat_pop>0,2014,ifelse(yr2013_nat_pop>0,2013,ifelse(yr2012_nat_pop>0,2012,ifelse(yr2011_nat_pop>0,2011,ifelse(yr2010_nat_pop>0,2010,ifelse(yr2009_nat_pop>0,2009,ifelse(yr2008_nat_pop>0,2008,ifelse(yr2007_nat_pop>0,2007,ifelse(yr2006_nat_pop>0,2006,ifelse(yr2005_nat_pop>0,2005,ifelse(yr2004_nat_pop>0,2004,ifelse(yr2003_nat_pop>0,2003,ifelse(yr2002_nat_pop>0,2002,ifelse(yr2001_nat_pop>0,2001,ifelse(yr2000_nat_pop>0,2000,0)))))))))))))))))))))) %>%
   filter(isced6_ref_yr+isced7_ref_yr+isced8_ref_yr==0)
-```
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-``` r
 university_enrollment_data %>%
   select(country,isced6_ref_yr,isced7_ref_yr,isced8_ref_yr) 
 ```
@@ -887,51 +658,6 @@ university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-din
   mutate(natpop_ref_yr=ifelse(yr2020_nat_pop>0,2020,ifelse(yr2019_nat_pop>0,2019,ifelse(yr2018_nat_pop>0,2018,ifelse(yr2017_nat_pop>0,2017,ifelse(yr2016_nat_pop>0,2016,ifelse(yr2015_nat_pop>0,2015,ifelse(yr2014_nat_pop>0,2014,ifelse(yr2013_nat_pop>0,2013,ifelse(yr2012_nat_pop>0,2012,ifelse(yr2011_nat_pop>0,2011,ifelse(yr2010_nat_pop>0,2010,ifelse(yr2009_nat_pop>0,2009,ifelse(yr2008_nat_pop>0,2008,ifelse(yr2007_nat_pop>0,2007,ifelse(yr2006_nat_pop>0,2006,ifelse(yr2005_nat_pop>0,2005,ifelse(yr2004_nat_pop>0,2004,ifelse(yr2003_nat_pop>0,2003,ifelse(yr2002_nat_pop>0,2002,ifelse(yr2001_nat_pop>0,2001,ifelse(yr2000_nat_pop>0,2000,0)))))))))))))))))))))) %>%
   rowwise() %>%
   filter(!isced6_ref_yr+isced7_ref_yr+isced8_ref_yr==0) 
-```
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-``` r
 university_enrollment_data %>%
   head(6)
 ```
@@ -985,51 +711,6 @@ university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-din
   rowwise() %>%
   filter(!isced6_ref_yr+isced7_ref_yr+isced8_ref_yr==0) %>%
   select(country,isced6_enr,isced6_ref_yr,isced7_enr,isced7_ref_yr,isced8_enr,isced8_ref_yr,natpop_est,natpop_ref_yr) 
-```
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-``` r
 university_enrollment_data 
 ```
 
@@ -1136,51 +817,6 @@ university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-din
   filter(!isced6_ref_yr+isced7_ref_yr+isced8_ref_yr==0) %>%
   select(country,isced6_enr,isced6_ref_yr,isced7_enr,isced7_ref_yr,isced8_enr,isced8_ref_yr,natpop_est,natpop_ref_yr) %>%
   filter_at(vars(country),all_vars(!. %in% c("Arab World","Caribbean small states","Central Europe and the Baltics","Early-demographic dividend","East Asia & Pacific","East Asia & Pacific (excluding high income)","East Asia & Pacific (IDA & IBRD countries","Euro area","Europe & Central Asia","Europe & Central Asia (excluding high income)","Europe & Central Asia (IDA & IBRD countries)","European Union","Fragile and conflict affected situations","Heavily indebted poor countries (HIPC)","High income","IBRD only","IDA & IBRD total","IDA blend","IDA only","IDA total","Late-demographic dividend","Latin America & Caribbean","Latin America & Caribbean (excluding high income)","Latin America & the Caribbean (IDA & IBRD countries)","Least developed countries: UN classification","Low & middle income","Low income","Lower middle income","Middle East & North Africa","Middle East & North Africa (excluding high income)","Middle East & North Africa (IDA & IBRD countries)","Middle income","North America","OECD members","Other small states","Pacific island small states","Post-demographic dividend","Pre-demographic dividend","Small states","South Asia","South Asia (IDA & IBRD)","Sub-Saharan Africa","Sub-Saharan Africa (excluding high income)","Upper middle income","World")))
-```
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-``` r
 university_enrollment_data 
 ```
 
@@ -1236,51 +872,6 @@ university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-din
   filter_at(vars(country),all_vars(!. %in% c("Arab World","Caribbean small states","Central Europe and the Baltics","Early-demographic dividend","East Asia & Pacific","East Asia & Pacific (excluding high income)","East Asia & Pacific (IDA & IBRD countries","Euro area","Europe & Central Asia","Europe & Central Asia (excluding high income)","Europe & Central Asia (IDA & IBRD countries)","European Union","Fragile and conflict affected situations","Heavily indebted poor countries (HIPC)","High income","IBRD only","IDA & IBRD total","IDA blend","IDA only","IDA total","Late-demographic dividend","Latin America & Caribbean","Latin America & Caribbean (excluding high income)","Latin America & the Caribbean (IDA & IBRD countries)","Least developed countries: UN classification","Low & middle income","Low income","Lower middle income","Middle East & North Africa","Middle East & North Africa (excluding high income)","Middle East & North Africa (IDA & IBRD countries)","Middle income","North America","OECD members","Other small states","Pacific island small states","Post-demographic dividend","Pre-demographic dividend","Small states","South Asia","South Asia (IDA & IBRD)","Sub-Saharan Africa","Sub-Saharan Africa (excluding high income)","Upper middle income","World"))) %>%
   mutate(uni_enr_tot=isced6_enr+isced7_enr+isced8_enr) %>%
   mutate(uni_enr_pop=uni_enr_tot/natpop_est)
-```
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-    ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-``` r
 university_enrollment_data 
 ```
 
@@ -1302,8 +893,74 @@ university_enrollment_data
     ## #   and abbreviated variable names ¹​isced6_enr, ²​isced6_ref_yr, ³​isced7_enr,
     ## #   ⁴​isced7_ref_yr, ⁵​isced8_enr, ⁶​isced8_ref_yr, ⁷​natpop_est, ⁸​natpop_ref_yr
 
-## Spatially Joining Our University Enrollment Data
+## Spatially Joining Our Dietary Footprint and University Enrollment Data
 
-map gap
+Now that both of our parent datasets are in formats that align with the
+needs of our shapefile data, we can begin the necessary preparations for
+our spatial join. Before performing this operation, we will first need
+to identify all inconsistencies in the `region` and `country`
+designations between our three data sources.
+
+We will begin this process by investigating the differences between our
+university enrollment and dietary footprint data, first by examining the
+rows that exist in the former but not the latter and then by examining
+the rows that exist in the latter but not the former.
+
+``` r
+anti_join(dietary_footprint_data,university_enrollment_data,by="country")
+```
+
+    ## # A tibble: 35 × 46
+    ##    country       basel…¹ basel…² basel…³ basel…⁴ basel…⁵ meatl…⁶ meatl…⁷ meatl…⁸
+    ##    <chr>           <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
+    ##  1 Antigua and …   1310.   1400.  1.19e6  77859.  1.11e6   1642.   1740.  1.44e6
+    ##  2 Bahamas         1727.   1782.  1.03e6 154346.  8.73e5   1980.   2037.  1.15e6
+    ##  3 Bolivia (Plu…   2138.   2654.  2.63e6  62642.  2.56e6   2564.   3285.  3.19e6
+    ##  4 Solomon Isla…    650.    658.  6.53e5 130067.  5.23e5    905.    920.  8.71e5
+    ##  5 Central Afri…   2508.   2512.  1.16e6  61010.  1.10e6   3551.   3559.  1.51e6
+    ##  6 China, mainl…   1191.   1258.  8.37e5 135411.  7.02e5   1089.   1151.  7.87e5
+    ##  7 Congo            639.    678.  9.92e5  78014.  9.14e5    989.   1061.  1.34e6
+    ##  8 Dominica        1181.   1217.  2.37e6 105926.  2.26e6   1372.   1413.  2.14e6
+    ##  9 Egypt           1215.   1283.  1.09e6 565678.  5.23e5   1011.   1061.  8.37e5
+    ## 10 French Polyn…   1922.   1994.  1.05e6 114577.  9.32e5   1986.   2055.  1.06e6
+    ## # … with 25 more rows, 37 more variables: meatless_day_l_blue_wf_total <dbl>,
+    ## #   meatless_day_l_green_wf <dbl>, no_dairy_kg_co2e_excl_luc <dbl>,
+    ## #   no_dairy_kg_co2e_total <dbl>, no_dairy_l_blue_green_wf <dbl>,
+    ## #   no_dairy_l_blue_wf_total <dbl>, no_dairy_l_green_wf <dbl>,
+    ## #   low_red_meat_kg_co2e_excl_luc <dbl>, low_red_meat_kg_co2e_total <dbl>,
+    ## #   low_red_meat_l_blue_green_wf <dbl>, low_red_meat_l_blue_wf_total <dbl>,
+    ## #   low_red_meat_l_green_wf <dbl>, no_red_meat_kg_co2e_excl_luc <dbl>, …
+
+``` r
+anti_join(university_enrollment_data,dietary_footprint_data,by="country")
+```
+
+    ## # A tibble: 67 × 11
+    ## # Rowwise: 
+    ##    country       isced…¹ isced…² isced…³ isced…⁴ isced…⁵ isced…⁶ natpo…⁷ natpo…⁸
+    ##    <chr>           <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
+    ##  1 Andorra        5.54e2    2019      35    2019  2.35e1    2019  7.7 e4    2019
+    ##  2 Aruba          8.48e2    2016      55    2016  0            0  1.06e5    2019
+    ##  3 Bahrain        4.00e4    2019    4035    2019  2.68e2    2019  1.64e6    2019
+    ##  4 Bangladesh     2.92e6    2019  563065    2019  1.32e4    2018  1.63e8    2019
+    ##  5 Bhutan         1.04e4    2020     398    2020  0            0  7.63e5    2019
+    ##  6 Burundi        4.03e4    2018    1262    2018  3.07e2    2018  1.15e7    2019
+    ##  7 Chad           3.83e4    2015    2348    2015  1.95e2    2015  1.59e7    2019
+    ##  8 China          2.41e7    2019 2409068    2019  4.10e5    2019  1.40e9    2019
+    ##  9 Comoros        5.45e3    2014      87    2013  0            0  8.51e5    2019
+    ## 10 Congo, Dem. …  3.69e5    2016   93444    2016  2.07e3    2016  8.68e7    2019
+    ## # … with 57 more rows, 2 more variables: uni_enr_tot <dbl>, uni_enr_pop <dbl>,
+    ## #   and abbreviated variable names ¹​isced6_enr, ²​isced6_ref_yr, ³​isced7_enr,
+    ## #   ⁴​isced7_ref_yr, ⁵​isced8_enr, ⁶​isced8_ref_yr, ⁷​natpop_est, ⁸​natpop_ref_yr
+
+From these two lists, we will need to construct a systematized process
+for reconciling two types of cases: countries that need to be adjusted
+and countries that will be removed from our analysis.
+
+We will first identify the instances where there are differences in the
+naming conventions between the two countries.
+
+We will then identify the instances where there is data for the country
+in one data source but not the other.
 
 ## Writing the Final Data File
