@@ -909,37 +909,33 @@ included in the `university_enrollment_data` but not
 `dietary_footprint_data`.
 
 ``` r
-anti_join(dietary_footprint_data,university_enrollment_data,by="country")
+anti_join(dietary_footprint_data,university_enrollment_data,by="country") %>%
+  select(country)
 ```
 
-    ## # A tibble: 35 × 46
-    ##    country       basel…¹ basel…² basel…³ basel…⁴ basel…⁵ meatl…⁶ meatl…⁷ meatl…⁸
-    ##    <chr>           <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
-    ##  1 Antigua and …   1310.   1400.  1.19e6  77859.  1.11e6   1642.   1740.  1.44e6
-    ##  2 Bahamas         1727.   1782.  1.03e6 154346.  8.73e5   1980.   2037.  1.15e6
-    ##  3 Bolivia (Plu…   2138.   2654.  2.63e6  62642.  2.56e6   2564.   3285.  3.19e6
-    ##  4 Solomon Isla…    650.    658.  6.53e5 130067.  5.23e5    905.    920.  8.71e5
-    ##  5 Central Afri…   2508.   2512.  1.16e6  61010.  1.10e6   3551.   3559.  1.51e6
-    ##  6 China, mainl…   1191.   1258.  8.37e5 135411.  7.02e5   1089.   1151.  7.87e5
-    ##  7 Congo            639.    678.  9.92e5  78014.  9.14e5    989.   1061.  1.34e6
-    ##  8 Dominica        1181.   1217.  2.37e6 105926.  2.26e6   1372.   1413.  2.14e6
-    ##  9 Egypt           1215.   1283.  1.09e6 565678.  5.23e5   1011.   1061.  8.37e5
-    ## 10 French Polyn…   1922.   1994.  1.05e6 114577.  9.32e5   1986.   2055.  1.06e6
-    ## # … with 25 more rows, 37 more variables: meatless_day_l_blue_wf_total <dbl>,
-    ## #   meatless_day_l_green_wf <dbl>, no_dairy_kg_co2e_excl_luc <dbl>,
-    ## #   no_dairy_kg_co2e_total <dbl>, no_dairy_l_blue_green_wf <dbl>,
-    ## #   no_dairy_l_blue_wf_total <dbl>, no_dairy_l_green_wf <dbl>,
-    ## #   low_red_meat_kg_co2e_excl_luc <dbl>, low_red_meat_kg_co2e_total <dbl>,
-    ## #   low_red_meat_l_blue_green_wf <dbl>, low_red_meat_l_blue_wf_total <dbl>,
-    ## #   low_red_meat_l_green_wf <dbl>, no_red_meat_kg_co2e_excl_luc <dbl>, …
+    ## # A tibble: 35 × 1
+    ##    country                         
+    ##    <chr>                           
+    ##  1 Antigua and Barbuda             
+    ##  2 Bahamas                         
+    ##  3 Bolivia (Plurinational State of)
+    ##  4 Solomon Islands                 
+    ##  5 Central African Republic        
+    ##  6 China, mainland                 
+    ##  7 Congo                           
+    ##  8 Dominica                        
+    ##  9 Egypt                           
+    ## 10 French Polynesia                
+    ## # … with 25 more rows
 
-Of the 35 cases where there was an indexed country name appearing within
-`dietary_footprint_data` but not `university_enrollment_data`, there
-were x instances where the mismatch were due, simply, to differences in
-how countries were named. Said differently, this group of cases refers
-to countries that were included in both cleaned datasets, but were
-indexed under different names. Using how they were listed in
-`dietary_footprint_data`, we name each of these instances below (n=18):
+Of the 35 instances where there was an indexed country name appearing
+within `dietary_footprint_data` but not `university_enrollment_data`,
+there were 18 instances (n=18) where the mismatch was due, simply, to a
+difference in how the countries were indexed in their respective
+datasets. Said differently, these cases refer to countries that were
+included in both cleaned datasets, but were indexed under different
+names. Using how they were listed in `dietary_footprint_data`, we name
+each of these instances below:
 
 -   “China, mainland”
 -   “Congo”
@@ -960,7 +956,12 @@ indexed under different names. Using how they were listed in
 -   “Venezuela (Bolivarian Republic of)”
 -   “Yemen”
 
-Was in but removed (n=15):
+Another 15 cases (n=15) were a result of the countries previously being
+removed from the previously described cleaning procedure To be more
+precise, each of these instances resulted from there not being
+sufficient data for inclusion due to there being no available data for
+any of the eligible ISCED programs between 2000 and 2020. We list them
+below:
 
 -   “Antigua and Barbuda”
 -   “Bahamas”
@@ -978,36 +979,56 @@ Was in but removed (n=15):
 -   “Suriname”
 -   “Zambia”
 
-Option to supplement (n=2):
+Finally, the last two cases (n=2) refer to the designated countries that
+were indexed within the dietary footprint dataset but not the university
+enrollment data because the entities were simply not indexed by the data
+source. We list them below:
 
 -   “Bolivia (Plurinational State of)”
 -   “China, Taiwan Province of”
+
+The actionable steps from this evaluation reveal that we need to (1)
+find a standardized naming convention, ideally one that maps on to the
+shapefile data, for countries that are indexed under different names
+across data sources, and (2) make systematized decisions about whether
+to supplement the university enrollment data provided by EdStats for
+countries that were indexed within the dietary footprint data but not
+within EdStats.
+
+We will first change names according to how they are named in \[\[(TWEAK
+THIS) first get consistency THEN change to ISO \]\] before looking at
+the names indexed within the university enrollment data but not the
+dietary footprint data to mitigate the number of redundnat cases.
+
+To reduce the potential for confusion, we will change the names for all
+included countries in alignment with ISO 3166 and, to reduce the
+opportunity for confusion, we will also supply the corresponding ISO
+numeric code and the official state name.
 
 will need to make systematized decisions about whether to (a) supplement
 the data made available through the EdStats database with
 government-provided enrollment data or (b) remove the
 
 ``` r
-anti_join(university_enrollment_data,dietary_footprint_data,by="country")
+anti_join(university_enrollment_data,dietary_footprint_data,by="country") %>%
+  select(country)
 ```
 
-    ## # A tibble: 67 × 11
+    ## # A tibble: 67 × 1
     ## # Rowwise: 
-    ##    country       isced…¹ isced…² isced…³ isced…⁴ isced…⁵ isced…⁶ natpo…⁷ natpo…⁸
-    ##    <chr>           <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
-    ##  1 Andorra        5.54e2    2019      35    2019  2.35e1    2019  7.7 e4    2019
-    ##  2 Aruba          8.48e2    2016      55    2016  0            0  1.06e5    2019
-    ##  3 Bahrain        4.00e4    2019    4035    2019  2.68e2    2019  1.64e6    2019
-    ##  4 Bangladesh     2.92e6    2019  563065    2019  1.32e4    2018  1.63e8    2019
-    ##  5 Bhutan         1.04e4    2020     398    2020  0            0  7.63e5    2019
-    ##  6 Burundi        4.03e4    2018    1262    2018  3.07e2    2018  1.15e7    2019
-    ##  7 Chad           3.83e4    2015    2348    2015  1.95e2    2015  1.59e7    2019
-    ##  8 China          2.41e7    2019 2409068    2019  4.10e5    2019  1.40e9    2019
-    ##  9 Comoros        5.45e3    2014      87    2013  0            0  8.51e5    2019
-    ## 10 Congo, Dem. …  3.69e5    2016   93444    2016  2.07e3    2016  8.68e7    2019
-    ## # … with 57 more rows, 2 more variables: uni_enr_tot <dbl>, uni_enr_pop <dbl>,
-    ## #   and abbreviated variable names ¹​isced6_enr, ²​isced6_ref_yr, ³​isced7_enr,
-    ## #   ⁴​isced7_ref_yr, ⁵​isced8_enr, ⁶​isced8_ref_yr, ⁷​natpop_est, ⁸​natpop_ref_yr
+    ##    country         
+    ##    <chr>           
+    ##  1 Andorra         
+    ##  2 Aruba           
+    ##  3 Bahrain         
+    ##  4 Bangladesh      
+    ##  5 Bhutan          
+    ##  6 Burundi         
+    ##  7 Chad            
+    ##  8 China           
+    ##  9 Comoros         
+    ## 10 Congo, Dem. Rep.
+    ## # … with 57 more rows
 
 Of the 67 cases that fall into this first category, we will need to make
 systematized decisions about whether to (a) supplement the data made
