@@ -896,15 +896,17 @@ university_enrollment_data
 ## Spatially Joining Our Dietary Footprint and University Enrollment Data
 
 Now that both of our parent datasets are in formats that align with the
-needs of our shapefile data, we can begin the necessary preparations for
-our spatial join. Before performing this operation, we will first need
-to identify all inconsistencies in the `region` and `country`
-designations between our three data sources.
+needs of our analysis, we can begin the necessary preparations for our
+spatial join. Before performing this operation, we will first need to
+identify the inconsistencies in the `region` and `country` designations
+between our three data sources.
 
-We will begin this process by investigating the differences between our
-university enrollment and dietary footprint data, first by examining the
-rows that exist in the former but not the latter and then by examining
-the rows that exist in the latter but not the former.
+To accomplish this, we will begin by investigating the differences
+between our university enrollment and dietary footprint data, first by
+examining the countries included in `dietary_footprint_data` but not
+`university_enrollment_data` and then by examining the countries
+included in the `university_enrollment_data` but not
+`dietary_footprint_data`.
 
 ``` r
 anti_join(dietary_footprint_data,university_enrollment_data,by="country")
@@ -931,6 +933,60 @@ anti_join(dietary_footprint_data,university_enrollment_data,by="country")
     ## #   low_red_meat_l_blue_green_wf <dbl>, low_red_meat_l_blue_wf_total <dbl>,
     ## #   low_red_meat_l_green_wf <dbl>, no_red_meat_kg_co2e_excl_luc <dbl>, …
 
+Of the 35 cases where there was an indexed country name appearing within
+`dietary_footprint_data` but not `university_enrollment_data`, there
+were x instances where the mismatch were due, simply, to differences in
+how countries were named. Said differently, this group of cases refers
+to countries that were included in both cleaned datasets, but were
+indexed under different names. Using how they were listed in
+`dietary_footprint_data`, we name each of these instances below (n=18):
+
+-   “China, mainland”
+-   “Congo”
+-   “Egypt”
+-   “China, Hong Kong SAR”
+-   “Iran (Islamic Republic of)”
+-   “CÃ´te d’Ivoire”
+-   “Kyrgyzstan”
+-   “Republic of Korea”
+-   “China, Macao SAR”
+-   “Republic of Moldova”
+-   “New Caledonia”
+-   “The former Yugoslav Republic of Macedonia”
+-   “Czechia”
+-   “Slovakia”
+-   “United Republic of Tanzania”
+-   “United States of America”
+-   “Venezuela (Bolivarian Republic of)”
+-   “Yemen”
+
+Was in but removed (n=15):
+
+-   “Antigua and Barbuda”
+-   “Bahamas”
+-   “Solomon Islands”
+-   “Central African Republic”
+-   “Dominica”
+-   “French Polynesia”
+-   “Gambia”
+-   “Kiribati”
+-   “Guyana”
+-   “Vanuatu”
+-   “Nicaragua”
+-   “Paraguay”
+-   “Sao Tome and Principe”
+-   “Suriname”
+-   “Zambia”
+
+Option to supplement (n=2):
+
+-   “Bolivia (Plurinational State of)”
+-   “China, Taiwan Province of”
+
+will need to make systematized decisions about whether to (a) supplement
+the data made available through the EdStats database with
+government-provided enrollment data or (b) remove the
+
 ``` r
 anti_join(university_enrollment_data,dietary_footprint_data,by="country")
 ```
@@ -952,6 +1008,11 @@ anti_join(university_enrollment_data,dietary_footprint_data,by="country")
     ## # … with 57 more rows, 2 more variables: uni_enr_tot <dbl>, uni_enr_pop <dbl>,
     ## #   and abbreviated variable names ¹​isced6_enr, ²​isced6_ref_yr, ³​isced7_enr,
     ## #   ⁴​isced7_ref_yr, ⁵​isced8_enr, ⁶​isced8_ref_yr, ⁷​natpop_est, ⁸​natpop_ref_yr
+
+Of the 67 cases that fall into this first category, we will need to make
+systematized decisions about whether to (a) supplement the data made
+available through the EdStats database with government-provided
+enrollment data or (b) remove the
 
 From these two lists, we will need to construct a systematized process
 for reconciling two types of cases: countries that need to be adjusted
