@@ -757,6 +757,7 @@ designations:
 -   “Europe & Central Asia (IDA & IBRD countries)”
 -   “European Union”
 -   “Fragile and conflict affected situations”
+-   “Global Partnership for Education”
 -   “Heavily indebted poor countries (HIPC)”
 -   “High income”
 -   “IBRD only”
@@ -784,8 +785,9 @@ designations:
 -   “Pre-demographic dividend”
 -   “Small states”
 -   “South Asia”
--   “South Asia (IDA & IBRD)”
+-   “South Asia (IDA & IBR countries)”
 -   “Sub-Saharan Africa”
+-   “Sub-Saharan Africa (IDA & IBRD countries)”
 -   “Sub-Saharan Africa (excluding high income)”
 -   “Upper middle income”
 -   “World”
@@ -816,11 +818,11 @@ university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-din
   rowwise() %>%
   filter(!isced6_ref_yr+isced7_ref_yr+isced8_ref_yr==0) %>%
   select(country,isced6_enr,isced6_ref_yr,isced7_enr,isced7_ref_yr,isced8_enr,isced8_ref_yr,natpop_est,natpop_ref_yr) %>%
-  filter_at(vars(country),all_vars(!. %in% c("Arab World","Caribbean small states","Central Europe and the Baltics","Early-demographic dividend","East Asia & Pacific","East Asia & Pacific (excluding high income)","East Asia & Pacific (IDA & IBRD countries","Euro area","Europe & Central Asia","Europe & Central Asia (excluding high income)","Europe & Central Asia (IDA & IBRD countries)","European Union","Fragile and conflict affected situations","Heavily indebted poor countries (HIPC)","High income","IBRD only","IDA & IBRD total","IDA blend","IDA only","IDA total","Late-demographic dividend","Latin America & Caribbean","Latin America & Caribbean (excluding high income)","Latin America & the Caribbean (IDA & IBRD countries)","Least developed countries: UN classification","Low & middle income","Low income","Lower middle income","Middle East & North Africa","Middle East & North Africa (excluding high income)","Middle East & North Africa (IDA & IBRD countries)","Middle income","North America","OECD members","Other small states","Pacific island small states","Post-demographic dividend","Pre-demographic dividend","Small states","South Asia","South Asia (IDA & IBRD)","Sub-Saharan Africa","Sub-Saharan Africa (excluding high income)","Upper middle income","World")))
+  filter_at(vars(country),all_vars(!. %in% c("Arab World","Caribbean small states","Central Europe and the Baltics","Early-demographic dividend","East Asia & Pacific","East Asia & Pacific (excluding high income)","East Asia & Pacific (IDA & IBRD countries)","Euro area","Europe & Central Asia","Europe & Central Asia (excluding high income)","Europe & Central Asia (IDA & IBRD countries)","European Union","Fragile and conflict affected situations","Global Partnership for Education","Heavily indebted poor countries (HIPC)","High income","IBRD only","IDA & IBRD total","IDA blend","IDA only","IDA total","Late-demographic dividend","Latin America & Caribbean","Latin America & Caribbean (excluding high income)","Latin America & the Caribbean (IDA & IBRD countries)","Least developed countries: UN classification","Low & middle income","Low income","Lower middle income","Middle East & North Africa","Middle East & North Africa (excluding high income)","Middle East & North Africa (IDA & IBRD countries)","Middle income","North America","OECD members","Other small states","Pacific island small states","Post-demographic dividend","Pre-demographic dividend","Small states","South Asia","South Asia (IDA & IBRD)","Sub-Saharan Africa","Sub-Saharan Africa (excluding high income)","Sub-Saharan Africa (IDA & IBRD countries)","Upper middle income","World")))
 university_enrollment_data 
 ```
 
-    ## # A tibble: 172 × 9
+    ## # A tibble: 169 × 9
     ## # Rowwise: 
     ##    country     isced6_…¹ isced…² isced…³ isced…⁴ isced…⁵ isced…⁶ natpo…⁷ natpo…⁸
     ##    <chr>           <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
@@ -834,7 +836,7 @@ university_enrollment_data
     ##  8 Australia     999034     2018 304632     2018 56110      2018  2.53e7    2019
     ##  9 Austria       199236.    2018 135346.    2018 20396.     2018  8.86e6    2019
     ## 10 Azerbaijan    160631     2019  20954     2019  2626      2019  1.00e7    2019
-    ## # … with 162 more rows, and abbreviated variable names ¹​isced6_enr,
+    ## # … with 159 more rows, and abbreviated variable names ¹​isced6_enr,
     ## #   ²​isced6_ref_yr, ³​isced7_enr, ⁴​isced7_ref_yr, ⁵​isced8_enr, ⁶​isced8_ref_yr,
     ## #   ⁷​natpop_est, ⁸​natpop_ref_yr
 
@@ -869,13 +871,13 @@ university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-din
   rowwise() %>%
   filter(!isced6_ref_yr+isced7_ref_yr+isced8_ref_yr==0) %>%
   select(country,isced6_enr,isced6_ref_yr,isced7_enr,isced7_ref_yr,isced8_enr,isced8_ref_yr,natpop_est,natpop_ref_yr) %>%
-  filter_at(vars(country),all_vars(!. %in% c("Arab World","Caribbean small states","Central Europe and the Baltics","Early-demographic dividend","East Asia & Pacific","East Asia & Pacific (excluding high income)","East Asia & Pacific (IDA & IBRD countries","Euro area","Europe & Central Asia","Europe & Central Asia (excluding high income)","Europe & Central Asia (IDA & IBRD countries)","European Union","Fragile and conflict affected situations","Heavily indebted poor countries (HIPC)","High income","IBRD only","IDA & IBRD total","IDA blend","IDA only","IDA total","Late-demographic dividend","Latin America & Caribbean","Latin America & Caribbean (excluding high income)","Latin America & the Caribbean (IDA & IBRD countries)","Least developed countries: UN classification","Low & middle income","Low income","Lower middle income","Middle East & North Africa","Middle East & North Africa (excluding high income)","Middle East & North Africa (IDA & IBRD countries)","Middle income","North America","OECD members","Other small states","Pacific island small states","Post-demographic dividend","Pre-demographic dividend","Small states","South Asia","South Asia (IDA & IBRD)","Sub-Saharan Africa","Sub-Saharan Africa (excluding high income)","Upper middle income","World"))) %>%
+  filter_at(vars(country),all_vars(!. %in% c("Arab World","Caribbean small states","Central Europe and the Baltics","Early-demographic dividend","East Asia & Pacific","East Asia & Pacific (excluding high income)","East Asia & Pacific (IDA & IBRD countries)","Euro area","Europe & Central Asia","Europe & Central Asia (excluding high income)","Europe & Central Asia (IDA & IBRD countries)","European Union","Fragile and conflict affected situations","Global Partnership for Education","Heavily indebted poor countries (HIPC)","High income","IBRD only","IDA & IBRD total","IDA blend","IDA only","IDA total","Late-demographic dividend","Latin America & Caribbean","Latin America & Caribbean (excluding high income)","Latin America & the Caribbean (IDA & IBRD countries)","Least developed countries: UN classification","Low & middle income","Low income","Lower middle income","Middle East & North Africa","Middle East & North Africa (excluding high income)","Middle East & North Africa (IDA & IBRD countries)","Middle income","North America","OECD members","Other small states","Pacific island small states","Post-demographic dividend","Pre-demographic dividend","Small states","South Asia","South Asia (IDA & IBRD)","Sub-Saharan Africa","Sub-Saharan Africa (excluding high income)","Sub-Saharan Africa (IDA & IBRD countries)","Upper middle income","World"))) %>%
   mutate(uni_enr_tot=isced6_enr+isced7_enr+isced8_enr) %>%
   mutate(uni_enr_pop=uni_enr_tot/natpop_est)
 university_enrollment_data 
 ```
 
-    ## # A tibble: 172 × 11
+    ## # A tibble: 169 × 11
     ## # Rowwise: 
     ##    country     isced6_…¹ isced…² isced…³ isced…⁴ isced…⁵ isced…⁶ natpo…⁷ natpo…⁸
     ##    <chr>           <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
@@ -889,7 +891,7 @@ university_enrollment_data
     ##  8 Australia     999034     2018 304632     2018 56110      2018  2.53e7    2019
     ##  9 Austria       199236.    2018 135346.    2018 20396.     2018  8.86e6    2019
     ## 10 Azerbaijan    160631     2019  20954     2019  2626      2019  1.00e7    2019
-    ## # … with 162 more rows, 2 more variables: uni_enr_tot <dbl>, uni_enr_pop <dbl>,
+    ## # … with 159 more rows, 2 more variables: uni_enr_tot <dbl>, uni_enr_pop <dbl>,
     ## #   and abbreviated variable names ¹​isced6_enr, ²​isced6_ref_yr, ³​isced7_enr,
     ## #   ⁴​isced7_ref_yr, ⁵​isced8_enr, ⁶​isced8_ref_yr, ⁷​natpop_est, ⁸​natpop_ref_yr
 
@@ -947,7 +949,6 @@ each of these instances below:
 -   “Republic of Korea”
 -   “China, Macao SAR”
 -   “Republic of Moldova”
--   “New Caledonia”
 -   “The former Yugoslav Republic of Macedonia”
 -   “Czechia”
 -   “Slovakia”
@@ -974,6 +975,7 @@ below:
 -   “Kiribati”
 -   “Guyana”
 -   “Vanuatu”
+-   “New Caledonia”
 -   “Nicaragua”
 -   “Paraguay”
 -   “Sao Tome and Principe”
@@ -1033,14 +1035,14 @@ university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-din
   rowwise() %>%
   filter(!isced6_ref_yr+isced7_ref_yr+isced8_ref_yr==0) %>%
   select(country,isced6_enr,isced6_ref_yr,isced7_enr,isced7_ref_yr,isced8_enr,isced8_ref_yr,natpop_est,natpop_ref_yr) %>%
-  filter_at(vars(country),all_vars(!. %in% c("Arab World","Caribbean small states","Central Europe and the Baltics","Early-demographic dividend","East Asia & Pacific","East Asia & Pacific (excluding high income)","East Asia & Pacific (IDA & IBRD countries","Euro area","Europe & Central Asia","Europe & Central Asia (excluding high income)","Europe & Central Asia (IDA & IBRD countries)","European Union","Fragile and conflict affected situations","Heavily indebted poor countries (HIPC)","High income","IBRD only","IDA & IBRD total","IDA blend","IDA only","IDA total","Late-demographic dividend","Latin America & Caribbean","Latin America & Caribbean (excluding high income)","Latin America & the Caribbean (IDA & IBRD countries)","Least developed countries: UN classification","Low & middle income","Low income","Lower middle income","Middle East & North Africa","Middle East & North Africa (excluding high income)","Middle East & North Africa (IDA & IBRD countries)","Middle income","North America","OECD members","Other small states","Pacific island small states","Post-demographic dividend","Pre-demographic dividend","Small states","South Asia","South Asia (IDA & IBRD)","Sub-Saharan Africa","Sub-Saharan Africa (excluding high income)","Upper middle income","World"))) %>%
+  filter_at(vars(country),all_vars(!. %in% c("Arab World","Caribbean small states","Central Europe and the Baltics","Early-demographic dividend","East Asia & Pacific","East Asia & Pacific (excluding high income)","East Asia & Pacific (IDA & IBRD countries)","Euro area","Europe & Central Asia","Europe & Central Asia (excluding high income)","Europe & Central Asia (IDA & IBRD countries)","European Union","Fragile and conflict affected situations","Global Partnership for Education","Heavily indebted poor countries (HIPC)","High income","IBRD only","IDA & IBRD total","IDA blend","IDA only","IDA total","Late-demographic dividend","Latin America & Caribbean","Latin America & Caribbean (excluding high income)","Latin America & the Caribbean (IDA & IBRD countries)","Least developed countries: UN classification","Low & middle income","Low income","Lower middle income","Middle East & North Africa","Middle East & North Africa (excluding high income)","Middle East & North Africa (IDA & IBRD countries)","Middle income","North America","OECD members","Other small states","Pacific island small states","Post-demographic dividend","Pre-demographic dividend","Small states","South Asia","South Asia (IDA & IBRD)","Sub-Saharan Africa","Sub-Saharan Africa (excluding high income)","Sub-Saharan Africa (IDA & IBRD countries)","Upper middle income","World"))) %>%
   mutate(uni_enr_tot=isced6_enr+isced7_enr+isced8_enr) %>%
-  mutate(uni_enr_prop=uni_enr_tot/natpop_est) %>%
-  add_row(tibble_row(country="Taiwan, Province of",isced6_enr=985144,isced6_ref_yr=2021,isced7_enr=171779,isced7_ref_yr=2021,isced8_enr=28907,isced8_ref_yr=2021,natpop_est=23186278,natpop_ref_yr=2022,uni_enr_tot=1185830,uni_enr_prop=0.05114361175),.before=1)
-university_enrollment_data 
+  mutate(uni_enr_prop=uni_enr_tot/natpop_est) 
+university_enrollment_data %>%
+  add_row(tibble_row(country="Taiwan, Province of",isced6_enr=985144,isced6_ref_yr=2021,isced7_enr=171779,isced7_ref_yr=2021,isced8_enr=28907,isced8_ref_yr=2021,natpop_est=23186278,natpop_ref_yr=2022,uni_enr_tot=1185830,uni_enr_prop=0.05114361175),.before=1) 
 ```
 
-    ## # A tibble: 173 × 11
+    ## # A tibble: 170 × 11
     ## # Rowwise: 
     ##    country       isced…¹ isced…² isced…³ isced…⁴ isced…⁵ isced…⁶ natpo…⁷ natpo…⁸
     ##    <chr>           <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
@@ -1054,18 +1056,239 @@ university_enrollment_data
     ##  8 Aruba          8.48e2    2016     55     2016     0         0  1.06e5    2019
     ##  9 Australia      9.99e5    2018 304632     2018 56110      2018  2.53e7    2019
     ## 10 Austria        1.99e5    2018 135346.    2018 20396.     2018  8.86e6    2019
-    ## # … with 163 more rows, 2 more variables: uni_enr_tot <dbl>,
+    ## # … with 160 more rows, 2 more variables: uni_enr_tot <dbl>,
     ## #   uni_enr_prop <dbl>, and abbreviated variable names ¹​isced6_enr,
     ## #   ²​isced6_ref_yr, ³​isced7_enr, ⁴​isced7_ref_yr, ⁵​isced8_enr, ⁶​isced8_ref_yr,
     ## #   ⁷​natpop_est, ⁸​natpop_ref_yr
 
-isced6_enr=985144,isced6_ref_yr=2021,isced7_enr=171779,isced7_ref_yr=2021,isced8_enr=28907,isced8_ref_yr=2021,natpop_est=23186278,natpop_ref_yr=2022))
-%\>%
+Next, we will address the first set of cases, where there were
+differences in how the country was named across
+`university_enrollment_data` and `dietary_footprint_data`. While we will
+eventually add columns that correspond to each country’s official state
+name, ISO code, and ISO name, we will first change how the name appears
+in the university enrollment dataset so that it aligns with how it
+appears in our dietary footprint data in preparation for performing the
+inverse evaluation (i.e., which country names appear in the university
+enrollment dataset but not the dietary footprint dataset). The only
+exception to this will be the conversion from `China` to
+`China, mainland`, given how “China” can be found inside of some of the
+planned string replacements (e.g., China, Hong Kong SAR and China, Macao
+SAR).
 
-We will first change names according to how they are named in \[\[(TWEAK
-THIS) first get consistency THEN change to ISO \]\] before looking at
-the names indexed within the university enrollment data but not the
-dietary footprint data to mitigate the number of redundnat cases.
+``` r
+university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/university_enrollment_data.csv") %>%
+  select(-Country.Code,-Series.Code) %>%
+  as_tibble(university_enrollment_data) %>%
+  slice(1:(n()-5)) %>%
+  rename(country=Country.Name,series=Series,yr2000=YR2000,yr2001=YR2001,yr2002=YR2002,yr2003=YR2003,yr2004=YR2004,yr2005=YR2005,yr2006=YR2006,yr2007=YR2007,yr2008=YR2008,yr2009=YR2009,yr2010=YR2010,yr2011=YR2011,yr2012=YR2012,yr2013=YR2013,yr2014=YR2014,yr2015=YR2015,yr2016=YR2016,yr2017=YR2017,yr2018=YR2018,yr2019=YR2019,yr2020=YR2020) %>%
+  mutate_at(c("yr2000","yr2001","yr2002","yr2003","yr2004","yr2005","yr2006","yr2007","yr2008","yr2009","yr2010","yr2011","yr2012","yr2013","yr2014","yr2015","yr2016","yr2017","yr2018","yr2019","yr2020"),as.double) %>%
+  replace(is.na(.),0) %>%
+  distinct() %>%
+  mutate(across("series",str_replace, fixed("Enrolment in tertiary education, ISCED 6 programmes, both sexes (number)"),"isced6_enr")) %>%
+  mutate(across("series",str_replace, fixed("Enrolment in tertiary education, ISCED 7 programmes, both sexes (number)"),"isced7_enr")) %>%
+  mutate(across("series",str_replace, fixed("Enrolment in tertiary education, ISCED 8 programmes, both sexes (number)"),"isced8_enr")) %>%
+  mutate(across("series",str_replace, fixed("Population, total"),"nat_pop")) %>%
+  pivot_wider(names_from="series",
+              values_from=c("yr2020","yr2019","yr2018","yr2017","yr2016","yr2015","yr2014","yr2013","yr2012","yr2011","yr2010","yr2009","yr2008","yr2007","yr2006","yr2005","yr2004","yr2003","yr2002","yr2001","yr2000")) %>%
+  mutate(isced6_ref_yr=ifelse(yr2020_isced6_enr>0,2020,ifelse(yr2019_isced6_enr>0,2019,ifelse(yr2018_isced6_enr>0,2018,ifelse(yr2017_isced6_enr>0,2017,ifelse(yr2016_isced6_enr>0,2016,ifelse(yr2015_isced6_enr>0,2015,ifelse(yr2014_isced6_enr>0,2014,ifelse(yr2013_isced6_enr>0,2013,ifelse(yr2012_isced6_enr>0,2012,ifelse(yr2011_isced6_enr>0,2011,ifelse(yr2010_isced6_enr>0,2010,ifelse(yr2009_isced6_enr>0,2009,ifelse(yr2008_isced6_enr>0,2008,ifelse(yr2007_isced6_enr>0,2007,ifelse(yr2006_isced6_enr>0,2006,ifelse(yr2005_isced6_enr>0,2005,ifelse(yr2004_isced6_enr>0,2004,ifelse(yr2003_isced6_enr>0,2003,ifelse(yr2002_isced6_enr>0,2002,ifelse(yr2001_isced6_enr>0,2001,ifelse(yr2000_isced6_enr>0,2000,0)))))))))))))))))))))) %>%
+  mutate(isced7_ref_yr=ifelse(yr2020_isced7_enr>0,2020,ifelse(yr2019_isced7_enr>0,2019,ifelse(yr2018_isced7_enr>0,2018,ifelse(yr2017_isced7_enr>0,2017,ifelse(yr2016_isced7_enr>0,2016,ifelse(yr2015_isced7_enr>0,2015,ifelse(yr2014_isced7_enr>0,2014,ifelse(yr2013_isced7_enr>0,2013,ifelse(yr2012_isced7_enr>0,2012,ifelse(yr2011_isced7_enr>0,2011,ifelse(yr2010_isced7_enr>0,2010,ifelse(yr2009_isced7_enr>0,2009,ifelse(yr2008_isced7_enr>0,2008,ifelse(yr2007_isced7_enr>0,2007,ifelse(yr2006_isced7_enr>0,2006,ifelse(yr2005_isced7_enr>0,2005,ifelse(yr2004_isced7_enr>0,2004,ifelse(yr2003_isced7_enr>0,2003,ifelse(yr2002_isced7_enr>0,2002,ifelse(yr2001_isced7_enr>0,2001,ifelse(yr2000_isced7_enr>0,2000,0)))))))))))))))))))))) %>%
+  mutate(isced8_ref_yr=ifelse(yr2020_isced8_enr>0,2020,ifelse(yr2019_isced8_enr>0,2019,ifelse(yr2018_isced8_enr>0,2018,ifelse(yr2017_isced8_enr>0,2017,ifelse(yr2016_isced8_enr>0,2016,ifelse(yr2015_isced8_enr>0,2015,ifelse(yr2014_isced8_enr>0,2014,ifelse(yr2013_isced8_enr>0,2013,ifelse(yr2012_isced8_enr>0,2012,ifelse(yr2011_isced8_enr>0,2011,ifelse(yr2010_isced8_enr>0,2010,ifelse(yr2009_isced8_enr>0,2009,ifelse(yr2008_isced8_enr>0,2008,ifelse(yr2007_isced8_enr>0,2007,ifelse(yr2006_isced8_enr>0,2006,ifelse(yr2005_isced8_enr>0,2005,ifelse(yr2004_isced8_enr>0,2004,ifelse(yr2003_isced8_enr>0,2003,ifelse(yr2002_isced8_enr>0,2002,ifelse(yr2001_isced8_enr>0,2001,ifelse(yr2000_isced8_enr>0,2000,0)))))))))))))))))))))) %>%
+  mutate(natpop_ref_yr=ifelse(yr2020_nat_pop>0,2020,ifelse(yr2019_nat_pop>0,2019,ifelse(yr2018_nat_pop>0,2018,ifelse(yr2017_nat_pop>0,2017,ifelse(yr2016_nat_pop>0,2016,ifelse(yr2015_nat_pop>0,2015,ifelse(yr2014_nat_pop>0,2014,ifelse(yr2013_nat_pop>0,2013,ifelse(yr2012_nat_pop>0,2012,ifelse(yr2011_nat_pop>0,2011,ifelse(yr2010_nat_pop>0,2010,ifelse(yr2009_nat_pop>0,2009,ifelse(yr2008_nat_pop>0,2008,ifelse(yr2007_nat_pop>0,2007,ifelse(yr2006_nat_pop>0,2006,ifelse(yr2005_nat_pop>0,2005,ifelse(yr2004_nat_pop>0,2004,ifelse(yr2003_nat_pop>0,2003,ifelse(yr2002_nat_pop>0,2002,ifelse(yr2001_nat_pop>0,2001,ifelse(yr2000_nat_pop>0,2000,0)))))))))))))))))))))) %>%
+  mutate(isced6_enr=ifelse(yr2020_isced6_enr>0,yr2020_isced6_enr,ifelse(yr2019_isced6_enr>0,yr2019_isced6_enr,ifelse(yr2018_isced6_enr>0,yr2018_isced6_enr,ifelse(yr2017_isced6_enr>0,yr2017_isced6_enr,ifelse(yr2016_isced6_enr>0,yr2016_isced6_enr,ifelse(yr2015_isced6_enr>0,yr2015_isced6_enr,ifelse(yr2014_isced6_enr>0,yr2014_isced6_enr,ifelse(yr2013_isced6_enr>0,yr2013_isced6_enr,ifelse(yr2012_isced6_enr>0,yr2012_isced6_enr,ifelse(yr2011_isced6_enr>0,yr2011_isced6_enr,ifelse(yr2010_isced6_enr>0,yr2010_isced6_enr,ifelse(yr2009_isced6_enr>0,yr2009_isced6_enr,ifelse(yr2008_isced6_enr>0,yr2008_isced6_enr,ifelse(yr2007_isced6_enr>0,yr2007_isced6_enr,ifelse(yr2006_isced6_enr>0,yr2006_isced6_enr,ifelse(yr2005_isced6_enr>0,yr2005_isced6_enr,ifelse(yr2004_isced6_enr>0,yr2004_isced6_enr,ifelse(yr2003_isced6_enr>0,yr2003_isced6_enr,ifelse(yr2002_isced6_enr>0,yr2002_isced6_enr,ifelse(yr2001_isced6_enr>0,yr2001_isced6_enr,ifelse(yr2000_isced6_enr>0,yr2000_isced6_enr,0)))))))))))))))))))))) %>%
+  mutate(isced7_enr=ifelse(yr2020_isced7_enr>0,yr2020_isced7_enr,ifelse(yr2019_isced7_enr>0,yr2019_isced7_enr,ifelse(yr2018_isced7_enr>0,yr2018_isced7_enr,ifelse(yr2017_isced7_enr>0,yr2017_isced7_enr,ifelse(yr2016_isced7_enr>0,yr2016_isced7_enr,ifelse(yr2015_isced7_enr>0,yr2015_isced7_enr,ifelse(yr2014_isced7_enr>0,yr2014_isced7_enr,ifelse(yr2013_isced7_enr>0,yr2013_isced7_enr,ifelse(yr2012_isced7_enr>0,yr2012_isced7_enr,ifelse(yr2011_isced7_enr>0,yr2011_isced7_enr,ifelse(yr2010_isced7_enr>0,yr2010_isced7_enr,ifelse(yr2009_isced7_enr>0,yr2009_isced7_enr,ifelse(yr2008_isced7_enr>0,yr2008_isced7_enr,ifelse(yr2007_isced7_enr>0,yr2007_isced7_enr,ifelse(yr2006_isced7_enr>0,yr2006_isced7_enr,ifelse(yr2005_isced7_enr>0,yr2005_isced7_enr,ifelse(yr2004_isced7_enr>0,yr2004_isced7_enr,ifelse(yr2003_isced7_enr>0,yr2003_isced7_enr,ifelse(yr2002_isced7_enr>0,yr2002_isced7_enr,ifelse(yr2001_isced7_enr>0,yr2001_isced7_enr,ifelse(yr2000_isced7_enr>0,yr2000_isced7_enr,0)))))))))))))))))))))) %>%
+  mutate(isced8_enr=ifelse(yr2020_isced8_enr>0,yr2020_isced8_enr,ifelse(yr2019_isced8_enr>0,yr2019_isced8_enr,ifelse(yr2018_isced8_enr>0,yr2018_isced8_enr,ifelse(yr2017_isced8_enr>0,yr2017_isced8_enr,ifelse(yr2016_isced8_enr>0,yr2016_isced8_enr,ifelse(yr2015_isced8_enr>0,yr2015_isced8_enr,ifelse(yr2014_isced8_enr>0,yr2014_isced8_enr,ifelse(yr2013_isced8_enr>0,yr2013_isced8_enr,ifelse(yr2012_isced8_enr>0,yr2012_isced8_enr,ifelse(yr2011_isced8_enr>0,yr2011_isced8_enr,ifelse(yr2010_isced8_enr>0,yr2010_isced8_enr,ifelse(yr2009_isced8_enr>0,yr2009_isced8_enr,ifelse(yr2008_isced8_enr>0,yr2008_isced8_enr,ifelse(yr2007_isced8_enr>0,yr2007_isced8_enr,ifelse(yr2006_isced8_enr>0,yr2006_isced8_enr,ifelse(yr2005_isced8_enr>0,yr2005_isced8_enr,ifelse(yr2004_isced8_enr>0,yr2004_isced8_enr,ifelse(yr2003_isced8_enr>0,yr2003_isced8_enr,ifelse(yr2002_isced8_enr>0,yr2002_isced8_enr,ifelse(yr2001_isced8_enr>0,yr2001_isced8_enr,ifelse(yr2000_isced8_enr>0,yr2000_isced8_enr,0)))))))))))))))))))))) %>%
+   mutate(natpop_est=ifelse(yr2020_nat_pop>0,yr2020_nat_pop,ifelse(yr2019_nat_pop>0,yr2019_nat_pop,ifelse(yr2018_nat_pop>0,yr2018_nat_pop,ifelse(yr2017_nat_pop>0,yr2017_nat_pop,ifelse(yr2016_nat_pop>0,yr2016_nat_pop,ifelse(yr2015_nat_pop>0,yr2015_nat_pop,ifelse(yr2014_nat_pop>0,yr2014_nat_pop,ifelse(yr2013_nat_pop>0,yr2013_nat_pop,ifelse(yr2012_nat_pop>0,yr2012_nat_pop,ifelse(yr2011_nat_pop>0,yr2011_nat_pop,ifelse(yr2010_nat_pop>0,yr2010_nat_pop,ifelse(yr2009_nat_pop>0,yr2009_nat_pop,ifelse(yr2008_nat_pop>0,yr2008_nat_pop,ifelse(yr2007_nat_pop>0,yr2007_nat_pop,ifelse(yr2006_nat_pop>0,yr2006_nat_pop,ifelse(yr2005_nat_pop>0,yr2005_nat_pop,ifelse(yr2004_nat_pop>0,yr2004_nat_pop,ifelse(yr2003_nat_pop>0,yr2003_nat_pop,ifelse(yr2002_nat_pop>0,yr2002_nat_pop,ifelse(yr2001_nat_pop>0,yr2001_nat_pop,ifelse(yr2000_nat_pop>0,yr2000_nat_pop,0)))))))))))))))))))))) %>%
+  rowwise() %>%
+  filter(!isced6_ref_yr+isced7_ref_yr+isced8_ref_yr==0) %>%
+  select(country,isced6_enr,isced6_ref_yr,isced7_enr,isced7_ref_yr,isced8_enr,isced8_ref_yr,natpop_est,natpop_ref_yr) %>%
+  filter_at(vars(country),all_vars(!. %in% c("Arab World","Caribbean small states","Central Europe and the Baltics","Early-demographic dividend","East Asia & Pacific","East Asia & Pacific (excluding high income)","East Asia & Pacific (IDA & IBRD countries)","Euro area","Europe & Central Asia","Europe & Central Asia (excluding high income)","Europe & Central Asia (IDA & IBRD countries)","European Union","Fragile and conflict affected situations","Global Partnership for Education","Heavily indebted poor countries (HIPC)","High income","IBRD only","IDA & IBRD total","IDA blend","IDA only","IDA total","Late-demographic dividend","Latin America & Caribbean","Latin America & Caribbean (excluding high income)","Latin America & the Caribbean (IDA & IBRD countries)","Least developed countries: UN classification","Low & middle income","Low income","Lower middle income","Middle East & North Africa","Middle East & North Africa (excluding high income)","Middle East & North Africa (IDA & IBRD countries)","Middle income","North America","OECD members","Other small states","Pacific island small states","Post-demographic dividend","Pre-demographic dividend","Small states","South Asia","South Asia (IDA & IBRD)","Sub-Saharan Africa","Sub-Saharan Africa (excluding high income)","Sub-Saharan Africa (IDA & IBRD countries)","Upper middle income","World"))) %>%
+  mutate(uni_enr_tot=isced6_enr+isced7_enr+isced8_enr) %>%
+  mutate(uni_enr_prop=uni_enr_tot/natpop_est) %>%
+  mutate(across(country,str_replace,"Congo, Dem. Rep.","Congo")) %>%
+  mutate(across(country,str_replace,"Egypt, Arab Rep.","Egypt")) %>%
+  mutate(across(country,str_replace,"Hong Kong SAR, China","China, Hong Kong SAR")) %>%
+  mutate(across(country,str_replace,"Iran, Islamic Rep.","Iran (Islamic Republic of)")) %>%
+  mutate(across(country,str_replace,"Cote d'Ivoire","CÃ´te d’Ivoire")) %>%
+  mutate(across(country,str_replace,"Kyrgyz Republic","Kyrgyzstan")) %>%
+  mutate(across(country,str_replace,"Korea, Rep.","Republic of Korea")) %>%
+  mutate(across(country,str_replace,"Macao SAR, China","China, Macao SAR")) %>%
+  mutate(across(country,str_replace,"Moldova","Republic of Moldova")) %>%
+  mutate(across(country,str_replace,"North Macedonia","The former Yugoslav Republic of Macedonia")) %>%
+  mutate(across(country,str_replace,"Czech Republic","Czechia")) %>%
+  mutate(across(country,str_replace,"Slovak Republic","Slovakia")) %>%
+  mutate(across(country,str_replace,"Tanzania","United Republic of Tanzania")) %>%
+  mutate(across(country,str_replace,"United States","United States of America")) %>%
+  mutate(across(country,str_replace,"Venezuela, RB","Venezuela (Bolivarian Republic of)")) %>%
+  mutate(across(country,str_replace,"Yemen, Rep.","Yemen")) 
+university_enrollment_data %>%
+  add_row(tibble_row(country="Taiwan, Province of",isced6_enr=985144,isced6_ref_yr=2021,isced7_enr=171779,isced7_ref_yr=2021,isced8_enr=28907,isced8_ref_yr=2021,natpop_est=23186278,natpop_ref_yr=2022,uni_enr_tot=1185830,uni_enr_prop=0.05114361175),.before=1) 
+```
+
+    ## # A tibble: 170 × 11
+    ## # Rowwise: 
+    ##    country       isced…¹ isced…² isced…³ isced…⁴ isced…⁵ isced…⁶ natpo…⁷ natpo…⁸
+    ##    <chr>           <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
+    ##  1 Taiwan, Prov…  9.85e5    2021 171779     2021 28907      2021  2.32e7    2022
+    ##  2 Afghanistan    3.66e5    2018   4600     2018    28      2018  3.80e7    2019
+    ##  3 Albania        8.92e4    2019  43749     2019  1865      2019  2.87e6    2019
+    ##  4 Algeria        9.96e5    2018      0        0     0         0  4.31e7    2019
+    ##  5 Andorra        5.54e2    2019     35     2019    23.5    2019  7.7 e4    2019
+    ##  6 Argentina      2.21e6    2017 276648     2017 26098      2017  4.49e7    2019
+    ##  7 Armenia        6.96e4    2019  10855     2019   985      2019  2.96e6    2019
+    ##  8 Aruba          8.48e2    2016     55     2016     0         0  1.06e5    2019
+    ##  9 Australia      9.99e5    2018 304632     2018 56110      2018  2.53e7    2019
+    ## 10 Austria        1.99e5    2018 135346.    2018 20396.     2018  8.86e6    2019
+    ## # … with 160 more rows, 2 more variables: uni_enr_tot <dbl>,
+    ## #   uni_enr_prop <dbl>, and abbreviated variable names ¹​isced6_enr,
+    ## #   ²​isced6_ref_yr, ³​isced7_enr, ⁴​isced7_ref_yr, ⁵​isced8_enr, ⁶​isced8_ref_yr,
+    ## #   ⁷​natpop_est, ⁸​natpop_ref_yr
+
+Now, we need to remove the 16 cases OR ADD –
+
+.. ..
+
+With these inconsistencies addressed, we now move onto the country names
+that appear in the university enrollment dataset but not the dietary
+footprint dataset.
+
+``` r
+anti_join(university_enrollment_data,dietary_footprint_data,by="country")
+```
+
+    ## # A tibble: 49 × 11
+    ## # Rowwise: 
+    ##    country     isced6_…¹ isced…² isced…³ isced…⁴ isced…⁵ isced…⁶ natpo…⁷ natpo…⁸
+    ##    <chr>           <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
+    ##  1 Andorra          554.    2019      35    2019  2.35e1    2019  7.7 e4    2019
+    ##  2 Aruba            848     2016      55    2016  0            0  1.06e5    2019
+    ##  3 Bahrain        40003     2019    4035    2019  2.68e2    2019  1.64e6    2019
+    ##  4 Bangladesh   2919335     2019  563065    2019  1.32e4    2018  1.63e8    2019
+    ##  5 Bhutan         10398     2020     398    2020  0            0  7.63e5    2019
+    ##  6 Burundi        40300     2018    1262    2018  3.07e2    2018  1.15e7    2019
+    ##  7 Chad           38285     2015    2348    2015  1.95e2    2015  1.59e7    2019
+    ##  8 China       24075437     2019 2409068    2019  4.10e5    2019  1.40e9    2019
+    ##  9 Comoros         5449     2014      87    2013  0            0  8.51e5    2019
+    ## 10 Congo, Rep.    34176     2017    7032    2017  8.21e2    2017  5.38e6    2019
+    ## # … with 39 more rows, 2 more variables: uni_enr_tot <dbl>, uni_enr_prop <dbl>,
+    ## #   and abbreviated variable names ¹​isced6_enr, ²​isced6_ref_yr, ³​isced7_enr,
+    ## #   ⁴​isced7_ref_yr, ⁵​isced8_enr, ⁶​isced8_ref_yr, ⁷​natpop_est, ⁸​natpop_ref_yr
+
+We will again sort these instances into different types of cases, which
+will inform how we choose to address these inconsistencies.
+
+Because the dietary footprint data is the more limiting of the two
+recruited data sources, in that it has fewer included countries and is
+more difficult to supplement, we will be organizing these instances into
+two groups: (1) row observations that name countries that are listed in
+the university enrollment data but not the dietary footprint data, which
+we will exclude from our analysis, and (2) row observations that name
+countries that are listed in both datasets, but under different names.
+
+49 total
+
+Rows to remove (as they appear in `university_enrollment_data`:
+
+-   Andorra
+
+-   Aruba
+
+-   Bahrain
+
+-   Bangladesh
+
+-   Bhutan
+
+-   Burundi
+
+-   Chad
+
+-   Comoros
+
+-   Congo, Rep.
+
+-   Cuba
+
+-   Curacao
+
+-   Dominican Republic
+
+-   Eritrea
+
+-   Eswatini
+
+-   Grenada
+
+-   Guinea
+
+-   Iraq
+
+-   Korea, Dem. People’s Rep.
+
+-   Lao PDR
+
+-   Lesotho
+
+-   Libya
+
+-   Liechtenstein
+
+-   Marshall Islands
+
+-   Monaco
+
+-   Mongolia
+
+-   Mozambique
+
+-   Myanmar
+
+-   Nigeria
+
+-   Puerto Rico
+
+-   Qatar
+
+-   Samoa
+
+-   San Marino
+
+-   Seychelles
+
+-   Singapore
+
+-   Sint Maarten (Dutch part)
+
+-   St. Kitts and Nevis
+
+-   St. Lucia
+
+-   Sudan
+
+-   Syrian Arab Republic
+
+-   Tajikistan
+
+-   Trinidad and Tobago  
+
+-   Turkmenistan
+
+-   Turks and Caicos Islands  
+
+-   United Arab Emirates
+
+-   Uzbekistan
+
+-   Vietnam
+
+-   West Bank and Gaza
+
+-   China
+
+-   CÃ´te d’Ivoire
+
+As we know from how we addressed the prior set of cases, the difference
+in how mainland China was indexed across these data sources will still
+show up in this search.
 
 To reduce the potential for confusion, we will change the names for all
 included countries in alignment with ISO 3166 and, to reduce the
@@ -1075,9 +1298,6 @@ numeric code and the official state name.
 will need to make systematized decisions about whether to (a) supplement
 the data made available through the EdStats database with
 government-provided enrollment data or (b) remove the
-
-anti_join(university_enrollment_data,dietary_footprint_data,by=“country”)
-%\>% select(country)
 
 Of the 67 cases that fall into this first category, we will need to make
 systematized decisions about whether to (a) supplement the data made
