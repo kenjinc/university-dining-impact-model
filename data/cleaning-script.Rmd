@@ -931,6 +931,11 @@ map_data_iso_check <- map_data_iso %>% distinct(country)
 anti_join(map_data_iso_check,impact_modeling_data,by="country") %>%
   select(country)
 ```
+```{r}
+anti_join(impact_modeling_data,map_data_iso_check,by="country") %>%
+  select(country)
+```
+
 
 anti_join(university_enrollment_data,dietary_footprint_data,by="country") %>%
   select(country)
