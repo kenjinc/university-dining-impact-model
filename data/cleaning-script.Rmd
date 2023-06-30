@@ -524,6 +524,8 @@ Now that both of our parent datasets are in formats that align with the needs of
 
 To accomplish this, we will begin by investigating the differences between our university enrollment and dietary footprint data, first by examining the countries included in `dietary_footprint_data` but not `university_enrollment_data` and then by examining the countries included in the `university_enrollment_data` but not `dietary_footprint_data`. 
 
+In the cases where the  countries are not being indexed differently by the two data sources, we will need to make systematized decisions about whether to supplement the identified data sources or to exclude the countries from our analysis.
+
 ```{r}
 anti_join(dietary_footprint_data,university_enrollment_data,by="country") %>%
   select(country)
@@ -610,7 +612,7 @@ university_enrollment_data %>%
   add_row(tibble_row(country="Taiwan, Province of",isced6_enr=985144,isced6_ref_yr=2021,isced7_enr=171779,isced7_ref_yr=2021,isced8_enr=28907,isced8_ref_yr=2021,natpop_est=23186278,natpop_ref_yr=2022,uni_enr_tot=1185830,uni_enr_prop=0.05114361175),.before=1) 
 ```
 
-Next, we will address the first set of cases, where there were differences in how the country was named across `university_enrollment_data` and `dietary_footprint_data`. While we will eventually add columns that correspond to each country's official state name, ISO code, and ISO name, we will first change how the name appears in the university enrollment dataset so that it aligns with how it appears in our dietary footprint data in preparation for performing the inverse evaluation (i.e., which country names appear in the university enrollment dataset but not the dietary footprint dataset). The only exception to this will be the conversion from `China` to `China, mainland`, given how "China" can be found inside of some of the planned string replacements (e.g., China, Hong Kong SAR and China, Macao SAR).
+Next, we will address the first set of cases, where there were differences in how the country was named across `university_enrollment_data` and `dietary_footprint_data`. While we will eventually add columns that correspond to each country's official state name, ISO code, and ISO name, we will first change how the name appears in the university enrollment dataset so that it aligns with how it appears in our dietary footprint data in preparation for performing the inverse evaluation (i.e., which country names appear in the university enrollment dataset but not the dietary footprint dataset). The two exceptions to this will be the conversion from `China` to `China, mainland` and `Cote d'Ivoire` to `CÃ´te d'Ivoire`, given how "China" can be found inside of some of the planned string replacements (e.g., China, Hong Kong SAR and China, Macao SAR) and the accepted symbology in R. We will address these in the second round of changes.
 
 ```{r}
 university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/university_enrollment_data.csv") %>%
@@ -645,7 +647,6 @@ university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-din
   mutate(across(country,str_replace,"Egypt, Arab Rep.","Egypt")) %>%
   mutate(across(country,str_replace,"Hong Kong SAR, China","China, Hong Kong SAR")) %>%
   mutate(across(country,str_replace,"Iran, Islamic Rep.","Iran (Islamic Republic of)")) %>%
-  mutate(across(country,str_replace,"Cote d'Ivoire","CÃ´te d’Ivoire")) %>%
   mutate(across(country,str_replace,"Kyrgyz Republic","Kyrgyzstan")) %>%
   mutate(across(country,str_replace,"Korea, Rep.","Republic of Korea")) %>%
   mutate(across(country,str_replace,"Macao SAR, China","China, Macao SAR")) %>%
@@ -661,80 +662,209 @@ university_enrollment_data %>%
   add_row(tibble_row(country="Taiwan, Province of",isced6_enr=985144,isced6_ref_yr=2021,isced7_enr=171779,isced7_ref_yr=2021,isced8_enr=28907,isced8_ref_yr=2021,natpop_est=23186278,natpop_ref_yr=2022,uni_enr_tot=1185830,uni_enr_prop=0.05114361175),.before=1) 
 ```
 
-Now, we need to remove the 16 cases OR ADD -- 
-
+Now, we are presented with the choice of either finding data to supplement the 16 countries without available university enrollment data or excluding them from our analysis. 
 ..
 .. 
 
-With these inconsistencies addressed, we now move onto the country names that appear in the university enrollment dataset but not the dietary footprint dataset.
+With these inconsistencies addressed, we now move onto the inverse scenario, whereby the country names  appear in the university enrollment dataset but not the dietary footprint dataset.
 
 ```{r}
-anti_join(university_enrollment_data,dietary_footprint_data,by="country")
+anti_join(university_enrollment_data,dietary_footprint_data,by="country") %>%
+  select(country)
 ```
 
-We will again sort these instances into different types of cases, which will inform how we choose to address these inconsistencies. 
+As we did before, we will sort these 49 instances into different types of cases.
 
-Because the dietary footprint data is the more limiting of the two recruited data sources, in that it has fewer included countries and is more difficult to supplement, we will be organizing these instances into two groups: (1) row observations that name countries that are listed in the university enrollment data but not the dietary footprint data, which we will exclude from our analysis, and (2) row observations that name countries that are listed in both datasets, but under different names. 
+Because the dietary footprint data is the more limiting of the two identified data sources, in that it has fewer included countries and is more difficult to supplement, we will be organizing these caes into two buckets: (1) row observations that name countries that are listed in the university enrollment data but not the dietary footprint data, which we will exclude from our analysis, and (2) row observations that name countries that are cross-listed in both datasets but using different conventions 
 
-49 total
+Rows to remove (as they appear in `university_enrollment_data` (n=47): 
 
-Rows to remove (as they appear in `university_enrollment_data`: 
+* "Andorra"
+* "Aruba"
+* "Bahrain"
+* "Bangladesh"
+* "Bhutan"
+* "Burundi"
+* "Chad"
+* "Comoros"
+* "Congo, Rep."
+* "Cuba"
+* "Curacao"
+* "Dominican Republic"
+* "Eritrea"
+* "Eswatini"
+* "Grenada"
+* "Guinea"
+* "Iraq"
+* "Korea, Dem. People's Rep."
+* "Lao PDR"
+* "Lesotho"
+* "Libya"
+* "Liechtenstein"
+* "Marshall Islands"
+* "Monaco"
+* "Mongolia"
+* "Mozambique"
+* "Myanmar"
+* "Nigeria"
+* "Puerto Rico"
+* "Qatar"
+* "Samoa"
+* "San Marino"
+* "Seychelles"
+* "Singapore"
+* "Sint Maarten (Dutch part)"
+* "St. Kitts and Nevis"
+* "St. Lucia"
+* "Sudan"
+* "Syrian Arab Republic"
+* "Tajikistan"
+* "Trinidad and Tobago	"
+* "Turkmenistan"
+* "Turks and Caicos Islands"
+* "United Arab Emirates"
+* "Uzbekistan"
+* "Vietnam"
+* "West Bank and Gaza"
 
-* Andorra
-* Aruba
-* Bahrain
-* Bangladesh
-* Bhutan
-* Burundi
-* Chad
-* Comoros
-* Congo, Rep.
-* Cuba
-* Curacao
-* Dominican Republic
-* Eritrea
-* Eswatini
-* Grenada
-* Guinea
-* Iraq
-* Korea, Dem. People's Rep.
-* Lao PDR
-* Lesotho
-* Libya
-* Liechtenstein
-* Marshall Islands
-* Monaco
-* Mongolia
-* Mozambique
-* Myanmar
-* Nigeria
-* Puerto Rico
-* Qatar
-* Samoa
-* San Marino
-* Seychelles
-* Singapore
-* Sint Maarten (Dutch part)
-* St. Kitts and Nevis
-* St. Lucia
-* Sudan
-* Syrian Arab Republic
-* Tajikistan
-* Trinidad and Tobago	
-* Turkmenistan
-* Turks and Caicos Islands	
-* United Arab Emirates
-* Uzbekistan
-* Vietnam
-* West Bank and Gaza
+Rows to change (n=2):
+
+* "China"
+* "Cote d'Ivoire"
+
+```{r}
+dietary_footprint_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/dietary_footprint_data.csv") %>%
+  select(country,diet,attribute,value) %>%
+  pivot_wider(names_from=c(diet,attribute),
+              values_from="value") %>%
+  select(country,
+  "baseline_kg_co2e_excl_luc",
+  "baseline_kg_co2e_total",
+  "baseline_l_blue_green_wf",
+  "baseline_l_blue_wf_total",
+  "baseline_l_green_wf",
+  "meatless_day_kg_co2e_excl_luc",
+  "meatless_day_kg_co2e_total",
+  "meatless_day_l_blue_green_wf",
+  "meatless_day_l_blue_wf_total",
+  "meatless_day_l_green_wf",
+  "no_dairy_kg_co2e_excl_luc",
+  "no_dairy_kg_co2e_total",
+  "no_dairy_l_blue_green_wf",
+  "no_dairy_l_blue_wf_total",
+  "no_dairy_l_green_wf",
+  "low_red_meat_kg_co2e_excl_luc",
+  "low_red_meat_kg_co2e_total",
+  "low_red_meat_l_blue_green_wf",
+  "low_red_meat_l_blue_wf_total",
+  "low_red_meat_l_green_wf",
+  "no_red_meat_kg_co2e_excl_luc",
+  "no_red_meat_kg_co2e_total",
+  "no_red_meat_l_blue_green_wf",
+  "no_red_meat_l_blue_wf_total",
+  "no_red_meat_l_green_wf",
+  "pescetarian_kg_co2e_excl_luc",
+  "pescetarian_kg_co2e_total",
+  "pescetarian_l_blue_green_wf",
+  "pescetarian_l_blue_wf_total",
+  "pescetarian_l_green_wf",
+  "lacto_ovo_vegetarian_kg_co2e_excl_luc",
+  "lacto_ovo_vegetarian_kg_co2e_total",
+  "lacto_ovo_vegetarian_l_blue_green_wf",
+  "lacto_ovo_vegetarian_l_blue_wf_total",
+  "lacto_ovo_vegetarian_l_green_wf",
+  "2/3_vegan_kg_co2e_excl_luc",
+  "2/3_vegan_kg_co2e_total",
+  "2/3_vegan_l_blue_green_wf",
+  "2/3_vegan_l_blue_wf_total",
+  "2/3_vegan_l_green_wf",
+  "vegan_kg_co2e_excl_luc",
+  "vegan_kg_co2e_total",
+  "vegan_l_blue_green_wf",
+  "vegan_l_blue_wf_total",
+  "vegan_l_green_wf") %>%
+  mutate(across(country,str_replace,"China, mainland","China")) %>%
+  mutate(across(country,str_replace,"CÃ´te d'Ivoire","Cote d'Ivoire"))
+dietary_footprint_data
+```
+
+With the actionable steps taken for these inverse cases, we can run the `anti-join` function again to ensure that the same 47 cases emerge. 
+
+```{r}
+anti_join(university_enrollment_data,dietary_footprint_data,by="country") %>%
+  select(country)
+```
+
+Removing identified rows from the two datasets:
+
+```{r}
+dietary_footprint_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/dietary_footprint_data.csv") %>%
+  select(country,diet,attribute,value) %>%
+  pivot_wider(names_from=c(diet,attribute),
+              values_from="value") %>%
+  select(country,
+  "baseline_kg_co2e_excl_luc",
+  "baseline_kg_co2e_total",
+  "baseline_l_blue_green_wf",
+  "baseline_l_blue_wf_total",
+  "baseline_l_green_wf",
+  "meatless_day_kg_co2e_excl_luc",
+  "meatless_day_kg_co2e_total",
+  "meatless_day_l_blue_green_wf",
+  "meatless_day_l_blue_wf_total",
+  "meatless_day_l_green_wf",
+  "no_dairy_kg_co2e_excl_luc",
+  "no_dairy_kg_co2e_total",
+  "no_dairy_l_blue_green_wf",
+  "no_dairy_l_blue_wf_total",
+  "no_dairy_l_green_wf",
+  "low_red_meat_kg_co2e_excl_luc",
+  "low_red_meat_kg_co2e_total",
+  "low_red_meat_l_blue_green_wf",
+  "low_red_meat_l_blue_wf_total",
+  "low_red_meat_l_green_wf",
+  "no_red_meat_kg_co2e_excl_luc",
+  "no_red_meat_kg_co2e_total",
+  "no_red_meat_l_blue_green_wf",
+  "no_red_meat_l_blue_wf_total",
+  "no_red_meat_l_green_wf",
+  "pescetarian_kg_co2e_excl_luc",
+  "pescetarian_kg_co2e_total",
+  "pescetarian_l_blue_green_wf",
+  "pescetarian_l_blue_wf_total",
+  "pescetarian_l_green_wf",
+  "lacto_ovo_vegetarian_kg_co2e_excl_luc",
+  "lacto_ovo_vegetarian_kg_co2e_total",
+  "lacto_ovo_vegetarian_l_blue_green_wf",
+  "lacto_ovo_vegetarian_l_blue_wf_total",
+  "lacto_ovo_vegetarian_l_green_wf",
+  "2/3_vegan_kg_co2e_excl_luc",
+  "2/3_vegan_kg_co2e_total",
+  "2/3_vegan_l_blue_green_wf",
+  "2/3_vegan_l_blue_wf_total",
+  "2/3_vegan_l_green_wf",
+  "vegan_kg_co2e_excl_luc",
+  "vegan_kg_co2e_total",
+  "vegan_l_blue_green_wf",
+  "vegan_l_blue_wf_total",
+  "vegan_l_green_wf") %>%
+  mutate(across(country,str_replace,"China, mainland","China")) %>%
+  mutate(across(country,str_replace,"CÃ´te d'Ivoire","Cote d'Ivoire")) %>%
+  filter_at(vars(country),all_vars(!. %in% c("","","")))
+dietary_footprint_data
+```
 
 
+filter_at(vars(country),all_vars(!. %in% c("","","")))
 
-* China
-* CÃ´te d’Ivoire	
+With these alignments now in place, we can now perform a `left_join` to aggregate our university enrollment and dietary footprint data together. 
+
+```{r}
+impact_modeling_data <- inner_join(university_enrollment_data,dietary_footprint_data,by="country")
+impact_modeling_data
+```
 
 
-As we know from how we addressed the prior set of cases, the difference in how mainland China was indexed across these data sources will still show up in this search.
 
 
 To reduce the potential for confusion, we will change the names for all included countries in alignment with ISO 3166 and, to reduce the opportunity for confusion, we will also supply the corresponding ISO numeric code and the official state name. 
@@ -742,28 +872,9 @@ To reduce the potential for confusion, we will change the names for all included
 
 will need to make systematized decisions about whether to (a) supplement the data made available through the EdStats database with government-provided enrollment data or (b) remove the 
 
-  
-Of the 67 cases that fall into this first category, we will need to make systematized decisions about whether to (a) supplement the data made available through the EdStats database with government-provided enrollment data or (b) remove the 
 
 
 
-
-
-From these two lists, we will need to construct a systematized process for reconciling two types of cases: countries that need to be adjusted and countries that will be removed from our analysis.
-
-We will first identify the instances where there are differences in the naming conventions between the two countries. 
-
-
-```{r}
-
-```
-
-
-We will then identify the instances where there is data for the country in one data source but not the other. 
-
-```{r}
-
-```
 
 
 ## Writing the Final Data File
