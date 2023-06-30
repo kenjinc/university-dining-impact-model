@@ -937,7 +937,7 @@ anti_join(dietary_footprint_data,university_enrollment_data,by="country") %>%
 
 Of the 35 instances where there was an indexed country name appearing
 within `dietary_footprint_data` but not `university_enrollment_data`,
-there were 18 instances (n=18) where the mismatch was due, simply, to a
+there were 17 instances (n=17) where the mismatch was due, simply, to a
 difference in how the countries were indexed in their respective
 datasets. Said differently, these cases refer to countries that were
 included in both cleaned datasets, but were indexed under different
@@ -962,7 +962,7 @@ each of these instances below:
 -   “Venezuela (Bolivarian Republic of)”
 -   “Yemen”
 
-Another 16 cases (n=16) were a result of the countries previously being
+Another 17 cases (n=17) were a result of the countries previously being
 removed from the previously described cleaning procedure To be more
 precise, each of these instances resulted from there not being
 sufficient data for inclusion due to there being no available data for
@@ -1044,14 +1044,14 @@ university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-din
   mutate(uni_enr_tot=isced6_enr+isced7_enr+isced8_enr) %>%
   mutate(uni_enr_prop=uni_enr_tot/natpop_est) 
 university_enrollment_data %>%
-  add_row(tibble_row(country="Taiwan, Province of",isced6_enr=985144,isced6_ref_yr=2021,isced7_enr=171779,isced7_ref_yr=2021,isced8_enr=28907,isced8_ref_yr=2021,natpop_est=23186278,natpop_ref_yr=2022,uni_enr_tot=1185830,uni_enr_prop=0.05114361175),.before=1) 
+  add_row(tibble_row(country="China, Taiwan Province of",isced6_enr=985144,isced6_ref_yr=2021,isced7_enr=171779,isced7_ref_yr=2021,isced8_enr=28907,isced8_ref_yr=2021,natpop_est=23186278,natpop_ref_yr=2022,uni_enr_tot=1185830,uni_enr_prop=0.05114361175),.before=1) 
 ```
 
     ## # A tibble: 170 × 11
     ## # Rowwise: 
     ##    country       isced…¹ isced…² isced…³ isced…⁴ isced…⁵ isced…⁶ natpo…⁷ natpo…⁸
     ##    <chr>           <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
-    ##  1 Taiwan, Prov…  9.85e5    2021 171779     2021 28907      2021  2.32e7    2022
+    ##  1 China, Taiwa…  9.85e5    2021 171779     2021 28907      2021  2.32e7    2022
     ##  2 Afghanistan    3.66e5    2018   4600     2018    28      2018  3.80e7    2019
     ##  3 Albania        8.92e4    2019  43749     2019  1865      2019  2.87e6    2019
     ##  4 Algeria        9.96e5    2018      0        0     0         0  4.31e7    2019
@@ -1126,14 +1126,14 @@ university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-din
   mutate(across(country,str_replace,"Venezuela, RB","Venezuela (Bolivarian Republic of)")) %>%
   mutate(across(country,str_replace,"Yemen, Rep.","Yemen")) 
 university_enrollment_data %>%
-  add_row(tibble_row(country="Taiwan, Province of",isced6_enr=985144,isced6_ref_yr=2021,isced7_enr=171779,isced7_ref_yr=2021,isced8_enr=28907,isced8_ref_yr=2021,natpop_est=23186278,natpop_ref_yr=2022,uni_enr_tot=1185830,uni_enr_prop=0.05114361175),.before=1) 
+  add_row(tibble_row(country="China, Taiwan Province of",isced6_enr=985144,isced6_ref_yr=2021,isced7_enr=171779,isced7_ref_yr=2021,isced8_enr=28907,isced8_ref_yr=2021,natpop_est=23186278,natpop_ref_yr=2022,uni_enr_tot=1185830,uni_enr_prop=0.05114361175),.before=1) 
 ```
 
     ## # A tibble: 170 × 11
     ## # Rowwise: 
     ##    country       isced…¹ isced…² isced…³ isced…⁴ isced…⁵ isced…⁶ natpo…⁷ natpo…⁸
     ##    <chr>           <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
-    ##  1 Taiwan, Prov…  9.85e5    2021 171779     2021 28907      2021  2.32e7    2022
+    ##  1 China, Taiwa…  9.85e5    2021 171779     2021 28907      2021  2.32e7    2022
     ##  2 Afghanistan    3.66e5    2018   4600     2018    28      2018  3.80e7    2019
     ##  3 Albania        8.92e4    2019  43749     2019  1865      2019  2.87e6    2019
     ##  4 Algeria        9.96e5    2018      0        0     0         0  4.31e7    2019
@@ -1347,6 +1347,10 @@ anti_join(university_enrollment_data,dietary_footprint_data,by="country") %>%
 
 Removing identified rows from the two datasets:
 
+For the dietary footprint dataset, we will be removing 17 countries with
+no corresponding university enrollment data from the 140 rows left after
+cleaning.
+
 ``` r
 dietary_footprint_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/dietary_footprint_data.csv") %>%
   select(country,diet,attribute,value) %>%
@@ -1400,24 +1404,24 @@ dietary_footprint_data <- read.csv("/Users/kenjinchang/github/university-dining-
   "vegan_l_green_wf") %>%
   mutate(across(country,str_replace,"China, mainland","China")) %>%
   mutate(across(country,str_replace,"CÃ´te d'Ivoire","Cote d'Ivoire")) %>%
-  filter_at(vars(country),all_vars(!. %in% c("","","")))
+  filter_at(vars(country),all_vars(!. %in% c("Antigua and Barbuda","Bahamas","Bolivia (Plurinational State of)","Solomon Islands","Central African Republic","Dominica","French Polynesia","Gambia","Kiribati","Guyana","Vanuatu","New Caledonia","Nicaragua","Paraguay","Sao Tome and Principe","Suriname","Zambia")))
 dietary_footprint_data
 ```
 
-    ## # A tibble: 140 × 46
-    ##    country       basel…¹ basel…² basel…³ basel…⁴ basel…⁵ meatl…⁶ meatl…⁷ meatl…⁸
+    ## # A tibble: 123 × 46
+    ##    country     baselin…¹ basel…² basel…³ basel…⁴ basel…⁵ meatl…⁶ meatl…⁷ meatl…⁸
     ##    <chr>           <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
     ##  1 Armenia         1604.   1646.  1.44e6 191032.  1.25e6   1558.   1595.  1.39e6
     ##  2 Afghanistan      895.    898.  1.02e6 347777.  6.68e5   1810.   1817.  1.30e6
     ##  3 Albania         1952.   2013.  1.44e6 214147.  1.23e6   1651.   1699.  1.22e6
     ##  4 Algeria          983.   1108.  1.30e6 186077.  1.11e6   1066.   1213.  1.17e6
-    ##  5 Antigua and …   1310.   1400.  1.19e6  77859.  1.11e6   1642.   1740.  1.44e6
-    ##  6 Argentina       2952.   3517.  1.02e6  62016.  9.54e5   2125.   2557.  7.88e5
-    ##  7 Australia       3015.   3142.  1.52e6 174220.  1.34e6   2536.   2635.  1.29e6
-    ##  8 Austria         1522.   1583.  7.94e5  60195.  7.34e5   1223.   1270.  6.32e5
-    ##  9 Bahamas         1727.   1782.  1.03e6 154346.  8.73e5   1980.   2037.  1.15e6
-    ## 10 Barbados        1408.   1582.  9.51e5  86413.  8.65e5   1389.   1543.  9.05e5
-    ## # … with 130 more rows, 37 more variables: meatless_day_l_blue_wf_total <dbl>,
+    ##  5 Argentina       2952.   3517.  1.02e6  62016.  9.54e5   2125.   2557.  7.88e5
+    ##  6 Australia       3015.   3142.  1.52e6 174220.  1.34e6   2536.   2635.  1.29e6
+    ##  7 Austria         1522.   1583.  7.94e5  60195.  7.34e5   1223.   1270.  6.32e5
+    ##  8 Barbados        1408.   1582.  9.51e5  86413.  8.65e5   1389.   1543.  9.05e5
+    ##  9 Bermuda         1994.   2050.  1.04e6 129160.  9.13e5   2168.   2224.  1.16e6
+    ## 10 Botswana        1569.   1585.  1.07e6 111201.  9.58e5   2401.   2432.  1.39e6
+    ## # … with 113 more rows, 37 more variables: meatless_day_l_blue_wf_total <dbl>,
     ## #   meatless_day_l_green_wf <dbl>, no_dairy_kg_co2e_excl_luc <dbl>,
     ## #   no_dairy_kg_co2e_total <dbl>, no_dairy_l_blue_green_wf <dbl>,
     ## #   no_dairy_l_blue_wf_total <dbl>, no_dairy_l_green_wf <dbl>,
@@ -1425,37 +1429,162 @@ dietary_footprint_data
     ## #   low_red_meat_l_blue_green_wf <dbl>, low_red_meat_l_blue_wf_total <dbl>,
     ## #   low_red_meat_l_green_wf <dbl>, no_red_meat_kg_co2e_excl_luc <dbl>, …
 
-filter_at(vars(country),all_vars(!. %in% c(““,”“,”“)))
+From the university enrollment data, we will need to remove 47 rows
+where there was university enrollment data with no correpsonding dietary
+footprint data from the 170 countries in the university enrollment data,
+after supplementing the EdStats database with university enrollment data
+from Taiwan Ministry of Education.
+
+``` r
+university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/university_enrollment_data.csv") %>%
+  select(-Country.Code,-Series.Code) %>%
+  as_tibble(university_enrollment_data) %>%
+  slice(1:(n()-5)) %>%
+  rename(country=Country.Name,series=Series,yr2000=YR2000,yr2001=YR2001,yr2002=YR2002,yr2003=YR2003,yr2004=YR2004,yr2005=YR2005,yr2006=YR2006,yr2007=YR2007,yr2008=YR2008,yr2009=YR2009,yr2010=YR2010,yr2011=YR2011,yr2012=YR2012,yr2013=YR2013,yr2014=YR2014,yr2015=YR2015,yr2016=YR2016,yr2017=YR2017,yr2018=YR2018,yr2019=YR2019,yr2020=YR2020) %>%
+  mutate_at(c("yr2000","yr2001","yr2002","yr2003","yr2004","yr2005","yr2006","yr2007","yr2008","yr2009","yr2010","yr2011","yr2012","yr2013","yr2014","yr2015","yr2016","yr2017","yr2018","yr2019","yr2020"),as.double) %>%
+  replace(is.na(.),0) %>%
+  distinct() %>%
+  mutate(across("series",str_replace, fixed("Enrolment in tertiary education, ISCED 6 programmes, both sexes (number)"),"isced6_enr")) %>%
+  mutate(across("series",str_replace, fixed("Enrolment in tertiary education, ISCED 7 programmes, both sexes (number)"),"isced7_enr")) %>%
+  mutate(across("series",str_replace, fixed("Enrolment in tertiary education, ISCED 8 programmes, both sexes (number)"),"isced8_enr")) %>%
+  mutate(across("series",str_replace, fixed("Population, total"),"nat_pop")) %>%
+  pivot_wider(names_from="series",
+              values_from=c("yr2020","yr2019","yr2018","yr2017","yr2016","yr2015","yr2014","yr2013","yr2012","yr2011","yr2010","yr2009","yr2008","yr2007","yr2006","yr2005","yr2004","yr2003","yr2002","yr2001","yr2000")) %>%
+  mutate(isced6_ref_yr=ifelse(yr2020_isced6_enr>0,2020,ifelse(yr2019_isced6_enr>0,2019,ifelse(yr2018_isced6_enr>0,2018,ifelse(yr2017_isced6_enr>0,2017,ifelse(yr2016_isced6_enr>0,2016,ifelse(yr2015_isced6_enr>0,2015,ifelse(yr2014_isced6_enr>0,2014,ifelse(yr2013_isced6_enr>0,2013,ifelse(yr2012_isced6_enr>0,2012,ifelse(yr2011_isced6_enr>0,2011,ifelse(yr2010_isced6_enr>0,2010,ifelse(yr2009_isced6_enr>0,2009,ifelse(yr2008_isced6_enr>0,2008,ifelse(yr2007_isced6_enr>0,2007,ifelse(yr2006_isced6_enr>0,2006,ifelse(yr2005_isced6_enr>0,2005,ifelse(yr2004_isced6_enr>0,2004,ifelse(yr2003_isced6_enr>0,2003,ifelse(yr2002_isced6_enr>0,2002,ifelse(yr2001_isced6_enr>0,2001,ifelse(yr2000_isced6_enr>0,2000,0)))))))))))))))))))))) %>%
+  mutate(isced7_ref_yr=ifelse(yr2020_isced7_enr>0,2020,ifelse(yr2019_isced7_enr>0,2019,ifelse(yr2018_isced7_enr>0,2018,ifelse(yr2017_isced7_enr>0,2017,ifelse(yr2016_isced7_enr>0,2016,ifelse(yr2015_isced7_enr>0,2015,ifelse(yr2014_isced7_enr>0,2014,ifelse(yr2013_isced7_enr>0,2013,ifelse(yr2012_isced7_enr>0,2012,ifelse(yr2011_isced7_enr>0,2011,ifelse(yr2010_isced7_enr>0,2010,ifelse(yr2009_isced7_enr>0,2009,ifelse(yr2008_isced7_enr>0,2008,ifelse(yr2007_isced7_enr>0,2007,ifelse(yr2006_isced7_enr>0,2006,ifelse(yr2005_isced7_enr>0,2005,ifelse(yr2004_isced7_enr>0,2004,ifelse(yr2003_isced7_enr>0,2003,ifelse(yr2002_isced7_enr>0,2002,ifelse(yr2001_isced7_enr>0,2001,ifelse(yr2000_isced7_enr>0,2000,0)))))))))))))))))))))) %>%
+  mutate(isced8_ref_yr=ifelse(yr2020_isced8_enr>0,2020,ifelse(yr2019_isced8_enr>0,2019,ifelse(yr2018_isced8_enr>0,2018,ifelse(yr2017_isced8_enr>0,2017,ifelse(yr2016_isced8_enr>0,2016,ifelse(yr2015_isced8_enr>0,2015,ifelse(yr2014_isced8_enr>0,2014,ifelse(yr2013_isced8_enr>0,2013,ifelse(yr2012_isced8_enr>0,2012,ifelse(yr2011_isced8_enr>0,2011,ifelse(yr2010_isced8_enr>0,2010,ifelse(yr2009_isced8_enr>0,2009,ifelse(yr2008_isced8_enr>0,2008,ifelse(yr2007_isced8_enr>0,2007,ifelse(yr2006_isced8_enr>0,2006,ifelse(yr2005_isced8_enr>0,2005,ifelse(yr2004_isced8_enr>0,2004,ifelse(yr2003_isced8_enr>0,2003,ifelse(yr2002_isced8_enr>0,2002,ifelse(yr2001_isced8_enr>0,2001,ifelse(yr2000_isced8_enr>0,2000,0)))))))))))))))))))))) %>%
+  mutate(natpop_ref_yr=ifelse(yr2020_nat_pop>0,2020,ifelse(yr2019_nat_pop>0,2019,ifelse(yr2018_nat_pop>0,2018,ifelse(yr2017_nat_pop>0,2017,ifelse(yr2016_nat_pop>0,2016,ifelse(yr2015_nat_pop>0,2015,ifelse(yr2014_nat_pop>0,2014,ifelse(yr2013_nat_pop>0,2013,ifelse(yr2012_nat_pop>0,2012,ifelse(yr2011_nat_pop>0,2011,ifelse(yr2010_nat_pop>0,2010,ifelse(yr2009_nat_pop>0,2009,ifelse(yr2008_nat_pop>0,2008,ifelse(yr2007_nat_pop>0,2007,ifelse(yr2006_nat_pop>0,2006,ifelse(yr2005_nat_pop>0,2005,ifelse(yr2004_nat_pop>0,2004,ifelse(yr2003_nat_pop>0,2003,ifelse(yr2002_nat_pop>0,2002,ifelse(yr2001_nat_pop>0,2001,ifelse(yr2000_nat_pop>0,2000,0)))))))))))))))))))))) %>%
+  mutate(isced6_enr=ifelse(yr2020_isced6_enr>0,yr2020_isced6_enr,ifelse(yr2019_isced6_enr>0,yr2019_isced6_enr,ifelse(yr2018_isced6_enr>0,yr2018_isced6_enr,ifelse(yr2017_isced6_enr>0,yr2017_isced6_enr,ifelse(yr2016_isced6_enr>0,yr2016_isced6_enr,ifelse(yr2015_isced6_enr>0,yr2015_isced6_enr,ifelse(yr2014_isced6_enr>0,yr2014_isced6_enr,ifelse(yr2013_isced6_enr>0,yr2013_isced6_enr,ifelse(yr2012_isced6_enr>0,yr2012_isced6_enr,ifelse(yr2011_isced6_enr>0,yr2011_isced6_enr,ifelse(yr2010_isced6_enr>0,yr2010_isced6_enr,ifelse(yr2009_isced6_enr>0,yr2009_isced6_enr,ifelse(yr2008_isced6_enr>0,yr2008_isced6_enr,ifelse(yr2007_isced6_enr>0,yr2007_isced6_enr,ifelse(yr2006_isced6_enr>0,yr2006_isced6_enr,ifelse(yr2005_isced6_enr>0,yr2005_isced6_enr,ifelse(yr2004_isced6_enr>0,yr2004_isced6_enr,ifelse(yr2003_isced6_enr>0,yr2003_isced6_enr,ifelse(yr2002_isced6_enr>0,yr2002_isced6_enr,ifelse(yr2001_isced6_enr>0,yr2001_isced6_enr,ifelse(yr2000_isced6_enr>0,yr2000_isced6_enr,0)))))))))))))))))))))) %>%
+  mutate(isced7_enr=ifelse(yr2020_isced7_enr>0,yr2020_isced7_enr,ifelse(yr2019_isced7_enr>0,yr2019_isced7_enr,ifelse(yr2018_isced7_enr>0,yr2018_isced7_enr,ifelse(yr2017_isced7_enr>0,yr2017_isced7_enr,ifelse(yr2016_isced7_enr>0,yr2016_isced7_enr,ifelse(yr2015_isced7_enr>0,yr2015_isced7_enr,ifelse(yr2014_isced7_enr>0,yr2014_isced7_enr,ifelse(yr2013_isced7_enr>0,yr2013_isced7_enr,ifelse(yr2012_isced7_enr>0,yr2012_isced7_enr,ifelse(yr2011_isced7_enr>0,yr2011_isced7_enr,ifelse(yr2010_isced7_enr>0,yr2010_isced7_enr,ifelse(yr2009_isced7_enr>0,yr2009_isced7_enr,ifelse(yr2008_isced7_enr>0,yr2008_isced7_enr,ifelse(yr2007_isced7_enr>0,yr2007_isced7_enr,ifelse(yr2006_isced7_enr>0,yr2006_isced7_enr,ifelse(yr2005_isced7_enr>0,yr2005_isced7_enr,ifelse(yr2004_isced7_enr>0,yr2004_isced7_enr,ifelse(yr2003_isced7_enr>0,yr2003_isced7_enr,ifelse(yr2002_isced7_enr>0,yr2002_isced7_enr,ifelse(yr2001_isced7_enr>0,yr2001_isced7_enr,ifelse(yr2000_isced7_enr>0,yr2000_isced7_enr,0)))))))))))))))))))))) %>%
+  mutate(isced8_enr=ifelse(yr2020_isced8_enr>0,yr2020_isced8_enr,ifelse(yr2019_isced8_enr>0,yr2019_isced8_enr,ifelse(yr2018_isced8_enr>0,yr2018_isced8_enr,ifelse(yr2017_isced8_enr>0,yr2017_isced8_enr,ifelse(yr2016_isced8_enr>0,yr2016_isced8_enr,ifelse(yr2015_isced8_enr>0,yr2015_isced8_enr,ifelse(yr2014_isced8_enr>0,yr2014_isced8_enr,ifelse(yr2013_isced8_enr>0,yr2013_isced8_enr,ifelse(yr2012_isced8_enr>0,yr2012_isced8_enr,ifelse(yr2011_isced8_enr>0,yr2011_isced8_enr,ifelse(yr2010_isced8_enr>0,yr2010_isced8_enr,ifelse(yr2009_isced8_enr>0,yr2009_isced8_enr,ifelse(yr2008_isced8_enr>0,yr2008_isced8_enr,ifelse(yr2007_isced8_enr>0,yr2007_isced8_enr,ifelse(yr2006_isced8_enr>0,yr2006_isced8_enr,ifelse(yr2005_isced8_enr>0,yr2005_isced8_enr,ifelse(yr2004_isced8_enr>0,yr2004_isced8_enr,ifelse(yr2003_isced8_enr>0,yr2003_isced8_enr,ifelse(yr2002_isced8_enr>0,yr2002_isced8_enr,ifelse(yr2001_isced8_enr>0,yr2001_isced8_enr,ifelse(yr2000_isced8_enr>0,yr2000_isced8_enr,0)))))))))))))))))))))) %>%
+   mutate(natpop_est=ifelse(yr2020_nat_pop>0,yr2020_nat_pop,ifelse(yr2019_nat_pop>0,yr2019_nat_pop,ifelse(yr2018_nat_pop>0,yr2018_nat_pop,ifelse(yr2017_nat_pop>0,yr2017_nat_pop,ifelse(yr2016_nat_pop>0,yr2016_nat_pop,ifelse(yr2015_nat_pop>0,yr2015_nat_pop,ifelse(yr2014_nat_pop>0,yr2014_nat_pop,ifelse(yr2013_nat_pop>0,yr2013_nat_pop,ifelse(yr2012_nat_pop>0,yr2012_nat_pop,ifelse(yr2011_nat_pop>0,yr2011_nat_pop,ifelse(yr2010_nat_pop>0,yr2010_nat_pop,ifelse(yr2009_nat_pop>0,yr2009_nat_pop,ifelse(yr2008_nat_pop>0,yr2008_nat_pop,ifelse(yr2007_nat_pop>0,yr2007_nat_pop,ifelse(yr2006_nat_pop>0,yr2006_nat_pop,ifelse(yr2005_nat_pop>0,yr2005_nat_pop,ifelse(yr2004_nat_pop>0,yr2004_nat_pop,ifelse(yr2003_nat_pop>0,yr2003_nat_pop,ifelse(yr2002_nat_pop>0,yr2002_nat_pop,ifelse(yr2001_nat_pop>0,yr2001_nat_pop,ifelse(yr2000_nat_pop>0,yr2000_nat_pop,0)))))))))))))))))))))) %>%
+  rowwise() %>%
+  filter(!isced6_ref_yr+isced7_ref_yr+isced8_ref_yr==0) %>%
+  select(country,isced6_enr,isced6_ref_yr,isced7_enr,isced7_ref_yr,isced8_enr,isced8_ref_yr,natpop_est,natpop_ref_yr) %>%
+  filter_at(vars(country),all_vars(!. %in% c("Arab World","Caribbean small states","Central Europe and the Baltics","Early-demographic dividend","East Asia & Pacific","East Asia & Pacific (excluding high income)","East Asia & Pacific (IDA & IBRD countries)","Euro area","Europe & Central Asia","Europe & Central Asia (excluding high income)","Europe & Central Asia (IDA & IBRD countries)","European Union","Fragile and conflict affected situations","Global Partnership for Education","Heavily indebted poor countries (HIPC)","High income","IBRD only","IDA & IBRD total","IDA blend","IDA only","IDA total","Late-demographic dividend","Latin America & Caribbean","Latin America & Caribbean (excluding high income)","Latin America & the Caribbean (IDA & IBRD countries)","Least developed countries: UN classification","Low & middle income","Low income","Lower middle income","Middle East & North Africa","Middle East & North Africa (excluding high income)","Middle East & North Africa (IDA & IBRD countries)","Middle income","North America","OECD members","Other small states","Pacific island small states","Post-demographic dividend","Pre-demographic dividend","Small states","South Asia","South Asia (IDA & IBRD)","Sub-Saharan Africa","Sub-Saharan Africa (excluding high income)","Sub-Saharan Africa (IDA & IBRD countries)","Upper middle income","World"))) %>%
+   filter_at(vars(country),all_vars(!. %in% c("Andorra","Aruba","Bahrain","Bangladesh","Bhutan","Burundi","Chad","Comoros","Congo, Rep.","Cuba","Curacao","Dominican Republic","Eritrea","Eswatini","Grenada","Guinea","Iraq","Korea, Dem. People's Rep.","Lao PDR","Lesotho","Libya","Liechtenstein","Marshall Islands","Monaco","Mongolia","Mozambique","Myanmar","Nigeria","Puerto Rico","Qatar","Samoa","San Marino","Seychelles","Singapore","Sint Maarten (Dutch part)","St. Kitts and Nevis","St. Lucia","Sudan","Syrian Arab Republic","Tajikistan","Trinidad and Tobago","Turkmenistan","Turks and Caicos Islands","United Arab Emirates","Uzbekistan","Vietnam","West Bank and Gaza"))) %>%
+  mutate(uni_enr_tot=isced6_enr+isced7_enr+isced8_enr) %>%
+  mutate(uni_enr_prop=uni_enr_tot/natpop_est) %>%
+  mutate(across(country,str_replace,"Congo, Dem. Rep.","Congo")) %>%
+  mutate(across(country,str_replace,"Egypt, Arab Rep.","Egypt")) %>%
+  mutate(across(country,str_replace,"Hong Kong SAR, China","China, Hong Kong SAR")) %>%
+  mutate(across(country,str_replace,"Iran, Islamic Rep.","Iran (Islamic Republic of)")) %>%
+  mutate(across(country,str_replace,"Kyrgyz Republic","Kyrgyzstan")) %>%
+  mutate(across(country,str_replace,"Korea, Rep.","Republic of Korea")) %>%
+  mutate(across(country,str_replace,"Macao SAR, China","China, Macao SAR")) %>%
+  mutate(across(country,str_replace,"Moldova","Republic of Moldova")) %>%
+  mutate(across(country,str_replace,"North Macedonia","The former Yugoslav Republic of Macedonia")) %>%
+  mutate(across(country,str_replace,"Czech Republic","Czechia")) %>%
+  mutate(across(country,str_replace,"Slovak Republic","Slovakia")) %>%
+  mutate(across(country,str_replace,"Tanzania","United Republic of Tanzania")) %>%
+  mutate(across(country,str_replace,"United States","United States of America")) %>%
+  mutate(across(country,str_replace,"Venezuela, RB","Venezuela (Bolivarian Republic of)")) %>%
+  mutate(across(country,str_replace,"Yemen, Rep.","Yemen")) %>%
+  add_row(tibble_row(country="China, Taiwan Province of",isced6_enr=985144,isced6_ref_yr=2021,isced7_enr=171779,isced7_ref_yr=2021,isced8_enr=28907,isced8_ref_yr=2021,natpop_est=23186278,natpop_ref_yr=2022,uni_enr_tot=1185830,uni_enr_prop=0.05114361175),.before=1) 
+university_enrollment_data
+```
+
+    ## # A tibble: 123 × 11
+    ## # Rowwise: 
+    ##    country       isced…¹ isced…² isced…³ isced…⁴ isced…⁵ isced…⁶ natpo…⁷ natpo…⁸
+    ##    <chr>           <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
+    ##  1 China, Taiwa…  9.85e5    2021 171779     2021  28907     2021  2.32e7    2022
+    ##  2 Afghanistan    3.66e5    2018   4600     2018     28     2018  3.80e7    2019
+    ##  3 Albania        8.92e4    2019  43749     2019   1865     2019  2.87e6    2019
+    ##  4 Algeria        9.96e5    2018      0        0      0        0  4.31e7    2019
+    ##  5 Argentina      2.21e6    2017 276648     2017  26098     2017  4.49e7    2019
+    ##  6 Armenia        6.96e4    2019  10855     2019    985     2019  2.96e6    2019
+    ##  7 Australia      9.99e5    2018 304632     2018  56110     2018  2.53e7    2019
+    ##  8 Austria        1.99e5    2018 135346.    2018  20396.    2018  8.86e6    2019
+    ##  9 Azerbaijan     1.61e5    2019  20954     2019   2626     2019  1.00e7    2019
+    ## 10 Barbados       0            0      0        0    133     2011  2.87e5    2019
+    ## # … with 113 more rows, 2 more variables: uni_enr_tot <dbl>,
+    ## #   uni_enr_prop <dbl>, and abbreviated variable names ¹​isced6_enr,
+    ## #   ²​isced6_ref_yr, ³​isced7_enr, ⁴​isced7_ref_yr, ⁵​isced8_enr, ⁶​isced8_ref_yr,
+    ## #   ⁷​natpop_est, ⁸​natpop_ref_yr
+
+Across each dataset, we are now left with 123 named countries.
 
 With these alignments now in place, we can now perform a `left_join` to
 aggregate our university enrollment and dietary footprint data together.
 
 ``` r
-impact_modeling_data <- inner_join(university_enrollment_data,dietary_footprint_data,by="country")
+impact_modeling_data <- left_join(university_enrollment_data,dietary_footprint_data,by="country")
 impact_modeling_data
 ```
 
-    ## # A tibble: 122 × 56
+    ## # A tibble: 123 × 56
     ## # Rowwise: 
-    ##    country     isced6_…¹ isced…² isced…³ isced…⁴ isced…⁵ isced…⁶ natpo…⁷ natpo…⁸
+    ##    country       isced…¹ isced…² isced…³ isced…⁴ isced…⁵ isced…⁶ natpo…⁷ natpo…⁸
     ##    <chr>           <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
-    ##  1 Afghanistan   365982     2018   4600     2018     28     2018  3.80e7    2019
-    ##  2 Albania        89231     2019  43749     2019   1865     2019  2.87e6    2019
-    ##  3 Algeria       996087     2018      0        0      0        0  4.31e7    2019
-    ##  4 Argentina    2210454     2017 276648     2017  26098     2017  4.49e7    2019
-    ##  5 Armenia        69622     2019  10855     2019    985     2019  2.96e6    2019
-    ##  6 Australia     999034     2018 304632     2018  56110     2018  2.53e7    2019
-    ##  7 Austria       199236.    2018 135346.    2018  20396.    2018  8.86e6    2019
-    ##  8 Azerbaijan    160631     2019  20954     2019   2626     2019  1.00e7    2019
-    ##  9 Barbados           0        0      0        0    133     2011  2.87e5    2019
-    ## 10 Belarus       284348     2018  14947     2018   5652     2018  9.47e6    2019
-    ## # … with 112 more rows, 47 more variables: uni_enr_tot <dbl>,
+    ##  1 China, Taiwa…  9.85e5    2021 171779     2021  28907     2021  2.32e7    2022
+    ##  2 Afghanistan    3.66e5    2018   4600     2018     28     2018  3.80e7    2019
+    ##  3 Albania        8.92e4    2019  43749     2019   1865     2019  2.87e6    2019
+    ##  4 Algeria        9.96e5    2018      0        0      0        0  4.31e7    2019
+    ##  5 Argentina      2.21e6    2017 276648     2017  26098     2017  4.49e7    2019
+    ##  6 Armenia        6.96e4    2019  10855     2019    985     2019  2.96e6    2019
+    ##  7 Australia      9.99e5    2018 304632     2018  56110     2018  2.53e7    2019
+    ##  8 Austria        1.99e5    2018 135346.    2018  20396.    2018  8.86e6    2019
+    ##  9 Azerbaijan     1.61e5    2019  20954     2019   2626     2019  1.00e7    2019
+    ## 10 Barbados       0            0      0        0    133     2011  2.87e5    2019
+    ## # … with 113 more rows, 47 more variables: uni_enr_tot <dbl>,
     ## #   uni_enr_prop <dbl>, baseline_kg_co2e_excl_luc <dbl>,
     ## #   baseline_kg_co2e_total <dbl>, baseline_l_blue_green_wf <dbl>,
     ## #   baseline_l_blue_wf_total <dbl>, baseline_l_green_wf <dbl>,
     ## #   meatless_day_kg_co2e_excl_luc <dbl>, meatless_day_kg_co2e_total <dbl>,
     ## #   meatless_day_l_blue_green_wf <dbl>, meatless_day_l_blue_wf_total <dbl>,
     ## #   meatless_day_l_green_wf <dbl>, no_dairy_kg_co2e_excl_luc <dbl>, …
+
+Now, we will have to perform a similar set of procedures in order to go
+through with our spatial join.
+
+As a reminder, here’s how we left our shapefile data
+
+``` r
+map_data_iso 
+```
+
+    ## # A tibble: 99,467 × 5
+    ##     long   lat group order country    
+    ##    <dbl> <dbl> <dbl> <int> <chr>      
+    ##  1  74.9  37.2     2    12 Afghanistan
+    ##  2  74.8  37.2     2    13 Afghanistan
+    ##  3  74.8  37.2     2    14 Afghanistan
+    ##  4  74.7  37.3     2    15 Afghanistan
+    ##  5  74.7  37.3     2    16 Afghanistan
+    ##  6  74.7  37.3     2    17 Afghanistan
+    ##  7  74.6  37.2     2    18 Afghanistan
+    ##  8  74.4  37.2     2    19 Afghanistan
+    ##  9  74.4  37.1     2    20 Afghanistan
+    ## 10  74.5  37.1     2    21 Afghanistan
+    ## # … with 99,457 more rows
+
+To see how the country names line up between our impact modeling data
+and our shapefile data, we can use the following:
+
+``` r
+map_data_iso_check <- map_data_iso %>% distinct(country)
+anti_join(map_data_iso_check,impact_modeling_data,by="country") %>%
+  select(country)
+```
+
+    ## # A tibble: 152 × 1
+    ##    country            
+    ##    <chr>              
+    ##  1 American Samoa     
+    ##  2 Andorra            
+    ##  3 Angola             
+    ##  4 Anguilla           
+    ##  5 Antarctica         
+    ##  6 Antigua            
+    ##  7 Antigua and Barbuda
+    ##  8 Aruba              
+    ##  9 Ascension Island   
+    ## 10 Azores             
+    ## # … with 142 more rows
+
+anti_join(university_enrollment_data,dietary_footprint_data,by=“country”)
+%\>% select(country)
 
 To reduce the potential for confusion, we will change the names for all
 included countries in alignment with ISO 3166 and, to reduce the
