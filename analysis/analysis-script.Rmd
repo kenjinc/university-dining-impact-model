@@ -8,3 +8,83 @@ knitr::opts_chunk$set(echo = TRUE,warning=FALSE,message=FALSE)
 ```
 
 ## Required Packages 
+
+```{r, message=FALSE}
+library(tidyverse)
+library(RColorBrewer)
+library(colorspace)
+```
+
+## Data Loading
+
+```{r}
+impact_modeling_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/data/impact-modeling-data.csv")
+```
+
+## Included countries
+
+To distinguish the 123 included countries from within the 135 designated countries within the `world_map_iso` data without available university enrollment and dietary footprint data, we need to construct a new column that can aid with this need,
+
+```{r}
+impact_modeling_data %>%
+  mutate(inclusion=ifelse(uni_enr_tot>0,country)) %>%
+  ggplot(aes(x=long,y=lat,fill=inclusion,group=group)) + 
+  geom_polygon(color="black",linewidth=0.05) +
+  scale_fill_discrete(na.value="white") +
+  labs(fill="") +
+  xlab("") + 
+  ylab("") +
+  theme(legend.position="none",panel.grid=element_blank(),panel.background=element_blank(),axis.text=element_blank(),axis.ticks=element_blank())
+```
+
+```{r}
+impact_modeling_data %>%
+  distinct(country)
+```
+Comparing university enrollment totals across countries.
+
+```{r}
+ggplot(impact_modeling_data,aes(x=long,y=lat,fill=uni_enr_tot,group=group)) + 
+  geom_polygon(color="black",linewidth=0.05) + 
+  scale_fill_distiller(palette="Purples",trans="reverse",na.value="white") +
+  labs(fill="") +
+  xlab("") + 
+  ylab("") +
+  theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_blank(),axis.text=element_blank(),axis.ticks=element_blank())
+```
+
+Comparing university enrollment proportions (university enrollees as a function of the national population) across countries.
+
+```{r}
+ggplot(impact_modeling_data,aes(x=long,y=lat,fill=uni_enr_prop,group=group)) + 
+  geom_polygon(color="black",linewidth=0.05) + 
+  scale_fill_distiller(palette="Purples",trans="reverse",na.value="white") +
+  labs(fill="") +
+  xlab("") + 
+  ylab("") +
+  theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_blank(),axis.text=element_blank(),axis.ticks=element_blank())
+```
+
+Comparing per capita baseline carbon footprint (kg co2e) across countries
+
+```{r}
+ggplot(impact_modeling_data,aes(x=long,y=lat,fill=baseline_kg_co2e_total,group=group)) + 
+  geom_polygon(color="black",linewidth=0.05) + 
+  scale_fill_distiller(palette="Oranges",trans="reverse",na.value="white") +
+  labs(fill="") +
+  xlab("") + 
+  ylab("") +
+  theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_blank(),axis.text=element_blank(),axis.ticks=element_blank())
+```
+
+Comparing per capita water footprint of baseline diet across countries.
+
+```{r}
+ggplot(impact_modeling_data,aes(x=long,y=lat,fill=baseline_l_blue_green_wf,group=group)) + 
+  geom_polygon(color="black",linewidth=0.05) + 
+  scale_fill_continuous_sequential(palette="BluGrn",trans="reverse",na.value="white") +
+  labs(fill="") +
+  xlab("") + 
+  ylab("") +
+  theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_blank(),axis.text=element_blank(),axis.ticks=element_blank())
+```
