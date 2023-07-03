@@ -1509,8 +1509,8 @@ With these alignments now in place, we can now perform a `left_join` to
 aggregate our university enrollment and dietary footprint data together.
 
 ``` r
-impact_modeling_data <- left_join(university_enrollment_data,dietary_footprint_data,by="country")
-impact_modeling_data
+ue_df_data <- left_join(university_enrollment_data,dietary_footprint_data,by="country")
+ue_df_data
 ```
 
     ## # A tibble: 123 × 56
@@ -1564,7 +1564,7 @@ and our shapefile data, we can use the following:
 
 ``` r
 map_data_iso_check <- map_data_iso %>% distinct(country)
-anti_join(map_data_iso_check,impact_modeling_data,by="country") %>%
+anti_join(map_data_iso_check,ue_df_data,by="country") %>%
   select(country)
 ```
 
@@ -1583,16 +1583,150 @@ anti_join(map_data_iso_check,impact_modeling_data,by="country") %>%
     ## 10 Azores             
     ## # … with 142 more rows
 
-anti_join(university_enrollment_data,dietary_footprint_data,by=“country”)
-%\>% select(country)
+``` r
+anti_join(ue_df_data,map_data_iso_check,by="country") %>%
+  select(country)
+```
 
-To reduce the potential for confusion, we will change the names for all
-included countries in alignment with ISO 3166 and, to reduce the
-opportunity for confusion, we will also supply the corresponding ISO
-numeric code and the official state name.
+    ## # A tibble: 17 × 1
+    ## # Rowwise: 
+    ##    country                                  
+    ##    <chr>                                    
+    ##  1 China, Taiwan Province of                
+    ##  2 Brunei Darussalam                        
+    ##  3 Cabo Verde                               
+    ##  4 Congo                                    
+    ##  5 Czechia                                  
+    ##  6 China, Hong Kong SAR                     
+    ##  7 Iran (Islamic Republic of)               
+    ##  8 Republic of Korea                        
+    ##  9 Kyrgyzstan                               
+    ## 10 China, Macao SAR                         
+    ## 11 Republic of Moldova                      
+    ## 12 The former Yugoslav Republic of Macedonia
+    ## 13 Russian Federation                       
+    ## 14 Slovakia                                 
+    ## 15 United Republic of Tanzania              
+    ## 16 United States of America                 
+    ## 17 Venezuela (Bolivarian Republic of)
 
-will need to make systematized decisions about whether to (a) supplement
-the data made available through the EdStats database with
-government-provided enrollment data or (b) remove the
+Here, we have the 17 row observations that are found in the impact
+modeling data but not the shapefile data.
+
+We will look at the naming inconsistencies and align them according to
+how they are presented in the map data.
+
+-   Taiwan
+-   Brunei
+-   Cape Verde
+-   Congo, Dem. Rep.
+-   Czech Republic
+-   Hong Kong, China
+-   Iran
+-   South Korea
+-   Krygyz Republic
+-   Macao, China
+-   Moldova
+-   North Macedonia
+-   Russia
+-   Slovak Republic
+-   Tanzania
+-   United States
+-   Venezuela
+
+Because the `anti_join` function returns only unmatched records, we can
+presume that the other 106 countries are correspondingly named in the
+shapefile data.
+
+``` r
+ue_df_data <- ue_df_data %>%
+  mutate(across(country,str_replace,"China, Taiwan Province of","Taiwan")) %>%
+  mutate(across(country,str_replace,"Brunei Darussalam","Brunei")) %>%
+  mutate(across(country,str_replace,"Cabo Verde","Cape Verde")) %>%
+  mutate(across(country,str_replace,"Congo","Congo, Dem. Rep.")) %>%
+  mutate(across(country,str_replace,"Czechia","Czech Republic")) %>%
+  mutate(across(country,str_replace,"China, Hong Kong SAR","Hong Kong, China")) %>%
+  mutate(across(country,str_replace,"Republic of Korea","South Korea")) %>%
+  mutate(across(country,str_replace,"Kyrgyzstan","Krygyz Republic")) %>%
+  mutate(across(country,str_replace,"China, Macao SAR","Macao, China")) %>%
+  mutate(across(country,str_replace,"Republic of Moldova","Moldova")) %>%
+  mutate(across(country,str_replace,"The former Yugoslav Republic of Macedonia","North Macedonia")) %>%
+  mutate(across(country,str_replace,"Russian Federation","Russia")) %>%
+  mutate(across(country,str_replace,"Slovakia","Slovak Republic")) %>%
+  mutate(across(country,str_replace,"United Republic of Tanzania","Tanzania")) %>%
+  mutate(across(country,str_replace,"United States of America","United States")) %>%
+   mutate(across(country,str_replace,fixed("Iran (Islamic Republic of)"),"Iran")) %>%
+  mutate(across(country,str_replace,fixed("Venezuela (Bolivarian Republic of)"),"Venezuela")) 
+ue_df_data
+```
+
+    ## # A tibble: 123 × 56
+    ## # Rowwise: 
+    ##    country     isced6_…¹ isced…² isced…³ isced…⁴ isced…⁵ isced…⁶ natpo…⁷ natpo…⁸
+    ##    <chr>           <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
+    ##  1 Taiwan        985144     2021 171779     2021  28907     2021  2.32e7    2022
+    ##  2 Afghanistan   365982     2018   4600     2018     28     2018  3.80e7    2019
+    ##  3 Albania        89231     2019  43749     2019   1865     2019  2.87e6    2019
+    ##  4 Algeria       996087     2018      0        0      0        0  4.31e7    2019
+    ##  5 Argentina    2210454     2017 276648     2017  26098     2017  4.49e7    2019
+    ##  6 Armenia        69622     2019  10855     2019    985     2019  2.96e6    2019
+    ##  7 Australia     999034     2018 304632     2018  56110     2018  2.53e7    2019
+    ##  8 Austria       199236.    2018 135346.    2018  20396.    2018  8.86e6    2019
+    ##  9 Azerbaijan    160631     2019  20954     2019   2626     2019  1.00e7    2019
+    ## 10 Barbados           0        0      0        0    133     2011  2.87e5    2019
+    ## # … with 113 more rows, 47 more variables: uni_enr_tot <dbl>,
+    ## #   uni_enr_prop <dbl>, baseline_kg_co2e_excl_luc <dbl>,
+    ## #   baseline_kg_co2e_total <dbl>, baseline_l_blue_green_wf <dbl>,
+    ## #   baseline_l_blue_wf_total <dbl>, baseline_l_green_wf <dbl>,
+    ## #   meatless_day_kg_co2e_excl_luc <dbl>, meatless_day_kg_co2e_total <dbl>,
+    ## #   meatless_day_l_blue_green_wf <dbl>, meatless_day_l_blue_wf_total <dbl>,
+    ## #   meatless_day_l_green_wf <dbl>, no_dairy_kg_co2e_excl_luc <dbl>, …
+
+With this complete, we can run the same `anti_join` function to ensure
+that we’ve properly resolved each case.
+
+``` r
+anti_join(ue_df_data,map_data_iso_check,by="country") %>%
+  select(country)
+```
+
+    ## # A tibble: 0 × 1
+    ## # Rowwise: 
+    ## # … with 1 variable: country <chr>
+
+Now, we can move on with our spatial join.
+
+``` r
+impact_modeling_data <- left_join(map_data_iso,ue_df_data,by="country")
+impact_modeling_data
+```
+
+    ## # A tibble: 99,467 × 60
+    ##     long   lat group order country     isced6_…¹ isced…² isced…³ isced…⁴ isced…⁵
+    ##    <dbl> <dbl> <dbl> <int> <chr>           <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
+    ##  1  74.9  37.2     2    12 Afghanistan    365982    2018    4600    2018      28
+    ##  2  74.8  37.2     2    13 Afghanistan    365982    2018    4600    2018      28
+    ##  3  74.8  37.2     2    14 Afghanistan    365982    2018    4600    2018      28
+    ##  4  74.7  37.3     2    15 Afghanistan    365982    2018    4600    2018      28
+    ##  5  74.7  37.3     2    16 Afghanistan    365982    2018    4600    2018      28
+    ##  6  74.7  37.3     2    17 Afghanistan    365982    2018    4600    2018      28
+    ##  7  74.6  37.2     2    18 Afghanistan    365982    2018    4600    2018      28
+    ##  8  74.4  37.2     2    19 Afghanistan    365982    2018    4600    2018      28
+    ##  9  74.4  37.1     2    20 Afghanistan    365982    2018    4600    2018      28
+    ## 10  74.5  37.1     2    21 Afghanistan    365982    2018    4600    2018      28
+    ## # … with 99,457 more rows, 50 more variables: isced8_ref_yr <dbl>,
+    ## #   natpop_est <dbl>, natpop_ref_yr <dbl>, uni_enr_tot <dbl>,
+    ## #   uni_enr_prop <dbl>, baseline_kg_co2e_excl_luc <dbl>,
+    ## #   baseline_kg_co2e_total <dbl>, baseline_l_blue_green_wf <dbl>,
+    ## #   baseline_l_blue_wf_total <dbl>, baseline_l_green_wf <dbl>,
+    ## #   meatless_day_kg_co2e_excl_luc <dbl>, meatless_day_kg_co2e_total <dbl>,
+    ## #   meatless_day_l_blue_green_wf <dbl>, meatless_day_l_blue_wf_total <dbl>, …
 
 ## Writing the Final Data File
+
+As our final step, we will write this newly formed dataframe as a csv
+and move it to the `data` folder located within our repository.
+
+``` r
+write.csv(impact_modeling_data,"~/github/university-dining-impact-model/data/impact-modeling-data.csv")
+```
