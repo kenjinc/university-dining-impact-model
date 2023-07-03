@@ -336,7 +336,7 @@ countries
 ``` r
 ggplot(impact_modeling_data,aes(x=long,y=lat,fill=baseline_kg_co2e_total,group=group)) + 
   geom_polygon(color="black",linewidth=0.05) + 
-  scale_fill_distiller(palette="Oranges",trans="reverse",na.value="white") +
+  scale_fill_viridis_c(option="A",trans="reverse",na.value="white") +
   labs(fill="") +
   xlab("") + 
   ylab("") +
@@ -358,3 +358,15 @@ ggplot(impact_modeling_data,aes(x=long,y=lat,fill=baseline_l_blue_green_wf,group
 ```
 
 ![](analysis-script_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+
+``` r
+ggplot(impact_modeling_data,aes(x=long,y=lat,fill=baseline_l_blue_green_wf,group=group)) + 
+  geom_polygon(color="black",linewidth=0.05) + 
+  scale_fill_viridis_c(na.value="white") +
+  labs(fill="") +
+  xlab("") + 
+  ylab("") +
+  theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_blank(),axis.text=element_blank(),axis.ticks=element_blank())
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
