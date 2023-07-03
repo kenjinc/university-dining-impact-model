@@ -5,170 +5,15 @@ Analysis and Visualization Script
 
 ``` r
 library(tidyverse)
+library(RColorBrewer)
+library(colorspace)
 ```
 
 ## Data Loading
 
 ``` r
 impact_modeling_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/data/impact-modeling-data.csv")
-impact_modeling_data %>%
-  head(6)
 ```
-
-    ##   X     long      lat group order     country isced6_enr isced6_ref_yr
-    ## 1 1 74.89131 37.23164     2    12 Afghanistan     365982          2018
-    ## 2 2 74.84023 37.22505     2    13 Afghanistan     365982          2018
-    ## 3 3 74.76738 37.24917     2    14 Afghanistan     365982          2018
-    ## 4 4 74.73896 37.28564     2    15 Afghanistan     365982          2018
-    ## 5 5 74.72666 37.29072     2    16 Afghanistan     365982          2018
-    ## 6 6 74.66895 37.26670     2    17 Afghanistan     365982          2018
-    ##   isced7_enr isced7_ref_yr isced8_enr isced8_ref_yr natpop_est natpop_ref_yr
-    ## 1       4600          2018         28          2018   38042000          2019
-    ## 2       4600          2018         28          2018   38042000          2019
-    ## 3       4600          2018         28          2018   38042000          2019
-    ## 4       4600          2018         28          2018   38042000          2019
-    ## 5       4600          2018         28          2018   38042000          2019
-    ## 6       4600          2018         28          2018   38042000          2019
-    ##   uni_enr_tot uni_enr_prop baseline_kg_co2e_excl_luc baseline_kg_co2e_total
-    ## 1      370610  0.009742127                  894.9871               898.4078
-    ## 2      370610  0.009742127                  894.9871               898.4078
-    ## 3      370610  0.009742127                  894.9871               898.4078
-    ## 4      370610  0.009742127                  894.9871               898.4078
-    ## 5      370610  0.009742127                  894.9871               898.4078
-    ## 6      370610  0.009742127                  894.9871               898.4078
-    ##   baseline_l_blue_green_wf baseline_l_blue_wf_total baseline_l_green_wf
-    ## 1                  1015577                 347776.8            667799.9
-    ## 2                  1015577                 347776.8            667799.9
-    ## 3                  1015577                 347776.8            667799.9
-    ## 4                  1015577                 347776.8            667799.9
-    ## 5                  1015577                 347776.8            667799.9
-    ## 6                  1015577                 347776.8            667799.9
-    ##   meatless_day_kg_co2e_excl_luc meatless_day_kg_co2e_total
-    ## 1                      1809.934                   1817.495
-    ## 2                      1809.934                   1817.495
-    ## 3                      1809.934                   1817.495
-    ## 4                      1809.934                   1817.495
-    ## 5                      1809.934                   1817.495
-    ## 6                      1809.934                   1817.495
-    ##   meatless_day_l_blue_green_wf meatless_day_l_blue_wf_total
-    ## 1                      1302835                     506810.4
-    ## 2                      1302835                     506810.4
-    ## 3                      1302835                     506810.4
-    ## 4                      1302835                     506810.4
-    ## 5                      1302835                     506810.4
-    ## 6                      1302835                     506810.4
-    ##   meatless_day_l_green_wf no_dairy_kg_co2e_excl_luc no_dairy_kg_co2e_total
-    ## 1                796024.9                  503.0854               508.6838
-    ## 2                796024.9                  503.0854               508.6838
-    ## 3                796024.9                  503.0854               508.6838
-    ## 4                796024.9                  503.0854               508.6838
-    ## 5                796024.9                  503.0854               508.6838
-    ## 6                796024.9                  503.0854               508.6838
-    ##   no_dairy_l_blue_green_wf no_dairy_l_blue_wf_total no_dairy_l_green_wf
-    ## 1                  1298970                 502284.9            796685.3
-    ## 2                  1298970                 502284.9            796685.3
-    ## 3                  1298970                 502284.9            796685.3
-    ## 4                  1298970                 502284.9            796685.3
-    ## 5                  1298970                 502284.9            796685.3
-    ## 6                  1298970                 502284.9            796685.3
-    ##   low_red_meat_kg_co2e_excl_luc low_red_meat_kg_co2e_total
-    ## 1                      1827.645                    1835.41
-    ## 2                      1827.645                    1835.41
-    ## 3                      1827.645                    1835.41
-    ## 4                      1827.645                    1835.41
-    ## 5                      1827.645                    1835.41
-    ## 6                      1827.645                    1835.41
-    ##   low_red_meat_l_blue_green_wf low_red_meat_l_blue_wf_total
-    ## 1                      1377793                     565371.3
-    ## 2                      1377793                     565371.3
-    ## 3                      1377793                     565371.3
-    ## 4                      1377793                     565371.3
-    ## 5                      1377793                     565371.3
-    ## 6                      1377793                     565371.3
-    ##   low_red_meat_l_green_wf no_red_meat_kg_co2e_excl_luc
-    ## 1                  812422                     1946.329
-    ## 2                  812422                     1946.329
-    ## 3                  812422                     1946.329
-    ## 4                  812422                     1946.329
-    ## 5                  812422                     1946.329
-    ## 6                  812422                     1946.329
-    ##   no_red_meat_kg_co2e_total no_red_meat_l_blue_green_wf
-    ## 1                  1954.949                     1288915
-    ## 2                  1954.949                     1288915
-    ## 3                  1954.949                     1288915
-    ## 4                  1954.949                     1288915
-    ## 5                  1954.949                     1288915
-    ## 6                  1954.949                     1288915
-    ##   no_red_meat_l_blue_wf_total no_red_meat_l_green_wf
-    ## 1                    568457.3               720457.5
-    ## 2                    568457.3               720457.5
-    ## 3                    568457.3               720457.5
-    ## 4                    568457.3               720457.5
-    ## 5                    568457.3               720457.5
-    ## 6                    568457.3               720457.5
-    ##   pescetarian_kg_co2e_excl_luc pescetarian_kg_co2e_total
-    ## 1                     879.0195                  881.5167
-    ## 2                     879.0195                  881.5167
-    ## 3                     879.0195                  881.5167
-    ## 4                     879.0195                  881.5167
-    ## 5                     879.0195                  881.5167
-    ## 6                     879.0195                  881.5167
-    ##   pescetarian_l_blue_green_wf pescetarian_l_blue_wf_total
-    ## 1                     1168046                    512937.3
-    ## 2                     1168046                    512937.3
-    ## 3                     1168046                    512937.3
-    ## 4                     1168046                    512937.3
-    ## 5                     1168046                    512937.3
-    ## 6                     1168046                    512937.3
-    ##   pescetarian_l_green_wf lacto_ovo_vegetarian_kg_co2e_excl_luc
-    ## 1               655108.3                              2170.739
-    ## 2               655108.3                              2170.739
-    ## 3               655108.3                              2170.739
-    ## 4               655108.3                              2170.739
-    ## 5               655108.3                              2170.739
-    ## 6               655108.3                              2170.739
-    ##   lacto_ovo_vegetarian_kg_co2e_total lacto_ovo_vegetarian_l_blue_green_wf
-    ## 1                            2178.37                              1308713
-    ## 2                            2178.37                              1308713
-    ## 3                            2178.37                              1308713
-    ## 4                            2178.37                              1308713
-    ## 5                            2178.37                              1308713
-    ## 6                            2178.37                              1308713
-    ##   lacto_ovo_vegetarian_l_blue_wf_total lacto_ovo_vegetarian_l_green_wf
-    ## 1                             594591.9                        714121.1
-    ## 2                             594591.9                        714121.1
-    ## 3                             594591.9                        714121.1
-    ## 4                             594591.9                        714121.1
-    ## 5                             594591.9                        714121.1
-    ## 6                             594591.9                        714121.1
-    ##   X2.3_vegan_kg_co2e_excl_luc X2.3_vegan_kg_co2e_total
-    ## 1                     753.634                 756.1502
-    ## 2                     753.634                 756.1502
-    ## 3                     753.634                 756.1502
-    ## 4                     753.634                 756.1502
-    ## 5                     753.634                 756.1502
-    ## 6                     753.634                 756.1502
-    ##   X2.3_vegan_l_blue_green_wf X2.3_vegan_l_blue_wf_total X2.3_vegan_l_green_wf
-    ## 1                    1181193                   491555.1              689638.3
-    ## 2                    1181193                   491555.1              689638.3
-    ## 3                    1181193                   491555.1              689638.3
-    ## 4                    1181193                   491555.1              689638.3
-    ## 5                    1181193                   491555.1              689638.3
-    ## 6                    1181193                   491555.1              689638.3
-    ##   vegan_kg_co2e_excl_luc vegan_kg_co2e_total vegan_l_blue_green_wf
-    ## 1               255.5508            255.5508               1120862
-    ## 2               255.5508            255.5508               1120862
-    ## 3               255.5508            255.5508               1120862
-    ## 4               255.5508            255.5508               1120862
-    ## 5               255.5508            255.5508               1120862
-    ## 6               255.5508            255.5508               1120862
-    ##   vegan_l_blue_wf_total vegan_l_green_wf
-    ## 1              491242.5         629619.7
-    ## 2              491242.5         629619.7
-    ## 3              491242.5         629619.7
-    ## 4              491242.5         629619.7
-    ## 5              491242.5         629619.7
-    ## 6              491242.5         629619.7
 
 ## Included countries
 
@@ -499,3 +344,17 @@ ggplot(impact_modeling_data,aes(x=long,y=lat,fill=baseline_kg_co2e_total,group=g
 ```
 
 ![](analysis-script_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+
+Comparing per capita water footprint of baseline diet across countries.
+
+``` r
+ggplot(impact_modeling_data,aes(x=long,y=lat,fill=baseline_l_blue_green_wf,group=group)) + 
+  geom_polygon(color="black",linewidth=0.05) + 
+  scale_fill_continuous_sequential(palette="BluGrn",trans="reverse",na.value="white") +
+  labs(fill="") +
+  xlab("") + 
+  ylab("") +
+  theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_blank(),axis.text=element_blank(),axis.ticks=element_blank())
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
