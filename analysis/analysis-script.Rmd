@@ -21,6 +21,13 @@ library(colorspace)
 impact_modeling_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/data/impact-modeling-data.csv")
 ```
 
+```{r}
+reduction_modeling_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/data/impact-modeling-data.csv") %>%
+  distinct(country,isced6_enr,isced7_enr,isced8_enr,natpop_est,uni_enr_tot,uni_enr_prop,baseline_kg_co2e_excl_luc,baseline_kg_co2e_total,baseline_l_blue_green_wf,baseline_l_blue_wf_total,baseline_l_green_wf
+,meatless_day_kg_co2e_excl_luc,meatless_day_kg_co2e_total,meatless_day_l_blue_green_wf,meatless_day_l_blue_wf_total,meatless_day_l_green_wf,no_dairy_kg_co2e_excl_luc,no_dairy_kg_co2e_total,no_dairy_l_blue_green_wf,no_dairy_l_blue_wf_total,no_dairy_l_green_wf,low_red_meat_kg_co2e_excl_luc,low_red_meat_kg_co2e_total,low_red_meat_l_blue_green_wf,low_red_meat_l_blue_wf_total,low_red_meat_l_green_wf,no_red_meat_kg_co2e_excl_luc,no_red_meat_kg_co2e_total,no_red_meat_l_blue_green_wf,no_red_meat_l_blue_wf_total,no_red_meat_l_green_wf,pescetarian_kg_co2e_excl_luc,pescetarian_kg_co2e_total,pescetarian_l_blue_green_wf,pescetarian_l_blue_wf_total,pescetarian_l_green_wf,lacto_ovo_vegetarian_kg_co2e_excl_luc,lacto_ovo_vegetarian_kg_co2e_total,lacto_ovo_vegetarian_l_blue_green_wf,lacto_ovo_vegetarian_l_blue_wf_total,lacto_ovo_vegetarian_l_green_wf,X2.3_vegan_kg_co2e_excl_luc,X2.3_vegan_kg_co2e_total,X2.3_vegan_l_blue_green_wf,X2.3_vegan_l_blue_wf_total,X2.3_vegan_l_green_wf,vegan_kg_co2e_excl_luc,vegan_kg_co2e_total,vegan_l_blue_green_wf,vegan_l_blue_wf_total,vegan_l_green_wf) %>%
+  drop_na()
+```
+
 ## Included countries
 
 To distinguish the 123 included countries from within the 135 designated countries within the `world_map_iso` data without available university enrollment and dietary footprint data, we need to construct a new column that can aid with this need,
@@ -29,72 +36,74 @@ To distinguish the 123 included countries from within the 135 designated countri
 impact_modeling_data %>%
   mutate(inclusion=ifelse(uni_enr_tot>0,country)) %>%
   ggplot(aes(x=long,y=lat,fill=inclusion,group=group)) + 
-  geom_polygon(color="black",linewidth=0.05) +
-  scale_fill_discrete(na.value="white") +
-  labs(fill="") +
+  geom_polygon(color="black",size=0.05,alpha=0.67) +
+  scale_fill_discrete(h=c(115,350),na.value="white") +
+  guides(fill="none") +
   xlab("") + 
   ylab("") +
-  theme(legend.position="none",panel.grid=element_blank(),panel.background=element_blank(),axis.text=element_blank(),axis.ticks=element_blank())
+  labs(caption="") +
+  ggtitle("Figure 1. Choropleth map highlighting the 123 countries included in our analyses.") +
+  theme(legend.position="none",panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank())
 ```
 
-```{r}
-impact_modeling_data %>%
-  distinct(country)
-```
 Comparing university enrollment totals across countries.
 
 ```{r}
 ggplot(impact_modeling_data,aes(x=long,y=lat,fill=uni_enr_tot,group=group)) + 
-  geom_polygon(color="black",linewidth=0.05) + 
-  scale_fill_distiller(palette="Purples",trans="reverse",na.value="white") +
-  labs(fill="") +
+  geom_polygon(color="black",size=0.05) + 
+  scale_fill_distiller(name="",palette="Purples",trans="reverse",na.value="white",labels=scales::comma) +
+  guides(fill=guide_colorbar(reverse=TRUE)) + 
   xlab("") + 
   ylab("") +
-  theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_blank(),axis.text=element_blank(),axis.ticks=element_blank())
+  labs(caption="") +
+  ggtitle("Figure 2. Choropleth map comparing university enrollment estimates across the 123 included countries.") +
+  theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank(),legend.key.width=unit(2,"cm"))
 ```
 
 Comparing university enrollment proportions (university enrollees as a function of the national population) across countries.
 
 ```{r}
 ggplot(impact_modeling_data,aes(x=long,y=lat,fill=uni_enr_prop,group=group)) + 
-  geom_polygon(color="black",linewidth=0.05) + 
-  scale_fill_distiller(palette="Purples",trans="reverse",na.value="white") +
-  labs(fill="") +
+  geom_polygon(color="black",size=0.05) + 
+  scale_fill_distiller(name="",palette="Purples",trans="reverse",na.value="white",labels=scales::percent) +
+  guides(fill=guide_colorbar(reverse=TRUE)) + 
   xlab("") + 
   ylab("") +
-  theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_blank(),axis.text=element_blank(),axis.ticks=element_blank())
+  labs(caption="") +
+  ggtitle("Figure 4. Choropleth map comparing university enrollment estimates as a proportion of their respective national populations across the 123 included countries.") +
+  theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank(),legend.key.width=unit(2,"cm"))
 ```
 
 Comparing per capita baseline carbon footprint (kg co2e) across countries
 
 ```{r}
 ggplot(impact_modeling_data,aes(x=long,y=lat,fill=baseline_kg_co2e_total,group=group)) + 
-  geom_polygon(color="black",linewidth=0.05) + 
-  scale_fill_viridis_c(option="A",trans="reverse",na.value="white") +
-  labs(fill="") +
+  geom_polygon(color="black",size=0.05) + 
+  scale_fill_continuous_sequential(name="",palette="OrRd",na.value="white",labels=scales::comma) +
+  guides() +
   xlab("") + 
   ylab("") +
-  theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_blank(),axis.text=element_blank(),axis.ticks=element_blank())
+  labs(caption="") +
+  ggtitle("Figure 5. Choropleth map comparing annual per capita dietary greenhouse gas estimates (kg CO2e) at baseline across the 123 included countries.") +
+  theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank(),legend.key.width=unit(2,"cm"))
 ```
 
 Comparing per capita water footprint of baseline diet across countries.
 
 ```{r}
 ggplot(impact_modeling_data,aes(x=long,y=lat,fill=baseline_l_blue_green_wf,group=group)) + 
-  geom_polygon(color="black",linewidth=0.05) + 
-  scale_fill_continuous_sequential(palette="BluGrn",trans="reverse",na.value="white") +
-  labs(fill="") +
+  geom_polygon(color="black",size=0.05) + 
+  scale_fill_continuous_sequential(name="",palette="BluGrn",na.value="white",labels=scales::comma) +
+  guides() +
   xlab("") + 
   ylab("") +
-  theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_blank(),axis.text=element_blank(),axis.ticks=element_blank())
+  labs(caption="") +
+  ggtitle("Figure 6. Choropleth map comparing annual per capita dietary water footprint (L) at baseline across the 123 included countries.") +
+  theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank(),legend.key.width=unit(2,"cm"))
 ```
 
 ```{r}
-ggplot(impact_modeling_data,aes(x=long,y=lat,fill=baseline_l_blue_green_wf,group=group)) + 
-  geom_polygon(color="black",linewidth=0.05) + 
-  scale_fill_viridis_c(na.value="white") +
-  labs(fill="") +
-  xlab("") + 
-  ylab("") +
-  theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_blank(),axis.text=element_blank(),axis.ticks=element_blank())
+reduction_modeling_data %>%
+  mutate(baseline_pop_exlc_luc=baseline_kg_co2e_excl_luc*uni_enr_tot) 
 ```
+
