@@ -288,6 +288,6 @@ reduction_modeling_data <- reduction_modeling_data %>% mutate(perc_dec_pop_meatl
   mutate(perc_dec_pop_vegan_l_green_wf=(pop_baseline_l_green_wf-pop_vegan_l_green_wf)/pop_baseline_l_green_wf)
 ```
 
-
+Now, per our research questions, we will add economic designations using the World Bank Atlast Method to categorize our 123 countries into 4 groups: low-income countries, lower-middle-income countries, upper-middle-income countries, and high-income countries. 
 
 
