@@ -126,7 +126,7 @@ With these new variables in place, we can generate population-level estimates by
 
 ```{r}
 reduction_modeling_data <- reduction_modeling_data %>%
-  mutate(pop_baseline_excl_luc=baseline_kg_co2e_excl_luc*uni_enr_tot) %>%
+  mutate(pop_baseline_kg_co2e_excl_luc=baseline_kg_co2e_excl_luc*uni_enr_tot) %>%
   mutate(pop_baseline_kg_co2e_total=baseline_kg_co2e_total*uni_enr_tot) %>%
   mutate(pop_baseline_kg_co2e_luc=baseline_kg_co2e_luc*uni_enr_tot) %>%
   mutate(pop_baseline_l_blue_green_wf=baseline_l_blue_green_wf*uni_enr_tot) %>%
@@ -182,16 +182,110 @@ reduction_modeling_data <- reduction_modeling_data %>%
   mutate(pop_vegan_l_green_wf=vegan_l_green_wf*uni_enr_tot)
 ```
 
-With these newly constructed population-level estimates, we can now model how each of these indicators would change in response to the proposed dietary scenarios. To do so, we will subtract each of the population-level estimates associated the eight identified dietary scenarios from the corresponding baseline statistic for each country.
+With these newly constructed population-level estimates, we can now model how each of these indicators would change in response to the proposed dietary scenarios. To do so, we will subtract each of the population-level estimates associated the eight identified dietary scenarios from the corresponding baseline statistic for each country. Seeing as there are six indicators for each of the eight non-baseline scenarios, this should generate a total of 48 new columns. 
 
 ```{r}
-reduction_modeling_data %>% mutate(red_pop_meatless_day_kg_co2e_excl_luc=pop_baseline_excl_luc-pop_meatless_day_kg_co2e_excl_luc)
+reduction_modeling_data <- reduction_modeling_data %>% mutate(dec_pop_meatless_day_kg_co2e_excl_luc=pop_baseline_kg_co2e_excl_luc-pop_meatless_day_kg_co2e_excl_luc) %>%
+  mutate(dec_pop_meatless_day_kg_co2e_total=pop_meatless_day_kg_co2e_total-pop_meatless_day_kg_co2e_total) %>%
+  mutate(dec_pop_meatless_day_kg_co2e_luc=pop_baseline_kg_co2e_luc-pop_meatless_day_kg_co2e_luc) %>%
+  mutate(dec_pop_meatless_day_l_blue_green_wf=pop_baseline_l_blue_green_wf-pop_meatless_day_l_blue_green_wf) %>%
+  mutate(dec_pop_meatless_day_l_blue_wf_total=pop_baseline_l_blue_wf_total-pop_meatless_day_l_blue_wf_total) %>% 
+  mutate(dec_pop_meatless_day_l_green_wf=pop_baseline_l_green_wf-pop_meatless_day_l_green_wf) %>%
+  mutate(dec_pop_no_dairy_kg_co2e_excl_luc=pop_baseline_kg_co2e_excl_luc-pop_no_dairy_kg_co2e_excl_luc) %>%
+  mutate(dec_pop_no_dairy_kg_co2e_total=pop_baseline_kg_co2e_total-pop_no_dairy_kg_co2e_total) %>%
+  mutate(dec_pop_no_dairy_kg_co2e_luc=pop_baseline_kg_co2e_luc-pop_no_dairy_kg_co2e_luc) %>%
+  mutate(dec_pop_no_dairy_l_blue_green_wf=pop_baseline_l_blue_green_wf-pop_no_dairy_l_blue_green_wf) %>%
+  mutate(dec_pop_no_dairy_l_blue_wf_total=pop_baseline_l_blue_wf_total-pop_no_dairy_l_blue_wf_total) %>%
+  mutate(dec_pop_no_dairy_l_green_wf=pop_baseline_l_green_wf-pop_no_dairy_l_green_wf) %>%
+  mutate(dec_pop_low_red_meat_kg_co2e_excl_luc=pop_baseline_kg_co2e_excl_luc-pop_low_red_meat_kg_co2e_excl_luc) %>% 
+  mutate(dec_pop_low_red_meat_kg_co2e_total=pop_baseline_kg_co2e_total-pop_low_red_meat_kg_co2e_total) %>%
+  mutate(dec_pop_low_red_meat_kg_co2e_luc=pop_baseline_kg_co2e_luc-pop_low_red_meat_kg_co2e_luc) %>%
+  mutate(dec_pop_low_red_meat_l_blue_green_wf=pop_baseline_l_blue_green_wf-pop_low_red_meat_l_blue_green_wf) %>%
+  mutate(dec_pop_low_red_meat_l_blue_wf_total=pop_baseline_l_blue_wf_total-pop_low_red_meat_l_blue_wf_total) %>%
+  mutate(dec_pop_low_red_meat_l_green_wf=pop_baseline_l_green_wf-pop_low_red_meat_l_green_wf) %>%
+  mutate(dec_pop_no_red_meat_kg_co2e_excl_luc=pop_baseline_kg_co2e_excl_luc-pop_no_red_meat_kg_co2e_excl_luc) %>%
+  mutate(dec_pop_no_red_meat_kg_co2e_total=pop_baseline_kg_co2e_total-pop_no_red_meat_kg_co2e_total) %>%
+  mutate(dec_pop_no_red_meat_kg_co2e_luc=pop_baseline_kg_co2e_luc-pop_no_red_meat_kg_co2e_luc) %>%
+  mutate(dec_pop_no_red_meat_l_blue_green_wf=pop_baseline_l_blue_green_wf-pop_no_red_meat_l_blue_green_wf) %>%
+  mutate(dec_pop_no_red_meat_l_blue_wf_total=pop_baseline_l_blue_wf_total-pop_no_red_meat_l_blue_wf_total) %>%
+  mutate(dec_pop_no_red_meat_l_green_wf=pop_baseline_l_green_wf-pop_no_red_meat_l_green_wf) %>%
+  mutate(dec_pop_pescetarian_kg_co2e_excl_luc=pop_baseline_kg_co2e_excl_luc-pop_pescetarian_kg_co2e_excl_luc) %>%
+  mutate(dec_pop_pescetarian_kg_co2e_total=pop_baseline_kg_co2e_total-pop_pescetarian_kg_co2e_total) %>%
+  mutate(dec_pop_pescetarian_kg_co2e_luc=pop_baseline_kg_co2e_luc-pop_pescetarian_kg_co2e_luc) %>%
+  mutate(dec_pop_pescetarian_l_blue_green_wf=pop_baseline_l_blue_green_wf-pop_pescetarian_l_blue_green_wf) %>%
+  mutate(dec_pop_pescetarian_l_blue_wf_total=pop_baseline_l_blue_wf_total-pop_pescetarian_l_blue_wf_total) %>%
+  mutate(dec_pop_pescetarian_l_green_wf=pop_baseline_l_green_wf-pop_pescetarian_l_green_wf) %>%
+  mutate(dec_pop_lacto_ovo_vegetarian_kg_co2e_excl_luc=pop_baseline_kg_co2e_excl_luc-pop_lacto_ovo_vegetarian_kg_co2e_excl_luc) %>%
+  mutate(dec_pop_lacto_ovo_vegetarian_kg_co2e_total=pop_baseline_kg_co2e_total-pop_lacto_ovo_vegetarian_kg_co2e_total) %>%
+  mutate(dec_pop_lacto_ovo_vegetarian_kg_co2e_luc=pop_baseline_kg_co2e_luc-pop_lacto_ovo_vegetarian_kg_co2e_luc) %>%
+  mutate(dec_pop_lacto_ovo_vegetarian_l_blue_green_wf=pop_baseline_l_blue_green_wf-pop_lacto_ovo_vegetarian_l_blue_green_wf) %>%
+  mutate(dec_pop_lacto_ovo_vegetarian_l_blue_wf_total=pop_baseline_l_blue_wf_total-pop_lacto_ovo_vegetarian_l_blue_wf_total) %>%
+  mutate(dec_pop_lacto_ovo_vegetarian_l_green_wf=pop_baseline_l_green_wf-pop_lacto_ovo_vegetarian_l_green_wf) %>%
+  mutate(dec_pop_X2.3_vegan_kg_co2e_excl_luc=pop_baseline_kg_co2e_excl_luc-pop_X2.3_vegan_kg_co2e_excl_luc) %>%
+  mutate(dec_pop_X2.3_vegan_kg_co2e_total=pop_baseline_kg_co2e_total-pop_X2.3_vegan_kg_co2e_total) %>%
+  mutate(dec_pop_X2.3_vegan_kg_co2e_luc=pop_baseline_kg_co2e_luc-pop_X2.3_vegan_kg_co2e_luc) %>%
+  mutate(dec_pop_X2.3_vegan_l_blue_green_wf=pop_baseline_l_blue_green_wf-pop_X2.3_vegan_l_blue_green_wf) %>%
+  mutate(dec_pop_X2.3_vegan_l_blue_wf_total=pop_baseline_l_blue_wf_total-pop_X2.3_vegan_l_blue_wf_total) %>%
+  mutate(dec_pop_X2.3_vegan_l_green_wf=pop_baseline_l_green_wf-pop_X2.3_vegan_l_green_wf) %>%
+  mutate(dec_pop_vegan_kg_co2e_excl_luc=pop_baseline_kg_co2e_excl_luc-pop_vegan_kg_co2e_excl_luc) %>%
+  mutate(dec_pop_vegan_kg_co2e_total=pop_baseline_kg_co2e_total-pop_vegan_kg_co2e_total) %>%
+  mutate(dec_pop_vegan_kg_co2e_luc=pop_baseline_kg_co2e_luc-pop_vegan_kg_co2e_luc) %>%
+  mutate(dec_pop_vegan_l_blue_green_wf=pop_baseline_l_blue_green_wf-pop_vegan_l_blue_green_wf) %>%
+  mutate(dec_pop_vegan_l_blue_wf_total=pop_baseline_l_blue_wf_total-pop_vegan_l_blue_wf_total) %>%
+  mutate(dec_pop_vegan_l_green_wf=pop_baseline_l_green_wf-pop_vegan_l_green_wf) 
 ```
 
-Now, we will do the same for the per capita estimates.
+Now, we will do the same for the percent decrease calculations.
 
 ```{r}
-
+reduction_modeling_data <- reduction_modeling_data %>% mutate(perc_dec_pop_meatless_day_kg_co2e_excl_luc=(pop_baseline_kg_co2e_excl_luc-pop_meatless_day_kg_co2e_excl_luc)/pop_baseline_kg_co2e_excl_luc) %>%
+  mutate(perc_dec_pop_meatless_day_kg_co2e_total=(pop_meatless_day_kg_co2e_total-pop_meatless_day_kg_co2e_total)/pop_meatless_day_kg_co2e_total) %>%
+  mutate(perc_dec_pop_meatless_day_kg_co2e_luc=(pop_baseline_kg_co2e_luc-pop_meatless_day_kg_co2e_luc)/pop_baseline_kg_co2e_luc) %>%
+  mutate(perc_dec_pop_meatless_day_l_blue_green_wf=(pop_baseline_l_blue_green_wf-pop_meatless_day_l_blue_green_wf)/pop_baseline_l_blue_green_wf) %>%
+  mutate(perc_dec_pop_meatless_day_l_blue_wf_total=(pop_baseline_l_blue_wf_total-pop_meatless_day_l_blue_wf_total)/pop_baseline_l_blue_wf_total) %>% 
+  mutate(perc_dec_pop_meatless_day_l_green_wf=(pop_baseline_l_green_wf-pop_meatless_day_l_green_wf)/pop_baseline_l_green_wf) %>%
+  mutate(perc_dec_pop_no_dairy_kg_co2e_excl_luc=(pop_baseline_kg_co2e_excl_luc-pop_no_dairy_kg_co2e_excl_luc)/pop_baseline_kg_co2e_excl_luc) %>%
+  mutate(perc_dec_pop_no_dairy_kg_co2e_total=(pop_baseline_kg_co2e_total-pop_no_dairy_kg_co2e_total)/pop_baseline_kg_co2e_total) %>%
+  mutate(perc_dec_pop_no_dairy_kg_co2e_luc=(pop_baseline_kg_co2e_luc-pop_no_dairy_kg_co2e_luc)/pop_baseline_kg_co2e_luc) %>%
+  mutate(perc_dec_pop_no_dairy_l_blue_green_wf=(pop_baseline_l_blue_green_wf-pop_no_dairy_l_blue_green_wf)/pop_baseline_l_blue_green_wf) %>%
+  mutate(perc_dec_pop_no_dairy_l_blue_wf_total=(pop_baseline_l_blue_wf_total-pop_no_dairy_l_blue_wf_total)/pop_baseline_l_blue_wf_total) %>%
+  mutate(perc_dec_pop_no_dairy_l_green_wf=(pop_baseline_l_green_wf-pop_no_dairy_l_green_wf)/pop_baseline_l_green_wf) %>%
+  mutate(perc_dec_pop_low_red_meat_kg_co2e_excl_luc=(pop_baseline_kg_co2e_excl_luc-pop_low_red_meat_kg_co2e_excl_luc)/pop_baseline_kg_co2e_excl_luc) %>% 
+  mutate(perc_dec_pop_low_red_meat_kg_co2e_total=(pop_baseline_kg_co2e_total-pop_low_red_meat_kg_co2e_total)/pop_baseline_kg_co2e_total) %>%
+  mutate(perc_dec_pop_low_red_meat_kg_co2e_luc=(pop_baseline_kg_co2e_luc-pop_low_red_meat_kg_co2e_luc)/pop_baseline_kg_co2e_luc) %>%
+  mutate(perc_dec_pop_low_red_meat_l_blue_green_wf=(pop_baseline_l_blue_green_wf-pop_low_red_meat_l_blue_green_wf)/pop_baseline_l_blue_green_wf) %>%
+  mutate(perc_dec_pop_low_red_meat_l_blue_wf_total=(pop_baseline_l_blue_wf_total-pop_low_red_meat_l_blue_wf_total)/pop_baseline_l_blue_wf_total) %>%
+  mutate(perc_dec_pop_low_red_meat_l_green_wf=(pop_baseline_l_green_wf-pop_low_red_meat_l_green_wf)/pop_baseline_l_green_wf) %>%
+  mutate(perc_dec_pop_no_red_meat_kg_co2e_excl_luc=(pop_baseline_kg_co2e_excl_luc-pop_no_red_meat_kg_co2e_excl_luc)/pop_baseline_kg_co2e_excl_luc) %>%
+  mutate(perc_dec_pop_no_red_meat_kg_co2e_total=(pop_baseline_kg_co2e_total-pop_no_red_meat_kg_co2e_total)/pop_baseline_kg_co2e_total) %>%
+  mutate(perc_dec_pop_no_red_meat_kg_co2e_luc=(pop_baseline_kg_co2e_luc-pop_no_red_meat_kg_co2e_luc)/pop_baseline_kg_co2e_luc) %>%
+  mutate(perc_dec_pop_no_red_meat_l_blue_green_wf=(pop_baseline_l_blue_green_wf-pop_no_red_meat_l_blue_green_wf)/pop_baseline_l_blue_green_wf) %>%
+  mutate(perc_dec_pop_no_red_meat_l_blue_wf_total=(pop_baseline_l_blue_wf_total-pop_no_red_meat_l_blue_wf_total)/pop_baseline_l_blue_wf_total) %>%
+  mutate(perc_dec_pop_no_red_meat_l_green_wf=(pop_baseline_l_green_wf-pop_no_red_meat_l_green_wf)/pop_baseline_l_green_wf) %>%
+  mutate(perc_dec_pop_pescetarian_kg_co2e_excl_luc=(pop_baseline_kg_co2e_excl_luc-pop_pescetarian_kg_co2e_excl_luc)/pop_baseline_kg_co2e_excl_luc) %>%
+  mutate(perc_dec_pop_pescetarian_kg_co2e_total=(pop_baseline_kg_co2e_total-pop_pescetarian_kg_co2e_total)/pop_baseline_kg_co2e_total) %>%
+  mutate(perc_dec_pop_pescetarian_kg_co2e_luc=(pop_baseline_kg_co2e_luc-pop_pescetarian_kg_co2e_luc)/pop_baseline_kg_co2e_luc) %>%
+  mutate(perc_dec_pop_pescetarian_l_blue_green_wf=(pop_baseline_l_blue_green_wf-pop_pescetarian_l_blue_green_wf)/pop_baseline_l_blue_green_wf) %>%
+  mutate(perc_dec_pop_pescetarian_l_blue_wf_total=(pop_baseline_l_blue_wf_total-pop_pescetarian_l_blue_wf_total)/pop_baseline_l_blue_wf_total) %>%
+  mutate(perc_dec_pop_pescetarian_l_green_wf=(pop_baseline_l_green_wf-pop_pescetarian_l_green_wf)/pop_baseline_l_green_wf) %>%
+  mutate(perc_dec_pop_lacto_ovo_vegetarian_kg_co2e_excl_luc=(pop_baseline_kg_co2e_excl_luc-pop_lacto_ovo_vegetarian_kg_co2e_excl_luc)/pop_baseline_kg_co2e_excl_luc) %>%
+  mutate(perc_dec_pop_lacto_ovo_vegetarian_kg_co2e_total=(pop_baseline_kg_co2e_total-pop_lacto_ovo_vegetarian_kg_co2e_total)/pop_baseline_kg_co2e_total) %>%
+  mutate(perc_dec_pop_lacto_ovo_vegetarian_kg_co2e_luc=(pop_baseline_kg_co2e_luc-pop_lacto_ovo_vegetarian_kg_co2e_luc)/pop_baseline_kg_co2e_luc) %>%
+  mutate(perc_dec_pop_lacto_ovo_vegetarian_l_blue_green_wf=(pop_baseline_l_blue_green_wf-pop_lacto_ovo_vegetarian_l_blue_green_wf)/pop_baseline_l_blue_green_wf) %>%
+  mutate(perc_dec_pop_lacto_ovo_vegetarian_l_blue_wf_total=(pop_baseline_l_blue_wf_total-pop_lacto_ovo_vegetarian_l_blue_wf_total)/pop_baseline_l_blue_wf_total) %>%
+  mutate(perc_dec_pop_lacto_ovo_vegetarian_l_green_wf=(pop_baseline_l_green_wf-pop_lacto_ovo_vegetarian_l_green_wf)/pop_baseline_l_green_wf) %>%
+  mutate(perc_dec_pop_X2.3_vegan_kg_co2e_excl_luc=(pop_baseline_kg_co2e_excl_luc-pop_X2.3_vegan_kg_co2e_excl_luc)/pop_baseline_kg_co2e_excl_luc) %>%
+  mutate(perc_dec_pop_X2.3_vegan_kg_co2e_total=(pop_baseline_kg_co2e_total-pop_X2.3_vegan_kg_co2e_total)/pop_baseline_kg_co2e_total) %>%
+  mutate(perc_dec_pop_X2.3_vegan_kg_co2e_luc=(pop_baseline_kg_co2e_luc-pop_X2.3_vegan_kg_co2e_luc)/pop_baseline_kg_co2e_luc) %>%
+  mutate(perc_dec_pop_X2.3_vegan_l_blue_green_wf=(pop_baseline_l_blue_green_wf-pop_X2.3_vegan_l_blue_green_wf)/pop_baseline_l_blue_green_wf) %>%
+  mutate(perc_dec_pop_X2.3_vegan_l_blue_wf_total=(pop_baseline_l_blue_wf_total-pop_X2.3_vegan_l_blue_wf_total)/pop_baseline_l_blue_wf_total) %>%
+  mutate(perc_dec_pop_X2.3_vegan_l_green_wf=(pop_baseline_l_green_wf-pop_X2.3_vegan_l_green_wf)/pop_baseline_l_green_wf) %>%
+  mutate(perc_dec_pop_vegan_kg_co2e_excl_luc=(pop_baseline_kg_co2e_excl_luc-pop_vegan_kg_co2e_excl_luc)/pop_baseline_kg_co2e_excl_luc) %>%
+  mutate(perc_dec_pop_vegan_kg_co2e_total=(pop_baseline_kg_co2e_total-pop_vegan_kg_co2e_total)/pop_baseline_kg_co2e_total) %>%
+  mutate(perc_dec_pop_vegan_kg_co2e_luc=(pop_baseline_kg_co2e_luc-pop_vegan_kg_co2e_luc)/pop_baseline_kg_co2e_luc) %>%
+  mutate(perc_dec_pop_vegan_l_blue_green_wf=(pop_baseline_l_blue_green_wf-pop_vegan_l_blue_green_wf)/pop_baseline_l_blue_green_wf) %>%
+  mutate(perc_dec_pop_vegan_l_blue_wf_total=(pop_baseline_l_blue_wf_total-pop_vegan_l_blue_wf_total)/pop_baseline_l_blue_wf_total) %>%
+  mutate(perc_dec_pop_vegan_l_green_wf=(pop_baseline_l_green_wf-pop_vegan_l_green_wf)/pop_baseline_l_green_wf)
 ```
 
 
