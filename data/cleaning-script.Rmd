@@ -1004,3 +1004,11 @@ As our final step, we will write this newly formed dataframe as a csv and move i
 write.csv(impact_modeling_data,"~/github/university-dining-impact-model/data/impact-modeling-data.csv")
 ```
 
+Additionally, we will also write a csv file into our `data` folder capturing the 123 unique countries included in our analyses.
+
+```{r}
+ue_df_data %>%
+  distinct(country) %>%
+  write.csv("~/github/university-dining-impact-model/data/country-list.csv")
+```
+
