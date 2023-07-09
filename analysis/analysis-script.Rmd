@@ -293,6 +293,40 @@ Now, per our research questions, we will add economic designations using the Wor
 ```{r}
 reduction_modeling_data <- reduction_modeling_data %>%
   mutate(income.classification=case_when(country=="Australia"~"high",country=="Austria"~"high",country=="Barbados"~"high",country=="Belgium"~"high",country=="Bermuda"~"high",country=="Brunei"~"high",country=="Canada"~"high",country=="Chile"~"high",country=="Croatia"~"high",country=="Cyprus"~"high",country=="Czech Republic"~"high",country=="Denmark"~"high",country=="Estonia"~"high",country=="Finland"~"high",country=="France"~"high",country=="Germany"~"high",country=="Greece"~"high",country=="Hong Kong, China"~"high",country=="Hungary"~"high",country=="Iceland"~"high",country=="Ireland"~"high",country=="Israel"~"high",country=="Italy"~"high",country=="Japan"~"high",country=="Kuwait"~"high",country=="Latvia"~"high",country=="Lithuania"~"high",country=="Luxembourg"~"high",country=="Macao, China"~"high",country=="Malta"~"high",country=="Netherlands"~"high",country=="New Zealand"~"high",country=="Norway"~"high",country=="Oman"~"high",country=="Panama"~"high",country=="Poland"~"high",country=="Portugal"~"high",country=="Romania"~"high",country=="Saudi Arabia"~"high",country=="Slovak Republic"~"high",country=="Slovenia"~"high",country=="South Korea"~"high",country=="Spain"~"high",country=="Sweden"~"high",country=="Switzerland"~"high",country=="Taiwan"~"high",country=="United Kingdom"~"high",country=="United States"~"high",country=="Uruguay"~"high",country=="Afghanistan"~"low",country=="Burkina Faso"~"low",country=="Congo, Dem. Rep."~"low",country=="Ethiopia"~"low",country=="Madagascar"~"low",country=="Malawi"~"low",country=="Mali"~"low",country=="Niger"~"low",country=="Rwanda"~"low",country=="Togo"~"low",country=="Uganda"~"low",country=="Yemen"~"low",country=="Algeria"~"lower middle",country=="Benin"~"lower middle",country=="Cambodia"~"lower middle",country=="Cameroon"~"lower middle",country=="Cape Verde"~"lower middle",country=="Cote d'Ivoire"~"lower middle",country=="Egypt"~"lower middle",country=="Ghana"~"lower middle",country=="Honduras"~"lower middle",country=="India"~"lower middle",country=="Iran"~"lower middle",country=="Jordan"~"lower middle",country=="Kenya"~"lower middle",country=="Krygyz Republic"~"lower middle",country=="Lebanon"~"lower middle",country=="Mauritania"~"lower middle",country=="Morocco"~"lower middle",country=="Nepal"~"lower middle",country=="Pakistan"~"lower middle",country=="Philippines"~"lower middle",country=="Senegal"~"lower middle",country=="Sri Lanka"~"lower middle",country=="Tanzania"~"lower middle",country=="Tunisia"~"lower middle",country=="Ukraine"~"lower middle",country=="Zimbabwe"~"lower middle",country=="Albania"~"upper middle",country=="Argentina"~"upper middle",country=="Armenia"~"upper middle",country=="Azerbaijan"~"upper middle",country=="Belarus"~"upper middle",country=="Belize"~"upper middle",country=="Bosnia and Herzegovina"~"upper middle",country=="Botswana"~"upper middle",country=="Brazil"~"upper middle",country=="Bulgaria"~"upper middle",country=="China"~"upper middle",country=="Colombia"~"upper middle",country=="Costa Rica"~"upper middle",country=="Ecuador"~"upper middle",country=="El Salvador"~"upper middle",country=="Fiji"~"upper middle",country=="Georgia"~"upper middle",country=="Guatemala"~"upper middle",country=="Indonesia"~"upper middle",country=="Jamaica"~"upper middle",country=="Kazakhstan"~"upper middle",country=="Malaysia"~"upper middle",country=="Maldives"~"upper middle",country=="Mauritius"~"upper middle",country=="Mexico"~"upper middle",country=="Moldova"~"upper middle",country=="Montenegro"~"upper middle",country=="Namibia"~"upper middle",country=="North Macedonia"~"upper middle",country=="Peru"~"upper middle",country=="Russia"~"upper middle",country=="Serbia"~"upper middle",country=="South Africa"~"upper middle",country=="Thailand"~"upper middle",country=="Turkey"~"upper middle",country=="Venezuela"~"upper middle"))
-                                         
 ```
+
+Now, we will use the `count` function to see how many countries fall into each group of observations.
+
+```{r}
+reduction_modeling_data %>% group_by(income.classification) %>%
+  count("high")
+```
+
+After rejoining this new dataframe with our original working dataset (with the shapefile data), we can reconstruct our initial figure - this time designating the included countries according to their income classifications.
+
+```{r}
+left_join(impact_modeling_data,reduction_modeling_data,by="country") %>% ggplot(aes(x=long,y=lat,fill=income.classification,group=group)) + 
+  geom_polygon(color="black",size=0.05,alpha=0.33) +
+  scale_fill_discrete(labels=c("High\n(n=49)","Low\n(n=12)","Lower Middle\n(n=26)","Upper Middle\n(n=36)","NA"),na.value="white") +
+  guides() +
+  xlab("") + 
+  ylab("") +
+  labs(caption="") +
+  ggtitle("Figure 1. Choropleth map highlighting the 123 countries included in our analyses.") +
+  theme(legend.position="bottom",legend.title=element_blank(),panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank())
+```
+
+New inclusion choropleth designating countries by income classification.
+
+
+ggplot(reduction_modeling_data,aes(x=long,y=lat,fill=income.classification,group=group)) + 
+  geom_polygon(color="black",size=0.05,alpha=0.33) +
+  scale_fill_discrete(na.value="white") +
+  guides(fill="none") +
+  xlab("") + 
+  ylab("") +
+  labs(caption="") +
+  ggtitle("Figure 1. Choropleth map highlighting the 123 countries included in our analyses.") +
+  theme(legend.position="none",panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank())
+
 
