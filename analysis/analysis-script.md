@@ -351,7 +351,7 @@ classifications.
 ``` r
 left_join(impact_modeling_data,reduction_modeling_data,by="country") %>% ggplot(aes(x=long,y=lat,fill=income.classification,group=group)) + 
   geom_polygon(color="black",size=0.05,alpha=0.33) +
-  scale_fill_discrete(labels=c("High\n(n=49)","Low\n(n=12)","Lower Middle\n(n=26)","Upper Middle\n(n=36)","NA"),na.value="white") +
+  scale_fill_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)","NA"),na.value="white") +
   guides() +
   xlab("") + 
   ylab("") +
@@ -362,11 +362,27 @@ left_join(impact_modeling_data,reduction_modeling_data,by="country") %>% ggplot(
 
 ![](analysis-script_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
-New inclusion choropleth designating countries by income classification.
+``` r
+vegan_cf_total <- ggplot(reduction_modeling_data,aes(x=dec_pop_vegan_kg_co2e_total,y=income.classification,fill=income.classification)) + 
+  geom_violin(adjust=1.5,size=0.5,alpha=0.33) +
+  scale_fill_discrete(limits=c("high","upper middle","lower middle","low")) +
+  scale_y_discrete(limits=c(c("low","lower middle","upper middle","high"))) +
+  geom_boxplot(width=0.05,fill="black",outlier.shape=NA) + 
+  stat_summary(fun.y=median,geom="point",fill="white",shape=21,size=2)
+```
 
-ggplot(reduction_modeling_data,aes(x=long,y=lat,fill=income.classification,group=group)) +
-geom_polygon(color=“black”,size=0.05,alpha=0.33) +
-scale_fill_discrete(na.value=“white”) + guides(fill=“none”) + xlab(““) +
-ylab(”“) + labs(caption=”“) + ggtitle(”Figure 1. Choropleth map
-highlighting the 123 countries included in our analyses.”) +
-theme(legend.position=“none”,panel.grid=element_blank(),panel.background=element_rect(fill=“aliceblue”),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank())
+``` r
+vegan_cf_xlims <- reduction_modeling_data %>%
+  group_by(income.classification) %>%
+  summarize(q1=quantile(dec_pop_vegan_kg_co2e_total,1/4),q3=quantile(dec_pop_vegan_kg_co2e_total,3/4)) %>%
+  ungroup() %>%
+  summarize(lowq1=min(q1),highq3=max(q3))
+```
+
+``` r
+vegan_cf_total + coord_cartesian(xlim=as.numeric(vegan_cf_xlims))
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+remember to change out parent dataset so that it includes GNI for
+scatterplot
