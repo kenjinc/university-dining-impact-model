@@ -374,7 +374,7 @@ vegan_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_vegan_kg_co2
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Vegan") +
-  theme(legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
 vegan_cf_dec_pop_bp
 ```
 
@@ -392,7 +392,7 @@ vegan_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_vegan_kg_co2
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Vegan") +
-  theme(legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
 vegan_cf_dec_pop_vp
 ```
 
@@ -410,7 +410,7 @@ X2.3_vegan_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_X2.3_ve
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("2/3 Vegan") +
-  theme(legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
 X2.3_vegan_cf_dec_pop_bp
 ```
 
@@ -428,7 +428,7 @@ X2.3_vegan_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_X2.3_ve
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("2/3 Vegan") +
-  theme(legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none",axis.text.y=element_blank(),axis.ticks.y=element_blank())
 X2.3_vegan_cf_dec_pop_vp
 ```
 
@@ -446,7 +446,7 @@ lacto_ovo_vegetarian_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_p
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Vegetarian") +
-  theme(legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
 lacto_ovo_vegetarian_cf_dec_pop_bp
 ```
 
@@ -464,7 +464,7 @@ lacto_ovo_vegetarian_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_p
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Vegetarian") +
-  theme(legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none",axis.text.y=element_blank(),axis.ticks.y=element_blank())
 lacto_ovo_vegetarian_cf_dec_pop_vp
 ```
 
@@ -482,14 +482,14 @@ pescetarian_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_pescet
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Pescetarian") +
-  theme(legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
 pescetarian_cf_dec_pop_bp
 ```
 
 ![](analysis-script_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
 
 ``` r
-pecetarian_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_pescetarian_kg_co2e_total,y=income.classification,fill=income.classification)) + 
+pescetarian_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_pescetarian_kg_co2e_total,y=income.classification,fill=income.classification)) + 
   geom_violin(scale="width",draw_quantiles=0.5,adjust=1,alpha=0.33,trim=TRUE) +
   scale_fill_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
@@ -500,8 +500,8 @@ pecetarian_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_pesceta
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Pescetarian") +
-  theme(legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
-pecetarian_cf_dec_pop_vp
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none",axis.text.y=element_blank(),axis.ticks.y=element_blank())
+pescetarian_cf_dec_pop_vp
 ```
 
 ![](analysis-script_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
@@ -518,7 +518,7 @@ no_red_meat_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_no_red
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("No Red Meat") +
-  theme(legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
 no_red_meat_cf_dec_pop_bp
 ```
 
@@ -536,7 +536,7 @@ no_red_meat_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_no_red
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("No Red Meat") +
-  theme(legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none",axis.text.y=element_blank(),axis.ticks.y=element_blank())
 no_red_meat_cf_dec_pop_vp
 ```
 
@@ -554,7 +554,7 @@ low_red_meat_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_low_r
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Low Red Meat") +
-  theme(legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
 low_red_meat_cf_dec_pop_bp
 ```
 
@@ -572,7 +572,7 @@ low_red_meat_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_low_r
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Low Red Meat") +
-  theme(legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none",axis.text.y=element_blank(),axis.ticks.y=element_blank())
 low_red_meat_cf_dec_pop_vp
 ```
 
@@ -590,7 +590,7 @@ no_dairy_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_no_dairy_
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("No Dairy") +
-  theme(legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
 no_dairy_cf_dec_pop_bp
 ```
 
@@ -608,7 +608,7 @@ no_dairy_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_no_dairy_
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("No Dairy") +
-  theme(legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none",axis.text.y=element_blank(),axis.ticks.y=element_blank())
 no_dairy_cf_dec_pop_vp
 ```
 
@@ -626,7 +626,7 @@ meatless_day_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_meatl
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Meatless Day") +
-  theme(legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
 meatless_day_cf_dec_pop_bp
 ```
 
@@ -644,11 +644,21 @@ meatless_day_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_meatl
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Meatless Day") +
-  theme(legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none",axis.text.y=element_blank(),axis.ticks.y=element_blank())
 meatless_day_cf_dec_pop_vp
 ```
 
 ![](analysis-script_files/figure-gfm/unnamed-chunk-31-1.png)<!-- -->
+
+``` r
+library(egg)
+```
+
+``` r
+ggarrange(meatless_day_cf_dec_pop_vp,no_dairy_cf_dec_pop_vp,low_red_meat_cf_dec_pop_vp,no_red_meat_cf_dec_pop_vp,pescetarian_cf_dec_pop_vp,lacto_ovo_vegetarian_cf_dec_pop_vp,X2.3_vegan_cf_dec_pop_vp,vegan_cf_dec_pop_vp,ncol=1,labels=c("A","","","","","","",""))
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-33-1.png)<!-- -->
 
 remember to change out parent dataset so that it includes GNI for
 scatterplot
