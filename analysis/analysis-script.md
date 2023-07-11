@@ -650,6 +650,44 @@ meatless_day_cf_dec_pop_vp
 
 ![](analysis-script_files/figure-gfm/unnamed-chunk-31-1.png)<!-- -->
 
+Now, water footprint
+
+``` r
+meatless_day_wf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_meatless_day_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
+  geom_violin(scale="width",draw_quantiles=0.5,adjust=1,alpha=0.33,trim=TRUE) +
+  scale_fill_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
+  scale_x_continuous() +
+  geom_vline(xintercept=0,linetype=2) +
+  stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
+  coord_cartesian() +
+  xlab("Liters") +
+  ylab("") +
+  ggtitle("Meatless Day") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none",axis.text.y=element_blank(),axis.ticks.y=element_blank())
+meatless_day_wf_dec_pop_vp
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-32-1.png)<!-- -->
+
+``` r
+vegan_wf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_vegan_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
+  geom_violin(scale="width",draw_quantiles=0.5,adjust=1,alpha=0.33,trim=TRUE) +
+  scale_fill_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
+  scale_x_continuous() +
+  geom_vline(xintercept=0,linetype=2) +
+  stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
+  coord_cartesian() +
+  xlab("Liters") +
+  ylab("") +
+  ggtitle("Vegan") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none",axis.text.y=element_blank(),axis.ticks.y=element_blank())
+vegan_wf_dec_pop_vp
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-33-1.png)<!-- -->
+
 ``` r
 library(egg)
 ```
@@ -658,7 +696,7 @@ library(egg)
 ggarrange(meatless_day_cf_dec_pop_vp,no_dairy_cf_dec_pop_vp,low_red_meat_cf_dec_pop_vp,no_red_meat_cf_dec_pop_vp,pescetarian_cf_dec_pop_vp,lacto_ovo_vegetarian_cf_dec_pop_vp,X2.3_vegan_cf_dec_pop_vp,vegan_cf_dec_pop_vp,ncol=1,labels=c("A","","","","","","",""))
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-33-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-35-1.png)<!-- -->
 
 remember to change out parent dataset so that it includes GNI for
 scatterplot
