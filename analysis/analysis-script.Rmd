@@ -841,6 +841,194 @@ annotate_figure(top=text_grob("Figure X. Box plot array comparing the anticipate
 pop_dec_cf_wf_bp
 ```
 
+Now, we can make a plot that looks at the most impactful countries across
+
+```{r}
+meatless_day_cf_dec_pop_rank <- reduction_modeling_data %>%
+  select(country,dec_pop_meatless_day_kg_co2e_luc,dec_pop_meatless_day_kg_co2e_excl_luc,dec_pop_meatless_day_kg_co2e_total) %>%
+  arrange(desc(dec_pop_meatless_day_kg_co2e_total)) %>%
+  slice(1:10) %>%
+  pivot_longer(cols=c(dec_pop_meatless_day_kg_co2e_luc,dec_pop_meatless_day_kg_co2e_excl_luc),
+               names_to="indicator",
+               values_to="value") %>%
+  ggplot(aes(x=value,y=country,fill=indicator)) + 
+  geom_col(color="black",size=0.25,alpha=0.8) + 
+  scale_fill_manual(values=c("tomato","lightsalmon"),labels=c("Non-LUC-Attributable Carbon Footprint","LUC-Attributable Carbon Footprint")) +
+  scale_x_continuous(labels=function(x)x/1000000000) +
+  scale_y_discrete(limits=c("Germany","Mexico","Australia","France","Russia","Turkey","Argentina","China","United States","Brazil")) +
+  xlab(bquote('Billion Kilograms CO'[2]*'e')) +
+  ylab("") +
+  ggtitle("Meatless Day") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom")
+```
+
+```{r}
+no_dairy_cf_dec_pop_rank <- reduction_modeling_data %>%
+  select(country,dec_pop_no_dairy_kg_co2e_luc,dec_pop_no_dairy_kg_co2e_excl_luc,dec_pop_no_dairy_kg_co2e_total) %>%
+  arrange(desc(dec_pop_no_dairy_kg_co2e_total)) %>%
+  slice(1:10) %>%
+  pivot_longer(cols=c(dec_pop_no_dairy_kg_co2e_luc,dec_pop_no_dairy_kg_co2e_excl_luc),
+               names_to="indicator",
+               values_to="value") %>%
+  ggplot(aes(x=value,y=country,fill=indicator)) + 
+  geom_col(color="black",size=0.25,alpha=0.8) + 
+  scale_fill_manual(values=c("tomato","lightsalmon"),labels=c("Non-LUC-Attributable Carbon Footprint","LUC-Attributable Carbon Footprint")) +
+  scale_x_continuous(labels=function(x)x/1000000000) +
+  scale_y_discrete(limits=c("Mexico","France","Germany","Russia","Argentina","Turkey","China","United States","India","Brazil")) +
+  xlab(bquote('Billion Kilograms CO'[2]*'e')) +
+  ylab("") +
+  ggtitle("No Dairy") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom")
+```
+
+```{r}
+low_red_meat_cf_dec_pop_rank <- reduction_modeling_data %>%
+  select(country,dec_pop_low_red_meat_kg_co2e_luc,dec_pop_low_red_meat_kg_co2e_excl_luc,dec_pop_low_red_meat_kg_co2e_total) %>%
+  arrange(desc(dec_pop_low_red_meat_kg_co2e_total)) %>%
+  slice(1:10) %>%
+  pivot_longer(cols=c(dec_pop_low_red_meat_kg_co2e_luc,dec_pop_low_red_meat_kg_co2e_excl_luc),
+               names_to="indicator",
+               values_to="value") %>%
+  ggplot(aes(x=value,y=country,fill=indicator)) + 
+  geom_col(color="black",size=0.25,alpha=0.8) + 
+  scale_fill_manual(values=c("tomato","lightsalmon"),labels=c("Non-LUC-Attributable Carbon Footprint","LUC-Attributable Carbon Footprint")) +
+  scale_x_continuous(labels=function(x)x/1000000000) +
+  scale_y_discrete(limits=c("Russia","Mexico","Turkey","Germany","France","Australia","China","Argentina","United States","Brazil")) +
+  xlab(bquote('Billion Kilograms CO'[2]*'e')) +
+  ylab("") +
+  ggtitle("Low Red Meat") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom")
+```
+
+```{r}
+no_red_meat_cf_dec_pop_rank <- reduction_modeling_data %>%
+  select(country,dec_pop_no_red_meat_kg_co2e_luc,dec_pop_no_red_meat_kg_co2e_excl_luc,dec_pop_no_red_meat_kg_co2e_total) %>%
+  arrange(desc(dec_pop_no_red_meat_kg_co2e_total)) %>%
+  slice(1:10) %>%
+  pivot_longer(cols=c(dec_pop_no_red_meat_kg_co2e_luc,dec_pop_no_red_meat_kg_co2e_excl_luc),
+               names_to="indicator",
+               values_to="value") %>%
+  ggplot(aes(x=value,y=country,fill=indicator)) + 
+  geom_col(color="black",size=0.25,alpha=0.8) + 
+  scale_fill_manual(values=c("tomato","lightsalmon"),labels=c("Non-LUC-Attributable Carbon Footprint","LUC-Attributable Carbon Footprint")) +
+  scale_x_continuous(labels=function(x)x/1000000000) +
+  scale_y_discrete(limits=c("France","United Kingdom","Australia","Chile","Mexico","Russia","Argentina","China","United States","Brazil")) +
+  xlab(bquote('Billion Kilograms CO'[2]*'e')) +
+  ylab("") +
+  ggtitle("No Red Meat") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom")
+```
+
+
+```{r}
+pescetarian_cf_dec_pop_rank <- reduction_modeling_data %>%
+  select(country,dec_pop_pescetarian_kg_co2e_luc,dec_pop_pescetarian_kg_co2e_excl_luc,dec_pop_pescetarian_kg_co2e_total) %>%
+  arrange(desc(dec_pop_pescetarian_kg_co2e_total)) %>%
+  slice(1:10) %>%
+  pivot_longer(cols=c(dec_pop_pescetarian_kg_co2e_luc,dec_pop_pescetarian_kg_co2e_excl_luc),
+               names_to="indicator",
+               values_to="value") %>%
+  ggplot(aes(x=value,y=country,fill=indicator)) + 
+  geom_col(color="black",size=0.25,alpha=0.8) + 
+  scale_fill_manual(values=c("tomato","lightsalmon"),labels=c("Non-LUC-Attributable Carbon Footprint","LUC-Attributable Carbon Footprint")) +
+  scale_x_continuous(labels=function(x)x/1000000000) +
+  scale_y_discrete(limits=c("United Kingdom","Turkey","Australia","Chile","Mexico","Russia","Argentina","United States","China","Brazil")) +
+  xlab(bquote('Billion Kilograms CO'[2]*'e')) +
+  ylab("") +
+  ggtitle("Pescetarian") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom")
+```
+
+```{r}
+lacto_ovo_vegetarian_cf_dec_pop_rank <- reduction_modeling_data %>%
+  select(country,dec_pop_lacto_ovo_vegetarian_kg_co2e_luc,dec_pop_lacto_ovo_vegetarian_kg_co2e_excl_luc,dec_pop_lacto_ovo_vegetarian_kg_co2e_total) %>%
+  arrange(desc(dec_pop_lacto_ovo_vegetarian_kg_co2e_total)) %>%
+  slice(1:10) %>%
+  pivot_longer(cols=c(dec_pop_lacto_ovo_vegetarian_kg_co2e_luc,dec_pop_lacto_ovo_vegetarian_kg_co2e_excl_luc),
+               names_to="indicator",
+               values_to="value") %>%
+  ggplot(aes(x=value,y=country,fill=indicator)) + 
+  geom_col(color="black",size=0.25,alpha=0.8) + 
+  scale_fill_manual(values=c("tomato","lightsalmon"),labels=c("Non-LUC-Attributable Carbon Footprint","LUC-Attributable Carbon Footprint")) +
+  scale_x_continuous(labels=function(x)x/1000000000) +
+  scale_y_discrete(limits=c("France","Australia","South Korea","Chile","Mexico","Russia","Argentina","United States","China","Brazil")) +
+  xlab(bquote('Billion Kilograms CO'[2]*'e')) +
+  ylab("") +
+  ggtitle("Vegetarian") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom")
+```
+
+```{r}
+X2.3_vegan_cf_dec_pop_rank <- reduction_modeling_data %>%
+  select(country,dec_pop_X2.3_vegan_kg_co2e_luc,dec_pop_X2.3_vegan_kg_co2e_excl_luc,dec_pop_X2.3_vegan_kg_co2e_total) %>%
+  arrange(desc(dec_pop_X2.3_vegan_kg_co2e_total)) %>%
+  slice(1:10) %>%
+  pivot_longer(cols=c(dec_pop_X2.3_vegan_kg_co2e_luc,dec_pop_X2.3_vegan_kg_co2e_excl_luc),
+               names_to="indicator",
+               values_to="value") %>%
+  ggplot(aes(x=value,y=country,fill=indicator)) + 
+  geom_col(color="black",size=0.25,alpha=0.8) + 
+  scale_fill_manual(values=c("tomato","lightsalmon"),labels=c("Non-LUC-Attributable Carbon Footprint","LUC-Attributable Carbon Footprint")) +
+  scale_x_continuous(labels=function(x)x/1000000000) +
+  scale_y_discrete(limits=c("Australia","Germany","Mexico","Turkey","Russia","India","Argentina","China","United States","Brazil")) +
+  xlab(bquote('Billion Kilograms CO'[2]*'e')) +
+  ylab("") +
+  ggtitle("2/3 Vegan") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom")
+```
+
+```{r}
+vegan_cf_dec_pop_rank <- reduction_modeling_data %>%
+  select(country,dec_pop_vegan_kg_co2e_luc,dec_pop_vegan_kg_co2e_excl_luc,dec_pop_vegan_kg_co2e_total) %>%
+  arrange(desc(dec_pop_vegan_kg_co2e_total)) %>%
+  slice(1:10) %>%
+  pivot_longer(cols=c(dec_pop_vegan_kg_co2e_luc,dec_pop_vegan_kg_co2e_excl_luc),
+               names_to="indicator",
+               values_to="value") %>%
+  ggplot(aes(x=value,y=country,fill=indicator)) + 
+  geom_col(color="black",size=0.25,alpha=0.8) + 
+  scale_fill_manual(values=c("tomato","lightsalmon"),labels=c("Non-LUC-Attributable Carbon Footprint","LUC-Attributable Carbon Footprint")) +
+  scale_x_continuous(labels=function(x)x/1000000000) +
+  scale_y_discrete(limits=c("Germany","Australia","Mexico","Turkey","Russia","Argentina","India","United States","China","Brazil")) +
+  xlab(bquote('Billion Kilograms CO'[2]*'e')) +
+  ylab("") +
+  ggtitle("Vegan") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom")
+```
+Now, we will do the same for the countries with the largest anticipated water-related dividends.
+
+```{r}
+vegan_wf_dec_pop_rank <- reduction_modeling_data %>%
+  select(country,dec_pop_vegan_l_blue_wf_total,dec_pop_vegan_l_green_wf,dec_pop_vegan_l_blue_green_wf) %>%
+  arrange(desc(dec_pop_vegan_l_blue_green_wf)) %>%
+  slice(1:10) %>%
+  pivot_longer(cols=c(dec_pop_vegan_l_blue_wf_total,dec_pop_vegan_l_green_wf),
+               names_to="indicator",
+               values_to="value") %>%
+  ggplot(aes(x=value,y=country,fill=indicator)) + 
+  geom_col(color="black",size=0.25,alpha=0.8) + 
+  scale_fill_manual(values=c("aquamarine4","darkseagreen"),labels=c("Blue Water Footprint","Green Water Footprint")) +
+  scale_x_continuous(labels=function(x)x/1000000000000) +
+  scale_y_discrete(limits=c("Germany","Australia","Iran","Egypt","Mexico","Russia","Turkey","United States","China","Brazil")) +
+  xlab("Trillion Liters") +
+  ylab("") +
+  ggtitle("Vegan") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom")
+vegan_wf_dec_pop_rank 
+```
+
+
+```{r}
+pop_dec_cf_wf_rank <- ggarrange(meatless_day_cf_dec_pop_rank,no_dairy_cf_dec_pop_rank,low_red_meat_cf_dec_pop_rank,no_red_meat_cf_dec_pop_rank,pescetarian_cf_dec_pop_rank,lacto_ovo_vegetarian_cf_dec_pop_rank,X2.3_vegan_cf_dec_pop_rank,vegan_cf_dec_pop_rank,
+          ncol=1,
+          nrow=8,
+          labels=c("A","","","","","","",""),
+          font.label=list(size=14,face="bold",color="black"),
+          common.legend=TRUE,
+          legend="bottom") %>%
+annotate_figure(top=text_grob("Figure X. Bar plot array comparing the anticipated mitigation and savings potential associated with the 10 most impactful countries for each gross ecological indicator across the eight modeled dietary scenarios."))
+pop_dec_cf_wf_rank
+```
 
 
 remember to change out parent dataset so that it includes GNI for scatterplot
