@@ -92,7 +92,7 @@ Comparing per capita water footprint of baseline diet across countries.
 
 ``` r
 ggplot(impact_modeling_data,aes(x=long,y=lat,fill=baseline_l_blue_green_wf,group=group)) + 
-  geom_polygon(color="black",size=0.05,alpha=0.9) + 
+  geom_polygon(color="black",size=0.05) + 
   scale_fill_continuous_sequential(name="",palette="BluGrn",na.value="white",labels=scales::comma) +
   guides() +
   xlab("") + 
@@ -349,18 +349,25 @@ time designating the included countries according to their income
 classifications.
 
 ``` r
-left_join(impact_modeling_data,reduction_modeling_data,by="country") %>% ggplot(aes(x=long,y=lat,fill=income.classification,group=group)) + 
-  geom_polygon(color="black",linewidth=0.075,alpha=0.33) +
-  scale_fill_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)","NA"),na.value="white") +
+inclusion_income <- left_join(impact_modeling_data,reduction_modeling_data,by="country") %>% ggplot(aes(x=long,y=lat,fill=income.classification,group=group)) + 
+  geom_polygon(color="black",size=0.25,alpha=0.66) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)","NA"),na.value="white") +
   guides() +
   xlab("") + 
   ylab("") +
   labs(caption="") +
-  ggtitle("Figure X. Choropleth map highlighting the 123 countries included in our analyses.") +
   theme(legend.position="bottom",legend.title=element_blank(),panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank())
+inclusion_income
 ```
 
 ![](analysis-script_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+
+ggtitle(“Figure X. Choropleth map highlighting the 123 countries
+included in our analyses.”) +
+
+``` r
+ggsave("figure-1.tiff",device="tiff",plot=inclusion_income,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=120*(14/5))
+```
 
 Now, we will generate a violin plot array to depict the anticipated
 population-level reductions in water usage and carbon emissions across
@@ -633,7 +640,7 @@ annotate_figure(top=text_grob("Figure X. Violin plot array comparing the anticip
 pop_dec_cf_wf_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-33-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-34-1.png)<!-- -->
 
 In the interest of exploring the different possible visualization
 options, we will also generate an array of box plots to see how the
@@ -902,7 +909,7 @@ annotate_figure(top=text_grob("Figure X. Box plot array comparing the anticipate
 pop_dec_cf_wf_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-50-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-51-1.png)<!-- -->
 
 Now, we can make a plot that looks at the most impactful countries
 across
@@ -1239,12 +1246,20 @@ pop_dec_cf_wf_rank <- ggarrange(meatless_day_cf_dec_pop_rank,meatless_day_wf_dec
           labels=c("A","B","","","","","","","","","","","","","",""),
           font.label=list(size=14,face="bold",color="black"),
           common.legend=TRUE,
-          legend="bottom") %>%
-annotate_figure(top=text_grob("Figure X. Bar plot array comparing the anticipated mitigation\nand savings potential associated with the 10 most impactful countries\nfor each gross ecological indicator across the eight modeled dietary scenarios."))
+          legend="bottom") 
 pop_dec_cf_wf_rank
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-67-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-68-1.png)<!-- -->
+
+%\>% annotate_figure(top=text_grob(“Figure X. Bar plot array comparing
+the anticipated mitigationsavings potential associated with the 10 most
+impactful countrieseach gross ecological indicator across the eight
+modeled dietary scenarios.”))
+
+``` r
+ggsave("figure-4.tiff",device="tiff",plot=pop_dec_cf_wf_rank,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=100*(14/5),height=160*(14/5))
+```
 
 remember to change out parent dataset so that it includes GNI for
 scatterplot
