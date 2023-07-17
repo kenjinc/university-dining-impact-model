@@ -378,147 +378,139 @@ on diet-attributable climate emissions:
 
 ``` r
 vegan_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_vegan_kg_co2e_total,y=income.classification,fill=income.classification)) + 
-  geom_violin(scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  geom_jitter(aes(color=income.classification),height=0.33,alpha=0.33) +
+  geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  scale_color_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000) +
-  geom_vline(xintercept=0,linetype=2) +
+  scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-16000000000,-8000000000,0,8000000000,16000000000,24000000000,32000000000)) +
+  geom_vline(xintercept=0,linetype=2,size=0.25) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-16000000000,33000000000)) +
+  coord_cartesian(xlim=c(-17000000000,34000000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Vegan") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
-vegan_cf_dec_pop_vp
 ```
-
-![](analysis-script_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
 
 ``` r
 X2.3_vegan_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_X2.3_vegan_kg_co2e_total,y=income.classification,fill=income.classification)) + 
-  geom_violin(scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  geom_jitter(aes(color=income.classification),height=0.33,alpha=0.33) +
+  geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  scale_color_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000) +
-  geom_vline(xintercept=0,linetype=2) +
+  scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-16000000000,-8000000000,0,8000000000,16000000000,24000000000,32000000000)) +
+  geom_vline(xintercept=0,linetype=2,size=0.25) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-16000000000,33000000000)) +
+  coord_cartesian(xlim=c(-17000000000,34000000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("2/3 Vegan") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none",axis.text.y=element_blank(),axis.ticks.y=element_blank())
-X2.3_vegan_cf_dec_pop_vp
 ```
-
-![](analysis-script_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
 
 ``` r
 lacto_ovo_vegetarian_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_lacto_ovo_vegetarian_kg_co2e_total,y=income.classification,fill=income.classification)) + 
-  geom_violin(scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  geom_jitter(aes(color=income.classification),height=0.33,alpha=0.33) +
+  geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  scale_color_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000) +
-  geom_vline(xintercept=0,linetype=2) +
+  scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-16000000000,-8000000000,0,8000000000,16000000000,24000000000,32000000000)) +
+  geom_vline(xintercept=0,linetype=2,size=0.25) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-16000000000,33000000000)) +
+  coord_cartesian(xlim=c(-17000000000,34000000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Vegetarian") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none",axis.text.y=element_blank(),axis.ticks.y=element_blank())
-lacto_ovo_vegetarian_cf_dec_pop_vp
 ```
-
-![](analysis-script_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 
 ``` r
 pescetarian_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_pescetarian_kg_co2e_total,y=income.classification,fill=income.classification)) + 
-  geom_violin(scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  geom_jitter(aes(color=income.classification),height=0.33,alpha=0.33) +
+  geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  scale_color_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000) +
-  geom_vline(xintercept=0,linetype=2) +
+  scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-16000000000,-8000000000,0,8000000000,16000000000,24000000000,32000000000)) +
+  geom_vline(xintercept=0,linetype=2,size=0.25) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-16000000000,33000000000)) +
+  coord_cartesian(xlim=c(-17000000000,34000000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Pescetarian") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none",axis.text.y=element_blank(),axis.ticks.y=element_blank())
-pescetarian_cf_dec_pop_vp
 ```
-
-![](analysis-script_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
 
 ``` r
 no_red_meat_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_no_red_meat_kg_co2e_total,y=income.classification,fill=income.classification)) + 
-  geom_violin(scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  geom_jitter(aes(color=income.classification),height=0.33,alpha=0.33) +
+  geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  scale_color_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000) +
-  geom_vline(xintercept=0,linetype=2) +
+  scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-16000000000,-8000000000,0,8000000000,16000000000,24000000000,32000000000)) +
+  geom_vline(xintercept=0,linetype=2,size=0.25) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-16000000000,33000000000)) +
+  coord_cartesian(xlim=c(-17000000000,34000000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("No Red Meat") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none",axis.text.y=element_blank(),axis.ticks.y=element_blank())
-no_red_meat_cf_dec_pop_vp
 ```
-
-![](analysis-script_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
 
 ``` r
 low_red_meat_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_low_red_meat_kg_co2e_total,y=income.classification,fill=income.classification)) + 
-  geom_violin(scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  geom_jitter(aes(color=income.classification),height=0.33,alpha=0.33) +
+  geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  scale_color_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000) +
-  geom_vline(xintercept=0,linetype=2) +
+  scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-16000000000,-8000000000,0,8000000000,16000000000,24000000000,32000000000)) +
+  geom_vline(xintercept=0,linetype=2,size=0.25) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-16000000000,33000000000)) +
+  coord_cartesian(xlim=c(-17000000000,34000000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Low Red Meat") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none",axis.text.y=element_blank(),axis.ticks.y=element_blank())
-low_red_meat_cf_dec_pop_vp
 ```
-
-![](analysis-script_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
 
 ``` r
 no_dairy_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_no_dairy_kg_co2e_total,y=income.classification,fill=income.classification)) + 
-  geom_violin(scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  geom_jitter(aes(color=income.classification),height=0.33,alpha=0.33) +
+  geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  scale_color_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000) +
-  geom_vline(xintercept=0,linetype=2) +
+  scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-16000000000,-8000000000,0,8000000000,16000000000,24000000000,32000000000)) +
+  geom_vline(xintercept=0,linetype=2,size=0.25) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-16000000000,33000000000)) +
+  coord_cartesian(xlim=c(-17000000000,34000000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("No Dairy") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none",axis.text.y=element_blank(),axis.ticks.y=element_blank())
-no_dairy_cf_dec_pop_vp 
 ```
-
-![](analysis-script_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
 
 ``` r
 meatless_day_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_meatless_day_kg_co2e_total,y=income.classification,fill=income.classification)) + 
-  geom_violin(scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  geom_jitter(aes(color=income.classification),height=0.33,alpha=0.33) +
+  geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  scale_color_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000) +
-  geom_vline(xintercept=0,linetype=2) +
+  scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-16000000000,-8000000000,0,8000000000,16000000000,24000000000,32000000000)) +
+  geom_vline(xintercept=0,linetype=2,size=0.25) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-16000000000,33000000000)) +
+  coord_cartesian(xlim=c(-17000000000,34000000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Meatless Day") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none",axis.text.y=element_blank(),axis.ticks.y=element_blank())
-meatless_day_cf_dec_pop_vp
 ```
-
-![](analysis-script_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
 
 Now, we will generate the a similar array of plots for the estimated
 population-level reductions in water usage across the same eight
@@ -526,147 +518,139 @@ scenarios:
 
 ``` r
 vegan_wf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_vegan_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
-  geom_violin(scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  geom_jitter(aes(color=income.classification),height=0.33,alpha=0.33) +
+  geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  scale_color_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000000) +
-  geom_vline(xintercept=0,linetype=2) +
+  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-6000000000000,-4000000000000,-2000000000000,0,2000000000000,4000000000000,6000000000000,6000000000000,8000000000000)) +
+  geom_vline(xintercept=0,linetype=2,size=0.25) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-6800000000000,8200000000000)) +
+  coord_cartesian(xlim=c(-7000000000000,8200000000000)) +
   xlab("Trillion Liters") +
   ylab("") +
   ggtitle("Vegan") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
-vegan_wf_dec_pop_vp
 ```
-
-![](analysis-script_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
 
 ``` r
 X2.3_vegan_wf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_X2.3_vegan_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
-  geom_violin(scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  geom_jitter(aes(color=income.classification),height=0.33,alpha=0.33) +
+  geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  scale_color_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000000) +
-  geom_vline(xintercept=0,linetype=2) +
+  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-6000000000000,-4000000000000,-2000000000000,0,2000000000000,4000000000000,6000000000000,6000000000000,8000000000000)) +
+  geom_vline(xintercept=0,linetype=2,size=0.25) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-6800000000000,8200000000000)) +
+  coord_cartesian(xlim=c(-7000000000000,8200000000000)) +
   xlab("Trillion Liters") +
   ylab("") +
   ggtitle("2/3 Vegan") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none",axis.text.y=element_blank(),axis.ticks.y=element_blank())
-X2.3_vegan_wf_dec_pop_vp
 ```
-
-![](analysis-script_files/figure-gfm/unnamed-chunk-26-1.png)<!-- -->
 
 ``` r
 lacto_ovo_vegetarian_wf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_lacto_ovo_vegetarian_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
-  geom_violin(scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  geom_jitter(aes(color=income.classification),height=0.33,alpha=0.33) +
+  geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  scale_color_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000000) +
-  geom_vline(xintercept=0,linetype=2) +
+  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-6000000000000,-4000000000000,-2000000000000,0,2000000000000,4000000000000,6000000000000,6000000000000,8000000000000)) +
+  geom_vline(xintercept=0,linetype=2,size=0.25) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-6800000000000,8200000000000)) +
+  coord_cartesian(xlim=c(-7000000000000,8200000000000)) +
   xlab("Trillion Liters") +
   ylab("") +
   ggtitle("Vegetarian") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none",axis.text.y=element_blank(),axis.ticks.y=element_blank())
-lacto_ovo_vegetarian_wf_dec_pop_vp
 ```
-
-![](analysis-script_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
 
 ``` r
 pescetarian_wf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_pescetarian_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
-  geom_violin(scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  geom_jitter(aes(color=income.classification),height=0.33,alpha=0.33) +
+  geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  scale_color_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000000) +
-  geom_vline(xintercept=0,linetype=2) +
+  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-6000000000000,-4000000000000,-2000000000000,0,2000000000000,4000000000000,6000000000000,6000000000000,8000000000000)) +
+  geom_vline(xintercept=0,linetype=2,size=0.25) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-6800000000000,8200000000000)) +
+  coord_cartesian(xlim=c(-7000000000000,8200000000000)) +
   xlab("Trillion Liters") +
   ylab("") +
   ggtitle("Pescetarian") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none",axis.text.y=element_blank(),axis.ticks.y=element_blank())
-pescetarian_wf_dec_pop_vp
 ```
-
-![](analysis-script_files/figure-gfm/unnamed-chunk-28-1.png)<!-- -->
 
 ``` r
 no_red_meat_wf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_no_red_meat_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
-  geom_violin(scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  geom_jitter(aes(color=income.classification),height=0.33,alpha=0.33) +
+  geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  scale_color_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000000) +
-  geom_vline(xintercept=0,linetype=2) +
+  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-6000000000000,-4000000000000,-2000000000000,0,2000000000000,4000000000000,6000000000000,6000000000000,8000000000000)) +
+  geom_vline(xintercept=0,linetype=2,size=0.25) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-6800000000000,8200000000000)) +
+  coord_cartesian(xlim=c(-7000000000000,8200000000000)) +
   xlab("Trillion Liters") +
   ylab("") +
   ggtitle("No Red Meat") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none",axis.text.y=element_blank(),axis.ticks.y=element_blank())
-no_red_meat_wf_dec_pop_vp
 ```
-
-![](analysis-script_files/figure-gfm/unnamed-chunk-29-1.png)<!-- -->
 
 ``` r
 low_red_meat_wf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_low_red_meat_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
-  geom_violin(scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  geom_jitter(aes(color=income.classification),height=0.33,alpha=0.33) +
+  geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  scale_color_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000000) +
-  geom_vline(xintercept=0,linetype=2) +
+  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-6000000000000,-4000000000000,-2000000000000,0,2000000000000,4000000000000,6000000000000,6000000000000,8000000000000)) +
+  geom_vline(xintercept=0,linetype=2,size=0.25) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-6800000000000,8200000000000)) +
+  coord_cartesian(xlim=c(-7000000000000,8200000000000)) +
   xlab("Trillion Liters") +
   ylab("") +
   ggtitle("Low Red Meat") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none",axis.text.y=element_blank(),axis.ticks.y=element_blank())
-low_red_meat_wf_dec_pop_vp
 ```
-
-![](analysis-script_files/figure-gfm/unnamed-chunk-30-1.png)<!-- -->
 
 ``` r
 no_dairy_wf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_no_dairy_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
-  geom_violin(scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  geom_jitter(aes(color=income.classification),height=0.33,alpha=0.33) +
+  geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  scale_color_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000000) +
-  geom_vline(xintercept=0,linetype=2) +
+  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-6000000000000,-4000000000000,-2000000000000,0,2000000000000,4000000000000,6000000000000,6000000000000,8000000000000)) +
+  geom_vline(xintercept=0,linetype=2,size=0.25) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-6800000000000,8200000000000)) +
+  coord_cartesian(xlim=c(-7000000000000,8200000000000)) +
   xlab("Trillion Liters") +
   ylab("") +
   ggtitle("No Dairy") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none",axis.text.y=element_blank(),axis.ticks.y=element_blank())
-no_dairy_wf_dec_pop_vp
 ```
-
-![](analysis-script_files/figure-gfm/unnamed-chunk-31-1.png)<!-- -->
 
 ``` r
 meatless_day_wf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_meatless_day_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
-  geom_violin(scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  geom_jitter(aes(color=income.classification),height=0.33,alpha=0.33) +
+  geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  scale_color_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000000) +
-  geom_vline(xintercept=0,linetype=2) +
+  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-6000000000000,-4000000000000,-2000000000000,0,2000000000000,4000000000000,6000000000000,6000000000000,8000000000000)) +
+  geom_vline(xintercept=0,linetype=2,size=0.25) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-6800000000000,8200000000000)) +
+  coord_cartesian(xlim=c(-7000000000000,8200000000000)) +
   xlab("Trillion Liters") +
   ylab("") +
   ggtitle("Meatless Day") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none",axis.text.y=element_blank(),axis.ticks.y=element_blank())
-meatless_day_wf_dec_pop_vp
 ```
-
-![](analysis-script_files/figure-gfm/unnamed-chunk-32-1.png)<!-- -->
 
 With these subplots now assigned to our environment generated, we can
 use the `ggpubr` package’s `ggarrange` function to organize these plots
@@ -693,6 +677,10 @@ comparing the anticipated mitigation and savings potential associated
 with each of the eight modeled dietary scenarios across the four
 designated income classifications.”))
 
+``` r
+ggsave("supp-a.tiff",device="tiff",plot=pop_dec_cf_wf_vp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=75*(14/5),height=150*(14/5))
+```
+
 In the interest of exploring the different possible visualization
 options, we will also generate an array of box plots to see how the
 aesthetics and presentation of the distributions differ.
@@ -700,17 +688,17 @@ aesthetics and presentation of the distributions differ.
 As we did last time, we will begin this process by coding the relevant
 subplots mapping the distributions for the estimated emissions
 population-level reductions across income classification groups into our
-environment.
+environment - this time using box plots.
 
 ``` r
 vegan_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_vegan_kg_co2e_total,y=income.classification,fill=income.classification)) + 
-  geom_boxplot(outlier.shape=NA,alpha=0.33) +
-  scale_fill_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  geom_boxplot(outlier.shape=NA,alpha=0.66) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000) +
+  scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-750000000,0,750000000,1500000000,2250000000,3000000000,3750000000)) +
   geom_vline(xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-1000000000,4000000000)) +
+  coord_cartesian(xlim=c(-800000000,3800000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Vegan") +
@@ -719,13 +707,13 @@ vegan_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_vegan_kg_co2
 
 ``` r
 X2.3_vegan_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_X2.3_vegan_kg_co2e_total,y=income.classification,fill=income.classification)) + 
-  geom_boxplot(outlier.shape=NA,alpha=0.33) +
-  scale_fill_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  geom_boxplot(outlier.shape=NA,alpha=0.66) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000) +
+  scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-750000000,0,750000000,1500000000,2250000000,3000000000,3750000000)) +
   geom_vline(xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-1000000000,4000000000)) +
+  coord_cartesian(xlim=c(-800000000,3800000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("2/3 Vegan") +
@@ -734,13 +722,13 @@ X2.3_vegan_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_X2.3_ve
 
 ``` r
 lacto_ovo_vegetarian_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_lacto_ovo_vegetarian_kg_co2e_total,y=income.classification,fill=income.classification)) + 
-  geom_boxplot(outlier.shape=NA,alpha=0.33) +
-  scale_fill_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  geom_boxplot(outlier.shape=NA,alpha=0.66) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000) +
+  scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-750000000,0,750000000,1500000000,2250000000,3000000000,3750000000)) +
   geom_vline(xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-1000000000,4000000000)) +
+  coord_cartesian(xlim=c(-800000000,3800000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Vegetarian") +
@@ -749,13 +737,13 @@ lacto_ovo_vegetarian_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_p
 
 ``` r
 pescetarian_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_pescetarian_kg_co2e_total,y=income.classification,fill=income.classification)) + 
-  geom_boxplot(outlier.shape=NA,alpha=0.33) +
-  scale_fill_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  geom_boxplot(outlier.shape=NA,alpha=0.66) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000) +
+  scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-750000000,0,750000000,1500000000,2250000000,3000000000,3750000000)) +
   geom_vline(xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-1000000000,4000000000)) +
+  coord_cartesian(xlim=c(-800000000,3800000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Pescetarian") +
@@ -764,13 +752,13 @@ pescetarian_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_pescet
 
 ``` r
 no_red_meat_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_no_red_meat_kg_co2e_total,y=income.classification,fill=income.classification)) + 
-  geom_boxplot(outlier.shape=NA,alpha=0.33) +
-  scale_fill_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  geom_boxplot(outlier.shape=NA,alpha=0.66) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000) +
+  scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-750000000,0,750000000,1500000000,2250000000,3000000000,3750000000)) +
   geom_vline(xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-1000000000,4000000000)) +
+  coord_cartesian(xlim=c(-800000000,3800000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("No Red Meat") +
@@ -779,13 +767,13 @@ no_red_meat_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_no_red
 
 ``` r
 low_red_meat_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_low_red_meat_kg_co2e_total,y=income.classification,fill=income.classification)) + 
-  geom_boxplot(outlier.shape=NA,alpha=0.33) +
-  scale_fill_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  geom_boxplot(outlier.shape=NA,alpha=0.66) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000) +
+  scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-750000000,0,750000000,1500000000,2250000000,3000000000,3750000000)) +
   geom_vline(xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-1000000000,4000000000)) +
+  coord_cartesian(xlim=c(-800000000,3800000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Low Red Meat") +
@@ -794,13 +782,13 @@ low_red_meat_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_low_r
 
 ``` r
 no_dairy_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_no_dairy_kg_co2e_total,y=income.classification,fill=income.classification)) + 
-  geom_boxplot(outlier.shape=NA,alpha=0.33) +
-  scale_fill_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  geom_boxplot(outlier.shape=NA,alpha=0.66) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000) +
+  scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-750000000,0,750000000,1500000000,2250000000,3000000000,3750000000)) +
   geom_vline(xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-1000000000,4000000000)) +
+  coord_cartesian(xlim=c(-800000000,3800000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("No Dairy") +
@@ -809,13 +797,13 @@ no_dairy_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_no_dairy_
 
 ``` r
 meatless_day_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_meatless_day_kg_co2e_total,y=income.classification,fill=income.classification)) + 
-  geom_boxplot(outlier.shape=NA,alpha=0.33) +
-  scale_fill_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  geom_boxplot(outlier.shape=NA,alpha=0.66) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000) +
+  scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-750000000,0,750000000,1500000000,2250000000,3000000000,3750000000)) +
   geom_vline(xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-1000000000,4000000000)) +
+  coord_cartesian(xlim=c(-800000000,3800000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Meatless Day") +
@@ -827,13 +815,13 @@ water savings estimates across the same lending classifications.
 
 ``` r
 vegan_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_vegan_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
-  geom_boxplot(outlier.shape=NA,alpha=0.33) +
-  scale_fill_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  geom_boxplot(outlier.shape=NA,alpha=0.66) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-500000000000,0,500000000000,1000000000000,1500000000000,2000000000000,2500000000000,3000000000000)) +
+  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-250000000000,0,250000000000,500000000000,750000000000,1000000000000,1250000000000)) +
   geom_vline(xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-500000000000,2000000000000)) +
+  coord_cartesian(xlim=c(-300000000000,1300000000000)) +
   xlab("Trillion Liters") +
   ylab("") +
   ggtitle("Vegan") +
@@ -842,13 +830,13 @@ vegan_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_vegan_l_blue
 
 ``` r
 X2.3_vegan_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_X2.3_vegan_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
-  geom_boxplot(outlier.shape=NA,alpha=0.33) +
-  scale_fill_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  geom_boxplot(outlier.shape=NA,alpha=0.66) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-500000000000,0,500000000000,1000000000000,1500000000000,2000000000000,2500000000000,3000000000000)) +
+  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-250000000000,0,250000000000,500000000000,750000000000,1000000000000,1250000000000)) +
   geom_vline(xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-500000000000,2000000000000)) +
+  coord_cartesian(xlim=c(-300000000000,1300000000000)) +
   xlab("Trillion Liters") +
   ylab("") +
   ggtitle("2/3 Vegan") +
@@ -857,13 +845,13 @@ X2.3_vegan_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_X2.3_ve
 
 ``` r
 lacto_ovo_vegetarian_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_lacto_ovo_vegetarian_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
-  geom_boxplot(outlier.shape=NA,alpha=0.33) +
-  scale_fill_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  geom_boxplot(outlier.shape=NA,alpha=0.66) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-500000000000,0,500000000000,1000000000000,1500000000000,2000000000000,2500000000000,3000000000000)) +
+  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-250000000000,0,250000000000,500000000000,750000000000,1000000000000,1250000000000)) +
   geom_vline(xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-500000000000,2000000000000)) +
+  coord_cartesian(xlim=c(-300000000000,1300000000000)) +
   xlab("Trillion Liters") +
   ylab("") +
   ggtitle("Vegetarian") +
@@ -872,13 +860,13 @@ lacto_ovo_vegetarian_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_p
 
 ``` r
 pescetarian_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_pescetarian_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
-  geom_boxplot(outlier.shape=NA,alpha=0.33) +
-  scale_fill_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  geom_boxplot(outlier.shape=NA,alpha=0.66) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-500000000000,0,500000000000,1000000000000,1500000000000,2000000000000,2500000000000,3000000000000)) +
+  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-250000000000,0,250000000000,500000000000,750000000000,1000000000000,1250000000000)) +
   geom_vline(xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-500000000000,2000000000000)) +
+  coord_cartesian(xlim=c(-300000000000,1300000000000)) +
   xlab("Trillion Liters") +
   ylab("") +
   ggtitle("Pescetarian") +
@@ -887,13 +875,13 @@ pescetarian_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_pescet
 
 ``` r
 no_red_meat_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_no_red_meat_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
-  geom_boxplot(outlier.shape=NA,alpha=0.33) +
-  scale_fill_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  geom_boxplot(outlier.shape=NA,alpha=0.66) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-500000000000,0,500000000000,1000000000000,1500000000000,2000000000000,2500000000000,3000000000000)) +
+  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-250000000000,0,250000000000,500000000000,750000000000,1000000000000,1250000000000)) +
   geom_vline(xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-500000000000,2000000000000)) +
+  coord_cartesian(xlim=c(-300000000000,1300000000000)) +
   xlab("Trillion Liters") +
   ylab("") +
   ggtitle("No Red Meat") +
@@ -902,13 +890,13 @@ no_red_meat_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_no_red
 
 ``` r
 low_red_meat_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_low_red_meat_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
-  geom_boxplot(outlier.shape=NA,alpha=0.33) +
-  scale_fill_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  geom_boxplot(outlier.shape=NA,alpha=0.66) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-500000000000,0,500000000000,1000000000000,1500000000000,2000000000000,2500000000000,3000000000000)) +
+  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-250000000000,0,250000000000,500000000000,750000000000,1000000000000,1250000000000)) +
   geom_vline(xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-500000000000,2000000000000)) +
+  coord_cartesian(xlim=c(-300000000000,1300000000000)) +
   xlab("Trillion Liters") +
   ylab("") +
   ggtitle("Low Red Meat") +
@@ -917,13 +905,13 @@ low_red_meat_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_low_r
 
 ``` r
 no_dairy_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_no_dairy_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
-  geom_boxplot(outlier.shape=NA,alpha=0.33) +
-  scale_fill_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  geom_boxplot(outlier.shape=NA,alpha=0.66) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-500000000000,0,500000000000,1000000000000,1500000000000,2000000000000,2500000000000,3000000000000)) +
+  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-250000000000,0,250000000000,500000000000,750000000000,1000000000000,1250000000000)) +
   geom_vline(xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-500000000000,2000000000000)) +
+  coord_cartesian(xlim=c(-300000000000,1300000000000)) +
   xlab("Trillion Liters") +
   ylab("") +
   ggtitle("No Dairy") +
@@ -932,13 +920,13 @@ no_dairy_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_no_dairy_
 
 ``` r
 meatless_day_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_meatless_day_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
-  geom_boxplot(outlier.shape=NA,alpha=0.33) +
-  scale_fill_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  geom_boxplot(outlier.shape=NA,alpha=0.66) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-500000000000,0,500000000000,1000000000000,1500000000000,2000000000000,2500000000000,3000000000000)) +
+  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-250000000000,0,250000000000,500000000000,750000000000,1000000000000,1250000000000)) +
   geom_vline(xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(-500000000000,2000000000000)) +
+  coord_cartesian(xlim=c(-300000000000,1300000000000)) +
   xlab("Trillion Liters") +
   ylab("") +
   ggtitle("Meatless Day") +
@@ -955,12 +943,20 @@ pop_dec_cf_wf_bp <- ggarrange(meatless_day_cf_dec_pop_bp,meatless_day_wf_dec_pop
           labels=c("A","B","","","","","","","","","","","","","",""),
           font.label=list(size=14,face="bold",color="black"),
           common.legend=TRUE,
-          legend="bottom") %>%
-annotate_figure(top=text_grob("Figure X. Box plot array comparing the anticipated mitigation and savings potential associated with each of the eight modeled dietary scenarios across the four designated income classifications."))
+          legend="bottom") 
 pop_dec_cf_wf_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-51-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-52-1.png)<!-- -->
+
+``` r
+ggsave("figure-3.tiff",device="tiff",plot=pop_dec_cf_wf_bp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=75*(14/5),height=150*(14/5))
+```
+
+%\>% annotate_figure(top=text_grob(“Figure X. Box plot array comparing
+the anticipated mitigation and savings potential associated with each of
+the eight modeled dietary scenarios across the four designated income
+classifications.”))
 
 Now, we can make a plot that looks at the most impactful countries
 across
@@ -1301,7 +1297,7 @@ pop_dec_cf_wf_rank <- ggarrange(meatless_day_cf_dec_pop_rank,meatless_day_wf_dec
 pop_dec_cf_wf_rank
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-68-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-70-1.png)<!-- -->
 
 %\>% annotate_figure(top=text_grob(“Figure X. Bar plot array comparing
 the anticipated mitigationsavings potential associated with the 10 most
