@@ -84,7 +84,7 @@ pc_baseline_total_cf_choro <- ggplot(impact_modeling_data,aes(x=long,y=lat,fill=
   xlab("") + 
   ylab("") +
   labs(caption="") +
-  ggtitle("Baseline Per Capita Carbon Footprint") +
+  ggtitle("Annual Per Capita Carbon Footprint at Baseline") +
   theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank(),legend.key.width=unit(3.5,"cm"))
 ```
  
@@ -100,7 +100,7 @@ pc_baseline_total_wf_choro <- ggplot(impact_modeling_data,aes(x=long,y=lat,fill=
   xlab("") + 
   ylab("") +
   labs(caption="") +
-  ggtitle("Baseline Per Capita Water Footprint") +
+  ggtitle("Annual Per Capita Water Footprint at Baseline") +
   theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank(),legend.key.width=unit(3.5,"cm"))
 ```
   
@@ -1270,7 +1270,7 @@ uni_enr_tot_income_classification_bp <- ggplot(reduction_modeling_data,aes(x=uni
   geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) + 
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=function(x)x/1000000) +
+  scale_x_continuous(labels=function(x)x/1000000,breaks=c(0,500000,1000000,1500000,2000000,2500000,3000000,3500000,4000000,4500000)) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
   coord_cartesian(xlim=c(0,4400000)) +
@@ -1279,7 +1279,6 @@ uni_enr_tot_income_classification_bp <- ggplot(reduction_modeling_data,aes(x=uni
   ggtitle("Enrollment Total") +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
-uni_enr_tot_income_classification_bp
 ```
 
 ```{r}
@@ -1322,7 +1321,7 @@ uni_enr_prop_income_classification_bp <- ggplot(reduction_modeling_data,aes(x=un
   geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) + 
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
-  scale_x_continuous(labels=scales::percent,breaks=c(0,0.01,0.02,0.03,0.04,0.05,0.06)) +
+  scale_x_continuous(labels=scales::percent,breaks=c(0,0.0075,0.015,0.0225,0.03,0.0375,0.045,0.0525,0.06)) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
   coord_cartesian(xlim=c(0,0.06)) +
@@ -1331,7 +1330,6 @@ uni_enr_prop_income_classification_bp <- ggplot(reduction_modeling_data,aes(x=un
   ggtitle("Enrollment Proportion") +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
-uni_enr_prop_income_classification_bp
 ```
 
 ```{r}
@@ -1370,7 +1368,6 @@ uni_enr_prop_vp <- ggplot(reduction_modeling_data,aes(x=uni_enr_prop,y=income.cl
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="right")
 ```
 
-
 ```{r}
 uni_enr_prop_choro_vp <- ggarrange(uni_enr_prop_choro,uni_enr_prop_vp,
           ncol=1,
@@ -1408,6 +1405,37 @@ ggsave("figure-2.tiff",device="tiff",plot=uni_enr_tot_prop_choro_vp,path=("/User
 ```
 
 ```{r}
+uni_enr_tot_prop_choro <- ggarrange(uni_enr_tot_choro,uni_enr_prop_choro,
+                            ncol=2,
+                            nrow=1,
+                            labels=c("A","C"),
+                            font.label=list(size=14,face="bold",color="black"),
+                            legend="bottom")
+```
+
+```{r}
+uni_enr_tot_prop_bp <- ggarrange(uni_enr_tot_income_classification_bp,uni_enr_prop_income_classification_bp,
+                        ncol=2,
+                        nrow=1,
+                        labels=c("B","D"),
+                        font.label=list(size=14,face="bold",color="black"),
+                        legend="bottom",
+                        common.legend=TRUE)
+```
+
+```{r}
+uni_enr_tot_prop_choro_bp <- ggarrange(uni_enr_tot_prop_choro,uni_enr_tot_prop_bp,
+                              ncol=1,
+                              nrow=2,
+                              heights=c(1,0.5))
+uni_enr_tot_prop_choro_bp
+```
+
+```{r}
+ggsave("figure-2-alt.tiff",device="tiff",plot=uni_enr_tot_prop_choro_bp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=111*(14/5))
+```
+
+```{r}
 pc_baseline_total_cf_vp <- ggplot(reduction_modeling_data,aes(x=baseline_kg_co2e_total,y=income.classification,fill=income.classification)) +
   geom_jitter(aes(color=baseline_kg_co2e_total),height=0.33,show.legend=FALSE) +
   geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
@@ -1426,6 +1454,23 @@ pc_baseline_total_cf_vp <- ggplot(reduction_modeling_data,aes(x=baseline_kg_co2e
 ```
 
 ```{r}
+pc_baseline_total_cf_bp <- ggplot(reduction_modeling_data,aes(x=baseline_kg_co2e_total,y=income.classification,fill=income.classification)) +
+  geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  scale_y_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High (n=49)","Upper Middle (n=36)","Lower Middle (n=26)","Low (n=12)"),position="right") +
+  scale_x_continuous(labels=scales::comma,breaks=c(0,300,600,900,1200,1500,1800,2100,2400,2700)) +
+  geom_vline(size=0.25,xintercept=0,linetype=2) +
+  stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
+  coord_cartesian(xlim=c(0,2750)) +
+  xlab(bquote('Kilograms CO'[2]*'e')) +
+  ylab("") +
+  ggtitle("Annual Per Capita Carbon Footprint at Baseline") +
+  stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",axis.ticks.y=element_blank(),axis.text.y=element_blank())
+```
+
+
+```{r}
 pc_baseline_total_wf_vp <- ggplot(reduction_modeling_data,aes(x=baseline_l_blue_green_wf,y=income.classification,fill=income.classification)) +
   geom_jitter(aes(color=baseline_l_blue_green_wf),height=0.33,show.legend=FALSE) +
   geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
@@ -1442,6 +1487,24 @@ pc_baseline_total_wf_vp <- ggplot(reduction_modeling_data,aes(x=baseline_l_blue_
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="right")
 ```
+
+```{r}
+pc_baseline_total_wf_bp <- ggplot(reduction_modeling_data,aes(x=baseline_l_blue_green_wf,y=income.classification,fill=income.classification)) +
+  geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  scale_y_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High (n=49)","Upper Middle (n=36)","Lower Middle (n=26)","Low (n=12)"),position="right") +
+  scale_x_continuous(labels=scales::comma,breaks=c(0,190000,380000,560000,720000,910000,1100000,1290000,1480000,1670000)) +
+  geom_vline(size=0.25,xintercept=0,linetype=2) +
+  stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
+  coord_cartesian(xlim=c(0,1750000)) +
+  xlab("Liters") +
+  ylab("") +
+  ggtitle("Annual Per Capita Water Footprint at Baseline") +
+  stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
+```
+
+
 ```{r}
 pc_baseline_total_cf_choro_vp <- ggarrange(pc_baseline_total_cf_choro,pc_baseline_total_cf_vp,
           ncol=1,
@@ -1476,6 +1539,40 @@ pc_baseline_total_cf_wf_choro_vp
 ```{r}
 ggsave("figure-5.tiff",device="tiff",plot=pc_baseline_total_cf_wf_choro_vp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=84*(14/5))
 ```
+
+
+```{r}
+pc_baseline_total_cf_wf_choro <- ggarrange(pc_baseline_total_cf_choro,pc_baseline_total_wf_choro,
+                                           ncol=2,
+                                           nrow=1,
+                                           labels=c("A","C"),
+                                           font.label=list(size=14,face="bold",color="black"),
+                                           legend="bottom")
+```
+
+```{r}
+pc_baseline_total_cf_wf_bp <- ggarrange(pc_baseline_total_cf_bp,pc_baseline_total_wf_bp,
+                                        ncol=2,
+                                        nrow=1,
+                                        labels=c("B","D"),
+                                        font.label=list(size=14,face="bold",color="black"),
+                                        legend="bottom",
+                                        common.legend=TRUE)
+```
+
+```{r}
+pc_baseline_total_cf_wf_choro_bp <- ggarrange(pc_baseline_total_cf_wf_choro,pc_baseline_total_cf_wf_bp,
+                                              ncol=1,
+                                              nrow=2,
+                                              heights=c(1,0.5),
+                                              align="h")
+pc_baseline_total_cf_wf_choro_bp
+```
+
+FIGURE 3 ALT STILL NEED TO GGSAVE
+
+
+
 
 uni_enr_tot_choro_vp <- ggarrange(uni_enr_tot_choro,uni_enr_tot_vp,
           ncol=1,
