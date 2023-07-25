@@ -6,7 +6,6 @@ Analysis and Visualization Script
 ``` r
 library(tidyverse)
 library(RColorBrewer)
-library(colorspace)
 library(ggpubr)
 ```
 
@@ -27,7 +26,7 @@ that can aid with this need,
 impact_modeling_data %>%
   mutate(inclusion=ifelse(uni_enr_tot>0,country)) %>%
   ggplot(aes(x=long,y=lat,fill=inclusion,group=group)) + 
-  geom_polygon(color="black",size=0.05,alpha=0.33) +
+  geom_polygon(color="black",size=0.125,alpha=0.66) +
   scale_fill_discrete(h=c(260,260),na.value="white") +
   guides(fill="none") +
   xlab("") + 
@@ -43,15 +42,17 @@ Comparing university enrollment totals across countries.
 
 ``` r
 uni_enr_tot_choro <- ggplot(impact_modeling_data,aes(x=long,y=lat,fill=uni_enr_tot,group=group)) + 
-  geom_polygon(color="black",size=0.125) + 
-  scale_fill_distiller(labels=function(x)x/1000000,name="",palette="Purples",trans="reverse",na.value="white",breaks=c(0,6000000,12000000,18000000,24000000,30000000)) +
-  guides(fill=guide_colorbar(reverse=TRUE)) + 
+  geom_polygon(color="black",size=0.125,alpha=0.66) + 
+  scale_fill_viridis_c(labels=function(x)x/1000000,name="Millions Enrolled",option="A",trans="reverse",na.value="white",breaks=c(0,6000000,12000000,18000000,24000000,30000000),alpha=0.66) +
+  guides(fill=guide_colorbar(reverse=TRUE,title.position="top",title.hjust=0.5)) +
   xlab("") + 
   ylab("") +
   labs(caption="") +
   ggtitle("Enrollment Total") +
-  theme(legend.position="right",panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank(),legend.key.width=unit(3.5,"cm"))
+  theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank(),legend.key.width=unit(3.5,"cm"))
 ```
+
+guides(fill=guide_colorbar(reverse=TRUE
 
 ggtitle(“Figure X. Choropleth map comparing university enrollment
 estimates across the 123 included countries.”) +
@@ -61,15 +62,24 @@ function of the national population) across countries.
 
 ``` r
 uni_enr_prop_choro <- ggplot(impact_modeling_data,aes(x=long,y=lat,fill=uni_enr_prop,group=group)) + 
-  geom_polygon(color="black",size=0.125) + 
-  scale_fill_distiller(name="",palette="Purples",trans="reverse",na.value="white",labels=scales::percent,breaks=c(0,0.015,0.03,0.045,0.06,0.075)) +
-  guides(fill=guide_colorbar(reverse=TRUE)) + 
+  geom_polygon(color="black",size=0.125,alpha=0.66) + 
+  scale_fill_viridis_c(alpha=0.66,name="Percentage Enrolled",option="A",trans="reverse",na.value="white",labels=scales::percent,breaks=c(0,0.013,0.026,0.039,0.052,0.065)) +
+  guides(fill=guide_colorbar(reverse=TRUE,title.position="top",title.hjust=0.5)) +
   xlab("") + 
   ylab("") +
   labs(caption="") +
   ggtitle("Enrollment Proportion") +
-  theme(legend.position="right",panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank(),legend.key.width=unit(3.5,"cm"))
+  theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank(),legend.key.width=unit(3.5,"cm"))
 ```
+
+``` r
+ggarrange(uni_enr_tot_choro,uni_enr_prop_choro,
+          labels=c("A","B"),
+          ncol=1,
+          nrow=2)
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 ggtitle(“Figure X. Choropleth map comparing university enrollment
 estimates as a proportion of their respective national populations
@@ -80,13 +90,13 @@ countries
 
 ``` r
 pc_baseline_total_cf_choro <- ggplot(impact_modeling_data,aes(x=long,y=lat,fill=baseline_kg_co2e_total,group=group)) + 
-  geom_polygon(color="black",size=0.125) + 
-  scale_fill_continuous_sequential(name="",palette="OrRd",na.value="white",labels=scales::comma) +
-  guides() +
+  geom_polygon(color="black",size=0.125,alpha=0.66) + 
+  scale_fill_viridis_c(alpha=0.66,name=bquote('Kilograms CO'[2]*'e'),option="F",trans="reverse",na.value="white",labels=scales::comma,breaks=c(750,1500,2250,3000,3750)) +
+  guides(fill=guide_colorbar(reverse=TRUE,title.position="top",title.hjust=0.5)) +
   xlab("") + 
   ylab("") +
   labs(caption="") +
-  ggtitle("Annual Per Capita Carbon Footprint at Baseline") +
+  ggtitle("Diet-Attributable Greenhouse Gas Footprint at Baseline") +
   theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank(),legend.key.width=unit(3.5,"cm"))
 ```
 
@@ -98,13 +108,13 @@ Comparing per capita water footprint of baseline diet across countries.
 
 ``` r
 pc_baseline_total_wf_choro <- ggplot(impact_modeling_data,aes(x=long,y=lat,fill=baseline_l_blue_green_wf,group=group)) + 
-  geom_polygon(color="black",size=0.125) + 
-  scale_fill_continuous_sequential(name="",palette="BluGrn",na.value="white",labels=scales::comma) +
-  guides() +
+  geom_polygon(color="black",size=0.125,alpha=0.66) + 
+  scale_fill_viridis_c(alpha=0.66,name="Liters",option="G",trans="reverse",na.value="white",labels=scales::comma,breaks=c(750000,1500000,2250000,3000000,3750000)) +
+  guides(fill=guide_colorbar(reverse=TRUE,title.position="top",title.hjust=0.5)) +
   xlab("") + 
   ylab("") +
   labs(caption="") +
-  ggtitle("Annual Per Capita Water Footprint at Baseline") +
+  ggtitle("Diet-Attributable Water Footprint at Baseline") +
   theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank(),legend.key.width=unit(3.5,"cm"))
 ```
 
@@ -118,7 +128,7 @@ ggarrange(pc_baseline_total_cf_choro,pc_baseline_total_wf_choro,
           nrow=2)
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 ## Reduction Modeling
 
@@ -376,13 +386,13 @@ inclusion_income <- left_join(impact_modeling_data,reduction_modeling_data,by="c
 inclusion_income
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
 
 ggtitle(“Figure X. Choropleth map highlighting the 123 countries
 included in our analyses.”) +
 
 ``` r
-ggsave("figure-1.tiff",device="tiff",plot=inclusion_income,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=100*(14/5),height=60*(14/5))
+ggsave("figure-1.tiff",device="tiff",plot=inclusion_income,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=100*(14/5),height=70*(14/5))
 ```
 
 Now, we will generate a violin plot array to depict the anticipated
@@ -687,7 +697,7 @@ pop_dec_cf_wf_vp <- ggarrange(meatless_day_cf_dec_pop_vp,meatless_day_wf_dec_pop
 pop_dec_cf_wf_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-35-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-36-1.png)<!-- -->
 %\>% annotate_figure(top=text_grob(“Figure X. Violin plot array
 comparing the anticipated mitigation and savings potential associated
 with each of the eight modeled dietary scenarios across the four
@@ -963,7 +973,7 @@ pop_dec_cf_wf_bp <- ggarrange(meatless_day_cf_dec_pop_bp,meatless_day_wf_dec_pop
 pop_dec_cf_wf_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-53-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-54-1.png)<!-- -->
 
 ``` r
 ggsave("figure-3.tiff",device="tiff",plot=pop_dec_cf_wf_bp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=75*(14/5),height=150*(14/5))
@@ -1313,7 +1323,7 @@ pop_dec_cf_wf_rank <- ggarrange(meatless_day_cf_dec_pop_rank,meatless_day_wf_dec
 pop_dec_cf_wf_rank
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-71-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-72-1.png)<!-- -->
 
 %\>% annotate_figure(top=text_grob(“Figure X. Bar plot array comparing
 the anticipated mitigationsavings potential associated with the 10 most
@@ -1327,6 +1337,9 @@ ggsave("figure-4.tiff",device="tiff",plot=pop_dec_cf_wf_rank,path=("/Users/kenji
 Now, we will generate box and violin plots looking at the distribution
 of university enrollees across the different income classifications to
 pair alongside their corresponding choropleths.
+
+kdlsjfkasf;klasjfl; vadspfs dfaskjdnf dasf;jdsanfsa fdsa fasd fa sdf asd
+faf dsf das
 
 ``` r
 uni_enr_tot_income_classification_bp <- ggplot(reduction_modeling_data,aes(x=uni_enr_tot,y=income.classification,fill=income.classification)) + 
@@ -1364,10 +1377,10 @@ uni_enr_tot_income_classification_vp <- ggplot(reduction_modeling_data,aes(x=uni
 
 ``` r
 uni_enr_tot_vp <- ggplot(reduction_modeling_data,aes(x=uni_enr_tot,y=income.classification,fill=income.classification)) + 
-  geom_jitter(aes(color=uni_enr_tot),height=0.33,show.legend=FALSE) +
+  geom_jitter(aes(color=uni_enr_tot),height=0.33,show.legend=FALSE,alpha=0.66) +
   geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_color_distiller(palette="Purples",trans="reverse") +
+  scale_color_viridis_c(option="A",trans="reverse",alpha=0.66) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High (n=49)","Upper Middle (n=36)","Lower Middle (n=26)","Low (n=12)"),position="right") +
   scale_x_continuous(labels=function(x)x/1000000,breaks=c(0,7000000,14000000,21000000,28000000,35000000)) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
@@ -1416,10 +1429,10 @@ uni_enr_prop_income_classification_vp <- ggplot(reduction_modeling_data,aes(x=un
 
 ``` r
 uni_enr_prop_vp <- ggplot(reduction_modeling_data,aes(x=uni_enr_prop,y=income.classification,fill=income.classification)) + 
-  geom_jitter(aes(color=uni_enr_prop),height=0.33,show.legend=FALSE) +
+  geom_jitter(aes(color=uni_enr_prop),height=0.33,show.legend=FALSE,alpha=0.66) +
   geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_color_distiller(palette="Purples",trans="reverse") +
+  scale_color_viridis_c(option="A",trans="reverse",alpha=0.66) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High (n=49)","Upper Middle (n=36)","Lower Middle (n=26)","Low (n=12)"),position="right") +
   scale_x_continuous(labels=scales::percent,breaks=c(0,0.015,0.03,0.045,0.06,0.075)) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
@@ -1438,7 +1451,6 @@ uni_enr_prop_choro_vp <- ggarrange(uni_enr_prop_choro,uni_enr_prop_vp,
           nrow=2,
           labels=c("C","D"),
           font.label=list(size=14,face="bold",color="black"),
-          common.legend=TRUE,
           legend="bottom",
           align="hv",
           heights=c(1,0.4))
@@ -1450,7 +1462,6 @@ uni_enr_tot_choro_vp <- ggarrange(uni_enr_tot_choro,uni_enr_tot_vp,
           nrow=2,
           labels=c("A","B"),
           font.label=list(size=14,face="bold",color="black"),
-          common.legend=TRUE,
           legend="bottom",
           align="hv",
           heights=c(1,0.4))
@@ -1463,10 +1474,10 @@ uni_enr_tot_prop_choro_vp <- ggarrange(uni_enr_tot_choro_vp,uni_enr_prop_choro_v
 uni_enr_tot_prop_choro_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-81-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-82-1.png)<!-- -->
 
 ``` r
-ggsave("figure-2.tiff",device="tiff",plot=uni_enr_tot_prop_choro_vp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=84*(14/5))
+ggsave("figure-2.tiff",device="tiff",plot=uni_enr_tot_prop_choro_vp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=90*(14/5))
 ```
 
 ``` r
@@ -1492,22 +1503,22 @@ uni_enr_tot_prop_bp <- ggarrange(uni_enr_tot_income_classification_bp,uni_enr_pr
 uni_enr_tot_prop_choro_bp <- ggarrange(uni_enr_tot_prop_choro,uni_enr_tot_prop_bp,
                               ncol=1,
                               nrow=2,
-                              heights=c(1,0.5))
+                              heights=c(1,0.4))
 uni_enr_tot_prop_choro_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-85-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-86-1.png)<!-- -->
 
 ``` r
-ggsave("figure-2-alt.tiff",device="tiff",plot=uni_enr_tot_prop_choro_bp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=111*(14/5))
+ggsave("figure-2-alt.tiff",device="tiff",plot=uni_enr_tot_prop_choro_bp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=95*(14/5))
 ```
 
 ``` r
 pc_baseline_total_cf_vp <- ggplot(reduction_modeling_data,aes(x=baseline_kg_co2e_total,y=income.classification,fill=income.classification)) +
-  geom_jitter(aes(color=baseline_kg_co2e_total),height=0.33,show.legend=FALSE) +
+  geom_jitter(aes(color=baseline_kg_co2e_total),height=0.33,show.legend=FALSE,alpha=0.66) +
   geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_color_continuous_sequential(name="",palette="OrRd",na.value="white",labels=scales::comma) +
+  scale_color_viridis_c(name="",option="F",na.value="white",labels=scales::comma,trans="reverse") +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High (n=49)","Upper Middle (n=36)","Lower Middle (n=26)","Low (n=12)"),position="right") +
   scale_x_continuous(labels=scales::comma) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
@@ -1515,7 +1526,7 @@ pc_baseline_total_cf_vp <- ggplot(reduction_modeling_data,aes(x=baseline_kg_co2e
   coord_cartesian() +
   xlab(bquote('Kilograms CO'[2]*'e')) +
   ylab("") +
-  ggtitle("Baseline Per Capita Carbon Footprint") +
+  ggtitle("Diet-Attributable Greenhouse Gas Footprint at Baseline") +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="right")
 ```
@@ -1525,23 +1536,26 @@ pc_baseline_total_cf_bp <- ggplot(reduction_modeling_data,aes(x=baseline_kg_co2e
   geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High (n=49)","Upper Middle (n=36)","Lower Middle (n=26)","Low (n=12)"),position="right") +
-  scale_x_continuous(labels=scales::comma,breaks=c(0,300,600,900,1200,1500,1800,2100,2400,2700)) +
+  scale_x_continuous(labels=scales::comma) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(0,2750)) +
+  coord_cartesian() +
   xlab(bquote('Kilograms CO'[2]*'e')) +
   ylab("") +
-  ggtitle("Annual Per Capita Carbon Footprint at Baseline") +
+  ggtitle("Diet-Attributable Greenhouse Gas Footprint at Baseline") +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",axis.ticks.y=element_blank(),axis.text.y=element_blank())
+pc_baseline_total_cf_bp
 ```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-89-1.png)<!-- -->
 
 ``` r
 pc_baseline_total_wf_vp <- ggplot(reduction_modeling_data,aes(x=baseline_l_blue_green_wf,y=income.classification,fill=income.classification)) +
-  geom_jitter(aes(color=baseline_l_blue_green_wf),height=0.33,show.legend=FALSE) +
+  geom_jitter(aes(color=baseline_l_blue_green_wf),height=0.33,show.legend=FALSE,alpha=0.66) +
   geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_color_continuous_sequential(name="",palette="BluGrn",na.value="white",labels=scales::comma) +
+  scale_color_viridis_c(name="",option="G",na.value="white",labels=scales::comma,trans="reverse") +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High (n=49)","Upper Middle (n=36)","Lower Middle (n=26)","Low (n=12)"),position="right") +
   scale_x_continuous(labels=scales::comma) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
@@ -1549,7 +1563,7 @@ pc_baseline_total_wf_vp <- ggplot(reduction_modeling_data,aes(x=baseline_l_blue_
   coord_cartesian() +
   xlab("Liters") +
   ylab("") +
-  ggtitle("Baseline Per Capita Water Footprint") +
+  ggtitle("Diet-Attributable Water Footprint at Baseline") +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="right")
 ```
@@ -1559,16 +1573,19 @@ pc_baseline_total_wf_bp <- ggplot(reduction_modeling_data,aes(x=baseline_l_blue_
   geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High (n=49)","Upper Middle (n=36)","Lower Middle (n=26)","Low (n=12)"),position="right") +
-  scale_x_continuous(labels=scales::comma,breaks=c(0,190000,380000,560000,720000,910000,1100000,1290000,1480000,1670000)) +
+  scale_x_continuous(labels=scales::comma) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian(xlim=c(0,1750000)) +
+  coord_cartesian() +
   xlab("Liters") +
   ylab("") +
-  ggtitle("Annual Per Capita Water Footprint at Baseline") +
+  ggtitle("Diet-Attributable Water Footprint at Baseline") +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
+pc_baseline_total_wf_bp
 ```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-91-1.png)<!-- -->
 
 ``` r
 pc_baseline_total_cf_choro_vp <- ggarrange(pc_baseline_total_cf_choro,pc_baseline_total_cf_vp,
@@ -1576,7 +1593,6 @@ pc_baseline_total_cf_choro_vp <- ggarrange(pc_baseline_total_cf_choro,pc_baselin
           nrow=2,
           labels=c("A","B"),
           font.label=list(size=14,face="bold",color="black"),
-          common.legend=TRUE,
           legend="bottom",
           align="hv",
           heights=c(1,0.4))
@@ -1588,7 +1604,6 @@ pc_baseline_total_wf_choro_vp <- ggarrange(pc_baseline_total_wf_choro,pc_baselin
           nrow=2,
           labels=c("C","D"),
           font.label=list(size=14,face="bold",color="black"),
-          common.legend=TRUE,
           legend="bottom",
           align="hv",
           heights=c(1,0.4))
@@ -1601,48 +1616,48 @@ pc_baseline_total_cf_wf_choro_vp <- ggarrange(pc_baseline_total_cf_choro_vp,pc_b
 pc_baseline_total_cf_wf_choro_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-93-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-94-1.png)<!-- -->
 
 ``` r
-ggsave("figure-5.tiff",device="tiff",plot=pc_baseline_total_cf_wf_choro_vp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=84*(14/5))
+ggsave("figure-5.tiff",device="tiff",plot=pc_baseline_total_cf_wf_choro_vp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=90*(14/5))
 ```
 
 ``` r
 pc_baseline_total_cf_wf_choro <- ggarrange(pc_baseline_total_cf_choro,pc_baseline_total_wf_choro,
                                            ncol=2,
-                                           nrow=1,
-                                           labels=c("A","C"),
-                                           font.label=list(size=14,face="bold",color="black"),
-                                           legend="bottom")
+                            nrow=1,
+                            labels=c("A","C"),
+                            font.label=list(size=14,face="bold",color="black"),
+                            legend="bottom")
+pc_baseline_total_cf_wf_choro
 ```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-96-1.png)<!-- -->
 
 ``` r
 pc_baseline_total_cf_wf_bp <- ggarrange(pc_baseline_total_cf_bp,pc_baseline_total_wf_bp,
                                         ncol=2,
-                                        nrow=1,
-                                        labels=c("B","D"),
-                                        font.label=list(size=14,face="bold",color="black"),
-                                        legend="bottom",
-                                        common.legend=TRUE)
-```
-
-``` r
-pc_baseline_total_cf_wf_choro_bp <- ggarrange(pc_baseline_total_cf_wf_choro,pc_baseline_total_cf_wf_bp,
-                                              ncol=1,
-                                              nrow=2,
-                                              heights=c(1,0.5),
-                                              align="h")
-pc_baseline_total_cf_wf_choro_bp
+                        nrow=1,
+                        labels=c("B","D"),
+                        font.label=list(size=14,face="bold",color="black"),
+                        legend="bottom",
+                        common.legend=TRUE)
+pc_baseline_total_cf_wf_bp
 ```
 
 ![](analysis-script_files/figure-gfm/unnamed-chunk-97-1.png)<!-- -->
 
-FIGURE 3 ALT STILL NEED TO GGSAVE
+``` r
+pc_baseline_total_cf_wf_choro_bp <- ggarrange(pc_baseline_total_cf_wf_choro,pc_baseline_total_cf_wf_bp,
+                                              ncol=1,
+                              nrow=2,
+                              heights=c(1,0.4))
+pc_baseline_total_cf_wf_choro_bp
+```
 
-uni_enr_tot_choro_vp \<- ggarrange(uni_enr_tot_choro,uni_enr_tot_vp,
-ncol=1, nrow=2, labels=c(“A”,“B”),
-font.label=list(size=14,face=“bold”,color=“black”), common.legend=TRUE,
-legend=“bottom”, align=“hv”, heights=c(1,0.4))
+![](analysis-script_files/figure-gfm/unnamed-chunk-98-1.png)<!-- -->
+
+FIGURE 3 ALT STILL NEED TO GGSAVE
 
 remember to change out parent dataset so that it includes GNI for
 scatterplot
