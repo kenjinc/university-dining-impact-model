@@ -1239,8 +1239,8 @@ vegan_wf_dec_pop_rank <- reduction_modeling_data %>%
                names_to="indicator",
                values_to="value") %>%
   ggplot(aes(x=value,y=country,fill=indicator)) + 
-  geom_col(color="black",size=0.25,alpha=0.8) + 
-  scale_fill_manual(values=c("aquamarine4","darkseagreen"),labels=c("Blue Water Footprint","Green Water Footprint")) +
+  geom_col(color="black",size=0.25,alpha=0.66) + 
+  scale_fill_manual(values=c("lightskyblue3","paleturquoise3"),labels=c("Blue Water Footprint","Green Water Footprint")) +
   scale_x_continuous(labels=function(x)x/1000000000000) +
   scale_y_discrete(limits=c("Germany","Australia","Iran","Egypt","Mexico","Russia","Turkey","United States","China","Brazil")) +
   coord_cartesian(xlim=c(0,8500000000000)) +
@@ -1248,6 +1248,7 @@ vegan_wf_dec_pop_rank <- reduction_modeling_data %>%
   ylab("") +
   ggtitle("Vegan") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom")
+vegan_wf_dec_pop_rank
 ```
 
 
@@ -1322,7 +1323,7 @@ uni_enr_tot_income_classification_vp <- ggplot(reduction_modeling_data,aes(x=uni
 
 ```{r}
 uni_enr_tot_vp <- ggplot(reduction_modeling_data,aes(x=uni_enr_tot,y=income.classification,fill=income.classification)) + 
-  geom_jitter(aes(color=uni_enr_tot),height=0.33,show.legend=FALSE,alpha=0.66) +
+  geom_jitter(aes(color=uni_enr_tot),height=0.3,show.legend=FALSE,alpha=0.66,size=3) +
   geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_color_viridis_c(option="A",trans="reverse",alpha=0.66) +
@@ -1374,7 +1375,7 @@ uni_enr_prop_income_classification_vp <- ggplot(reduction_modeling_data,aes(x=un
 
 ```{r}
 uni_enr_prop_vp <- ggplot(reduction_modeling_data,aes(x=uni_enr_prop,y=income.classification,fill=income.classification)) + 
-  geom_jitter(aes(color=uni_enr_prop),height=0.33,show.legend=FALSE,alpha=0.66) +
+  geom_jitter(aes(color=uni_enr_prop),height=0.3,show.legend=FALSE,alpha=0.66,size=3) +
   geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_color_viridis_c(option="A",trans="reverse",alpha=0.66) +
@@ -1457,7 +1458,7 @@ ggsave("figure-2-alt.tiff",device="tiff",plot=uni_enr_tot_prop_choro_bp,path=("/
 
 ```{r}
 pc_baseline_total_cf_vp <- ggplot(reduction_modeling_data,aes(x=baseline_kg_co2e_total,y=income.classification,fill=income.classification)) +
-  geom_jitter(aes(color=baseline_kg_co2e_total),height=0.33,show.legend=FALSE,alpha=0.66) +
+  geom_jitter(aes(color=baseline_kg_co2e_total),height=0.3,show.legend=FALSE,alpha=0.66,size=3) +
   geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_color_viridis_c(name="",option="F",na.value="white",labels=scales::comma,trans="reverse") +
@@ -1492,7 +1493,7 @@ pc_baseline_total_cf_bp <- ggplot(reduction_modeling_data,aes(x=baseline_kg_co2e
 
 ```{r}
 pc_baseline_total_wf_vp <- ggplot(reduction_modeling_data,aes(x=baseline_l_blue_green_wf,y=income.classification,fill=income.classification)) +
-  geom_jitter(aes(color=baseline_l_blue_green_wf),height=0.33,show.legend=FALSE,alpha=0.66) +
+  geom_jitter(aes(color=baseline_l_blue_green_wf),height=0.3,show.legend=FALSE,alpha=0.66,size=3) +
   geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_color_viridis_c(name="",option="G",na.value="white",labels=scales::comma,trans="reverse") +
