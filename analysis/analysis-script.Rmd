@@ -12,6 +12,7 @@ knitr::opts_chunk$set(echo = TRUE,warning=FALSE,message=FALSE)
 
 ```{r, message=FALSE}
 library(tidyverse)
+library(viridis)
 library(RColorBrewer)
 library(ggpubr)
 ```
@@ -354,10 +355,9 @@ First, we will need to model the potential implications of these changes on diet
 
 ```{r}
 vegan_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_vegan_kg_co2e_total,y=income.classification,fill=income.classification)) + 
-  geom_jitter(aes(color=income.classification),height=0.33,alpha=0.33) +
+  geom_jitter(aes(color=dec_pop_vegan_kg_co2e_total),height=0.33,alpha=0.66) +
   geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
-  scale_color_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  scale_color_viridis_c(option="F",name="Kilograms",trans="reverse") +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
   scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-16000000000,-8000000000,0,8000000000,16000000000,24000000000,32000000000)) +
   geom_vline(xintercept=0,linetype=2,size=0.25) +
@@ -367,7 +367,9 @@ vegan_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_vegan_kg_co2
   ylab("") +
   ggtitle("Vegan") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
+vegan_cf_dec_pop_vp
 ```
+ scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
 
 ```{r}
 X2.3_vegan_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_X2.3_vegan_kg_co2e_total,y=income.classification,fill=income.classification)) + 
@@ -1475,20 +1477,17 @@ pc_baseline_total_cf_vp <- ggplot(reduction_modeling_data,aes(x=baseline_kg_co2e
 pc_baseline_total_cf_bp <- ggplot(reduction_modeling_data,aes(x=baseline_kg_co2e_total,y=income.classification,fill=income.classification)) +
   geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_y_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High (n=49)","Upper Middle (n=36)","Lower Middle (n=26)","Low (n=12)"),position="right") +
-  scale_x_continuous(labels=scales::comma) +
+  scale_y_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High (n=49)","Upper Middle (n=36)","Lower Middle (n=26)","Low (n=12)")) +
+  scale_x_continuous(labels=scales::comma,breaks=c(0,300,600,900,1200,1500,1800,2100,2400,2700)) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian() +
+  coord_cartesian(xlim=c(0,2750)) +
   xlab(bquote('Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Diet-Attributable Greenhouse Gas Footprint at Baseline") +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",axis.ticks.y=element_blank(),axis.text.y=element_blank())
-pc_baseline_total_cf_bp
 ```
-
-
 
 
 ```{r}
@@ -1513,17 +1512,16 @@ pc_baseline_total_wf_vp <- ggplot(reduction_modeling_data,aes(x=baseline_l_blue_
 pc_baseline_total_wf_bp <- ggplot(reduction_modeling_data,aes(x=baseline_l_blue_green_wf,y=income.classification,fill=income.classification)) +
   geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_y_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High (n=49)","Upper Middle (n=36)","Lower Middle (n=26)","Low (n=12)"),position="right") +
-  scale_x_continuous(labels=scales::comma) +
+  scale_y_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High (n=49)","Upper Middle (n=36)","Lower Middle (n=26)","Low (n=12)")) +
+  scale_x_continuous(labels=scales::comma,breaks=c(0,250000,500000,750000,1000000,1250000,1500000,1750000)) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
-  coord_cartesian() +
+  coord_cartesian(xlim=c(0,1750000)) +
   xlab("Liters") +
   ylab("") +
   ggtitle("Diet-Attributable Water Footprint at Baseline") +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
-pc_baseline_total_wf_bp
 ```
 
 
@@ -1568,7 +1566,6 @@ pc_baseline_total_cf_wf_choro <- ggarrange(pc_baseline_total_cf_choro,pc_baselin
                             labels=c("A","C"),
                             font.label=list(size=14,face="bold",color="black"),
                             legend="bottom")
-pc_baseline_total_cf_wf_choro
 ```
 
 ```{r}
@@ -1578,19 +1575,23 @@ pc_baseline_total_cf_wf_bp <- ggarrange(pc_baseline_total_cf_bp,pc_baseline_tota
                         labels=c("B","D"),
                         font.label=list(size=14,face="bold",color="black"),
                         legend="bottom",
-                        common.legend=TRUE)
-pc_baseline_total_cf_wf_bp
+                        common.legend=TRUE,
+                        align="hv")
 ```
 
 ```{r}
 pc_baseline_total_cf_wf_choro_bp <- ggarrange(pc_baseline_total_cf_wf_choro,pc_baseline_total_cf_wf_bp,
                                               ncol=1,
                               nrow=2,
+                              align="hv",
                               heights=c(1,0.4))
 pc_baseline_total_cf_wf_choro_bp
 ```
 
-FIGURE 3 ALT STILL NEED TO GGSAVE
+```{r}
+ggsave("figure-5-alt.tiff",device="tiff",plot=pc_baseline_total_cf_wf_choro_bp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=95*(14/5))
+```
+
 
 
 
