@@ -407,6 +407,7 @@ on diet-attributable climate emissions:
 vegan_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_vegan_kg_co2e_total,y=income.classification,fill=income.classification)) + 
   geom_jitter(aes(color=dec_pop_vegan_kg_co2e_total),height=0.33,alpha=0.66) +
   geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  geom_boxplot(size=0.25,fill=NA,outlier.shape=NA,width=0.3) +
   scale_color_viridis_c(option="F",name="Kilograms",trans="reverse") +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
   scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-16000000000,-8000000000,0,8000000000,16000000000,24000000000,32000000000)) +
