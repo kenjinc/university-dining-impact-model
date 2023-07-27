@@ -143,7 +143,7 @@ dropping the relevant shapefile and map data.
 
 ``` r
 reduction_modeling_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/data/impact-modeling-data.csv") %>%
-  distinct(country,isced6_enr,isced7_enr,isced8_enr,natpop_est,uni_enr_tot,uni_enr_prop,baseline_kg_co2e_excl_luc,baseline_kg_co2e_total,baseline_l_blue_green_wf,baseline_l_blue_wf_total,baseline_l_green_wf
+  distinct(country,isced6_enr,isced7_enr,isced8_enr,natpop_est,pcgni_est,uni_enr_tot,uni_enr_prop,baseline_kg_co2e_excl_luc,baseline_kg_co2e_total,baseline_l_blue_green_wf,baseline_l_blue_wf_total,baseline_l_green_wf
 ,meatless_day_kg_co2e_excl_luc,meatless_day_kg_co2e_total,meatless_day_l_blue_green_wf,meatless_day_l_blue_wf_total,meatless_day_l_green_wf,no_dairy_kg_co2e_excl_luc,no_dairy_kg_co2e_total,no_dairy_l_blue_green_wf,no_dairy_l_blue_wf_total,no_dairy_l_green_wf,low_red_meat_kg_co2e_excl_luc,low_red_meat_kg_co2e_total,low_red_meat_l_blue_green_wf,low_red_meat_l_blue_wf_total,low_red_meat_l_green_wf,no_red_meat_kg_co2e_excl_luc,no_red_meat_kg_co2e_total,no_red_meat_l_blue_green_wf,no_red_meat_l_blue_wf_total,no_red_meat_l_green_wf,pescetarian_kg_co2e_excl_luc,pescetarian_kg_co2e_total,pescetarian_l_blue_green_wf,pescetarian_l_blue_wf_total,pescetarian_l_green_wf,lacto_ovo_vegetarian_kg_co2e_excl_luc,lacto_ovo_vegetarian_kg_co2e_total,lacto_ovo_vegetarian_l_blue_green_wf,lacto_ovo_vegetarian_l_blue_wf_total,lacto_ovo_vegetarian_l_green_wf,X2.3_vegan_kg_co2e_excl_luc,X2.3_vegan_kg_co2e_total,X2.3_vegan_l_blue_green_wf,X2.3_vegan_l_blue_wf_total,X2.3_vegan_l_green_wf,vegan_kg_co2e_excl_luc,vegan_kg_co2e_total,vegan_l_blue_green_wf,vegan_l_blue_wf_total,vegan_l_green_wf) %>%
   drop_na()
 ```
@@ -1661,5 +1661,50 @@ pc_baseline_total_cf_wf_choro_bp
 ggsave("figure-5-alt.tiff",device="tiff",plot=pc_baseline_total_cf_wf_choro_bp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=95*(14/5))
 ```
 
-remember to change out parent dataset so that it includes GNI for
-scatterplot
+Now, we will directly map GNI against the two per capita ecological
+indicators at baseline.
+
+``` r
+xy_pcgni_wf <- reduction_modeling_data %>%
+  rowwise() %>%
+  filter(!pcgni_est==0) %>%
+  ggplot(aes(x=pcgni_est,y=baseline_l_blue_green_wf,color=baseline_l_blue_green_wf)) +
+  scale_color_viridis(option="G",trans="reverse") +
+  geom_smooth(method="loess",show.legend=FALSE,color="paleturquoise3",fill="azure2",alpha=0.66) +
+  geom_point(size=1.5,alpha=0.66) +
+  scale_x_continuous(labels=scales::comma) +
+  scale_y_continuous(labels=scales::comma) +
+  guides(color=guide_colorbar(reverse=TRUE,title.position="top",title.hjust=0.5)) +
+  xlab("Per Capita Gross National Income") +
+  ylab("Liters") + 
+  ggtitle("Diet-Attributable Water Footprint") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",legend.key.width=unit(3.5,"cm"))
+```
+
+``` r
+xy_pcgni_cf <- reduction_modeling_data %>%
+  rowwise() %>%
+  filter(!pcgni_est==0) %>%
+  ggplot(aes(x=pcgni_est,y=baseline_kg_co2e_total,color=baseline_kg_co2e_total)) +
+  scale_color_viridis(option="F",trans="reverse") +
+  geom_smooth(method="loess",show.legend=FALSE,alpha=0.66,color="lightsalmon2",fill="antiquewhite1") +
+  geom_point(aes(color=baseline_kg_co2e_total),alpha=0.66,size=1.5) +
+  scale_x_continuous(labels=scales::comma) +
+  scale_y_continuous(labels=scales::comma) +
+  guides(fill=guide_colorbar(reverse=TRUE,title.position="top",title.hjust=0.5,alpha=0.66)) +
+  xlab("Per Capita Gross National Income") +
+  ylab(bquote('Kilograms CO'[2]*'e')) + 
+  ggtitle("Diet-Attributable Greenhouse Gas Footprint") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",legend.key.width=unit(3.5,"cm"))
+```
+
+``` r
+xy_pcgnni_cf_wf <- ggarrange(xy_pcgni_cf,xy_pcgni_wf,
+          ncol=2,
+          nrow=1,
+          labels=c("A","B"),
+          font.label=list(size=14,face="bold",color="black"))
+xy_pcgnni_cf_wf
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-102-1.png)<!-- -->
