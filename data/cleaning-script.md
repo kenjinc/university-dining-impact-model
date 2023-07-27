@@ -1032,6 +1032,10 @@ for a total of 1,185,830 university enrollees. With a population of
 of the population enrolled using the same formula previously used in our
 `mutate` function.
 
+EDIT: AND, CORRESPONDINGLY, AFTER CHANGING OUT THE PARENT DATASETS, PER
+CAPITA STATISTICS WERE TAKEN FROM THE [NATIONAL STATISTICS
+OFFICE](https://eng.stat.gov.tw/cp.aspx?n=2334) FOR YEAR 2021.
+
 ``` r
 university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-dining-impact-model/parent-datasets/university_enrollment_data.csv") %>%
   select(-Country.Code,-Series.Code) %>%
@@ -1045,27 +1049,30 @@ university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-din
   mutate(across("series",str_replace, fixed("Enrolment in tertiary education, ISCED 7 programmes, both sexes (number)"),"isced7_enr")) %>%
   mutate(across("series",str_replace, fixed("Enrolment in tertiary education, ISCED 8 programmes, both sexes (number)"),"isced8_enr")) %>%
   mutate(across("series",str_replace, fixed("Population, total"),"nat_pop")) %>%
+  mutate(across("series",str_replace, fixed("GNI per capita, Atlas method (current US$)"),"pc_gni")) %>%
   pivot_wider(names_from="series",
               values_from=c("yr2020","yr2019","yr2018","yr2017","yr2016","yr2015","yr2014","yr2013","yr2012","yr2011","yr2010","yr2009","yr2008","yr2007","yr2006","yr2005","yr2004","yr2003","yr2002","yr2001","yr2000")) %>%
   mutate(isced6_ref_yr=ifelse(yr2020_isced6_enr>0,2020,ifelse(yr2019_isced6_enr>0,2019,ifelse(yr2018_isced6_enr>0,2018,ifelse(yr2017_isced6_enr>0,2017,ifelse(yr2016_isced6_enr>0,2016,ifelse(yr2015_isced6_enr>0,2015,ifelse(yr2014_isced6_enr>0,2014,ifelse(yr2013_isced6_enr>0,2013,ifelse(yr2012_isced6_enr>0,2012,ifelse(yr2011_isced6_enr>0,2011,ifelse(yr2010_isced6_enr>0,2010,ifelse(yr2009_isced6_enr>0,2009,ifelse(yr2008_isced6_enr>0,2008,ifelse(yr2007_isced6_enr>0,2007,ifelse(yr2006_isced6_enr>0,2006,ifelse(yr2005_isced6_enr>0,2005,ifelse(yr2004_isced6_enr>0,2004,ifelse(yr2003_isced6_enr>0,2003,ifelse(yr2002_isced6_enr>0,2002,ifelse(yr2001_isced6_enr>0,2001,ifelse(yr2000_isced6_enr>0,2000,0)))))))))))))))))))))) %>%
   mutate(isced7_ref_yr=ifelse(yr2020_isced7_enr>0,2020,ifelse(yr2019_isced7_enr>0,2019,ifelse(yr2018_isced7_enr>0,2018,ifelse(yr2017_isced7_enr>0,2017,ifelse(yr2016_isced7_enr>0,2016,ifelse(yr2015_isced7_enr>0,2015,ifelse(yr2014_isced7_enr>0,2014,ifelse(yr2013_isced7_enr>0,2013,ifelse(yr2012_isced7_enr>0,2012,ifelse(yr2011_isced7_enr>0,2011,ifelse(yr2010_isced7_enr>0,2010,ifelse(yr2009_isced7_enr>0,2009,ifelse(yr2008_isced7_enr>0,2008,ifelse(yr2007_isced7_enr>0,2007,ifelse(yr2006_isced7_enr>0,2006,ifelse(yr2005_isced7_enr>0,2005,ifelse(yr2004_isced7_enr>0,2004,ifelse(yr2003_isced7_enr>0,2003,ifelse(yr2002_isced7_enr>0,2002,ifelse(yr2001_isced7_enr>0,2001,ifelse(yr2000_isced7_enr>0,2000,0)))))))))))))))))))))) %>%
   mutate(isced8_ref_yr=ifelse(yr2020_isced8_enr>0,2020,ifelse(yr2019_isced8_enr>0,2019,ifelse(yr2018_isced8_enr>0,2018,ifelse(yr2017_isced8_enr>0,2017,ifelse(yr2016_isced8_enr>0,2016,ifelse(yr2015_isced8_enr>0,2015,ifelse(yr2014_isced8_enr>0,2014,ifelse(yr2013_isced8_enr>0,2013,ifelse(yr2012_isced8_enr>0,2012,ifelse(yr2011_isced8_enr>0,2011,ifelse(yr2010_isced8_enr>0,2010,ifelse(yr2009_isced8_enr>0,2009,ifelse(yr2008_isced8_enr>0,2008,ifelse(yr2007_isced8_enr>0,2007,ifelse(yr2006_isced8_enr>0,2006,ifelse(yr2005_isced8_enr>0,2005,ifelse(yr2004_isced8_enr>0,2004,ifelse(yr2003_isced8_enr>0,2003,ifelse(yr2002_isced8_enr>0,2002,ifelse(yr2001_isced8_enr>0,2001,ifelse(yr2000_isced8_enr>0,2000,0)))))))))))))))))))))) %>%
   mutate(natpop_ref_yr=ifelse(yr2020_nat_pop>0,2020,ifelse(yr2019_nat_pop>0,2019,ifelse(yr2018_nat_pop>0,2018,ifelse(yr2017_nat_pop>0,2017,ifelse(yr2016_nat_pop>0,2016,ifelse(yr2015_nat_pop>0,2015,ifelse(yr2014_nat_pop>0,2014,ifelse(yr2013_nat_pop>0,2013,ifelse(yr2012_nat_pop>0,2012,ifelse(yr2011_nat_pop>0,2011,ifelse(yr2010_nat_pop>0,2010,ifelse(yr2009_nat_pop>0,2009,ifelse(yr2008_nat_pop>0,2008,ifelse(yr2007_nat_pop>0,2007,ifelse(yr2006_nat_pop>0,2006,ifelse(yr2005_nat_pop>0,2005,ifelse(yr2004_nat_pop>0,2004,ifelse(yr2003_nat_pop>0,2003,ifelse(yr2002_nat_pop>0,2002,ifelse(yr2001_nat_pop>0,2001,ifelse(yr2000_nat_pop>0,2000,0)))))))))))))))))))))) %>%
+  mutate(pcgni_ref_yr=ifelse(yr2020_pc_gni>0,2020,ifelse(yr2019_pc_gni>0,2019,ifelse(yr2018_pc_gni>0,2018,ifelse(yr2017_pc_gni>0,2017,ifelse(yr2016_pc_gni>0,2016,ifelse(yr2015_pc_gni>0,2015,ifelse(yr2014_pc_gni>0,2014,ifelse(yr2013_pc_gni>0,2013,ifelse(yr2012_pc_gni>0,2012,ifelse(yr2011_pc_gni>0,2011,ifelse(yr2010_pc_gni>0,2010,ifelse(yr2009_pc_gni>0,2009,ifelse(yr2008_pc_gni>0,2008,ifelse(yr2007_pc_gni>0,2007,ifelse(yr2006_pc_gni>0,2006,ifelse(yr2005_pc_gni>0,2005,ifelse(yr2004_pc_gni>0,2004,ifelse(yr2003_pc_gni>0,2003,ifelse(yr2002_pc_gni>0,2002,ifelse(yr2001_pc_gni>0,2001,ifelse(yr2000_pc_gni>0,2000,0)))))))))))))))))))))) %>%
   mutate(isced6_enr=ifelse(yr2020_isced6_enr>0,yr2020_isced6_enr,ifelse(yr2019_isced6_enr>0,yr2019_isced6_enr,ifelse(yr2018_isced6_enr>0,yr2018_isced6_enr,ifelse(yr2017_isced6_enr>0,yr2017_isced6_enr,ifelse(yr2016_isced6_enr>0,yr2016_isced6_enr,ifelse(yr2015_isced6_enr>0,yr2015_isced6_enr,ifelse(yr2014_isced6_enr>0,yr2014_isced6_enr,ifelse(yr2013_isced6_enr>0,yr2013_isced6_enr,ifelse(yr2012_isced6_enr>0,yr2012_isced6_enr,ifelse(yr2011_isced6_enr>0,yr2011_isced6_enr,ifelse(yr2010_isced6_enr>0,yr2010_isced6_enr,ifelse(yr2009_isced6_enr>0,yr2009_isced6_enr,ifelse(yr2008_isced6_enr>0,yr2008_isced6_enr,ifelse(yr2007_isced6_enr>0,yr2007_isced6_enr,ifelse(yr2006_isced6_enr>0,yr2006_isced6_enr,ifelse(yr2005_isced6_enr>0,yr2005_isced6_enr,ifelse(yr2004_isced6_enr>0,yr2004_isced6_enr,ifelse(yr2003_isced6_enr>0,yr2003_isced6_enr,ifelse(yr2002_isced6_enr>0,yr2002_isced6_enr,ifelse(yr2001_isced6_enr>0,yr2001_isced6_enr,ifelse(yr2000_isced6_enr>0,yr2000_isced6_enr,0)))))))))))))))))))))) %>%
   mutate(isced7_enr=ifelse(yr2020_isced7_enr>0,yr2020_isced7_enr,ifelse(yr2019_isced7_enr>0,yr2019_isced7_enr,ifelse(yr2018_isced7_enr>0,yr2018_isced7_enr,ifelse(yr2017_isced7_enr>0,yr2017_isced7_enr,ifelse(yr2016_isced7_enr>0,yr2016_isced7_enr,ifelse(yr2015_isced7_enr>0,yr2015_isced7_enr,ifelse(yr2014_isced7_enr>0,yr2014_isced7_enr,ifelse(yr2013_isced7_enr>0,yr2013_isced7_enr,ifelse(yr2012_isced7_enr>0,yr2012_isced7_enr,ifelse(yr2011_isced7_enr>0,yr2011_isced7_enr,ifelse(yr2010_isced7_enr>0,yr2010_isced7_enr,ifelse(yr2009_isced7_enr>0,yr2009_isced7_enr,ifelse(yr2008_isced7_enr>0,yr2008_isced7_enr,ifelse(yr2007_isced7_enr>0,yr2007_isced7_enr,ifelse(yr2006_isced7_enr>0,yr2006_isced7_enr,ifelse(yr2005_isced7_enr>0,yr2005_isced7_enr,ifelse(yr2004_isced7_enr>0,yr2004_isced7_enr,ifelse(yr2003_isced7_enr>0,yr2003_isced7_enr,ifelse(yr2002_isced7_enr>0,yr2002_isced7_enr,ifelse(yr2001_isced7_enr>0,yr2001_isced7_enr,ifelse(yr2000_isced7_enr>0,yr2000_isced7_enr,0)))))))))))))))))))))) %>%
   mutate(isced8_enr=ifelse(yr2020_isced8_enr>0,yr2020_isced8_enr,ifelse(yr2019_isced8_enr>0,yr2019_isced8_enr,ifelse(yr2018_isced8_enr>0,yr2018_isced8_enr,ifelse(yr2017_isced8_enr>0,yr2017_isced8_enr,ifelse(yr2016_isced8_enr>0,yr2016_isced8_enr,ifelse(yr2015_isced8_enr>0,yr2015_isced8_enr,ifelse(yr2014_isced8_enr>0,yr2014_isced8_enr,ifelse(yr2013_isced8_enr>0,yr2013_isced8_enr,ifelse(yr2012_isced8_enr>0,yr2012_isced8_enr,ifelse(yr2011_isced8_enr>0,yr2011_isced8_enr,ifelse(yr2010_isced8_enr>0,yr2010_isced8_enr,ifelse(yr2009_isced8_enr>0,yr2009_isced8_enr,ifelse(yr2008_isced8_enr>0,yr2008_isced8_enr,ifelse(yr2007_isced8_enr>0,yr2007_isced8_enr,ifelse(yr2006_isced8_enr>0,yr2006_isced8_enr,ifelse(yr2005_isced8_enr>0,yr2005_isced8_enr,ifelse(yr2004_isced8_enr>0,yr2004_isced8_enr,ifelse(yr2003_isced8_enr>0,yr2003_isced8_enr,ifelse(yr2002_isced8_enr>0,yr2002_isced8_enr,ifelse(yr2001_isced8_enr>0,yr2001_isced8_enr,ifelse(yr2000_isced8_enr>0,yr2000_isced8_enr,0)))))))))))))))))))))) %>%
    mutate(natpop_est=ifelse(yr2020_nat_pop>0,yr2020_nat_pop,ifelse(yr2019_nat_pop>0,yr2019_nat_pop,ifelse(yr2018_nat_pop>0,yr2018_nat_pop,ifelse(yr2017_nat_pop>0,yr2017_nat_pop,ifelse(yr2016_nat_pop>0,yr2016_nat_pop,ifelse(yr2015_nat_pop>0,yr2015_nat_pop,ifelse(yr2014_nat_pop>0,yr2014_nat_pop,ifelse(yr2013_nat_pop>0,yr2013_nat_pop,ifelse(yr2012_nat_pop>0,yr2012_nat_pop,ifelse(yr2011_nat_pop>0,yr2011_nat_pop,ifelse(yr2010_nat_pop>0,yr2010_nat_pop,ifelse(yr2009_nat_pop>0,yr2009_nat_pop,ifelse(yr2008_nat_pop>0,yr2008_nat_pop,ifelse(yr2007_nat_pop>0,yr2007_nat_pop,ifelse(yr2006_nat_pop>0,yr2006_nat_pop,ifelse(yr2005_nat_pop>0,yr2005_nat_pop,ifelse(yr2004_nat_pop>0,yr2004_nat_pop,ifelse(yr2003_nat_pop>0,yr2003_nat_pop,ifelse(yr2002_nat_pop>0,yr2002_nat_pop,ifelse(yr2001_nat_pop>0,yr2001_nat_pop,ifelse(yr2000_nat_pop>0,yr2000_nat_pop,0)))))))))))))))))))))) %>%
+  mutate(pcgni_est=ifelse(yr2020_pc_gni>0,yr2020_pc_gni,ifelse(yr2019_pc_gni>0,yr2019_pc_gni,ifelse(yr2018_pc_gni>0,yr2018_pc_gni,ifelse(yr2017_pc_gni>0,yr2017_pc_gni,ifelse(yr2016_pc_gni>0,yr2016_pc_gni,ifelse(yr2015_pc_gni>0,yr2015_pc_gni,ifelse(yr2014_pc_gni>0,yr2014_pc_gni,ifelse(yr2013_pc_gni>0,yr2013_pc_gni,ifelse(yr2012_pc_gni>0,yr2012_pc_gni,ifelse(yr2011_pc_gni>0,yr2011_pc_gni,ifelse(yr2010_pc_gni>0,yr2010_pc_gni,ifelse(yr2009_pc_gni>0,yr2009_pc_gni,ifelse(yr2008_pc_gni>0,yr2008_pc_gni,ifelse(yr2007_pc_gni>0,yr2007_pc_gni,ifelse(yr2006_pc_gni>0,yr2006_pc_gni,ifelse(yr2005_pc_gni>0,yr2005_pc_gni,ifelse(yr2004_pc_gni>0,yr2004_pc_gni,ifelse(yr2003_pc_gni>0,yr2003_pc_gni,ifelse(yr2002_pc_gni>0,yr2002_pc_gni,ifelse(yr2001_pc_gni>0,yr2001_pc_gni,ifelse(yr2000_pc_gni>0,yr2000_pc_gni,0)))))))))))))))))))))) %>%
   rowwise() %>%
   filter(!isced6_ref_yr+isced7_ref_yr+isced8_ref_yr==0) %>%
-  select(country,isced6_enr,isced6_ref_yr,isced7_enr,isced7_ref_yr,isced8_enr,isced8_ref_yr,natpop_est,natpop_ref_yr) %>%
+  select(country,isced6_enr,isced6_ref_yr,isced7_enr,isced7_ref_yr,isced8_enr,isced8_ref_yr,natpop_est,natpop_ref_yr,pcgni_est,pcgni_ref_yr) %>%
   filter_at(vars(country),all_vars(!. %in% c("Arab World","Caribbean small states","Central Europe and the Baltics","Early-demographic dividend","East Asia & Pacific","East Asia & Pacific (excluding high income)","East Asia & Pacific (IDA & IBRD countries)","Euro area","Europe & Central Asia","Europe & Central Asia (excluding high income)","Europe & Central Asia (IDA & IBRD countries)","European Union","Fragile and conflict affected situations","Global Partnership for Education","Heavily indebted poor countries (HIPC)","High income","IBRD only","IDA & IBRD total","IDA blend","IDA only","IDA total","Late-demographic dividend","Latin America & Caribbean","Latin America & Caribbean (excluding high income)","Latin America & the Caribbean (IDA & IBRD countries)","Least developed countries: UN classification","Low & middle income","Low income","Lower middle income","Middle East & North Africa","Middle East & North Africa (excluding high income)","Middle East & North Africa (IDA & IBRD countries)","Middle income","North America","OECD members","Other small states","Pacific island small states","Post-demographic dividend","Pre-demographic dividend","Small states","South Asia","South Asia (IDA & IBRD)","Sub-Saharan Africa","Sub-Saharan Africa (excluding high income)","Sub-Saharan Africa (IDA & IBRD countries)","Upper middle income","World"))) %>%
   mutate(uni_enr_tot=isced6_enr+isced7_enr+isced8_enr) %>%
   mutate(uni_enr_prop=uni_enr_tot/natpop_est) 
 university_enrollment_data %>%
-  add_row(tibble_row(country="China, Taiwan Province of",isced6_enr=985144,isced6_ref_yr=2021,isced7_enr=171779,isced7_ref_yr=2021,isced8_enr=28907,isced8_ref_yr=2021,natpop_est=23186278,natpop_ref_yr=2022,uni_enr_tot=1185830,uni_enr_prop=0.05114361175),.before=1) 
+  add_row(tibble_row(country="China, Taiwan Province of",isced6_enr=985144,isced6_ref_yr=2021,isced7_enr=171779,isced7_ref_yr=2021,isced8_enr=28907,isced8_ref_yr=2021,natpop_est=23186278,natpop_ref_yr=2022,pcgni_est=33756,pcgni_ref_yr=2021,uni_enr_tot=1185830,uni_enr_prop=0.05114361175),.before=1) 
 ```
 
-    ## # A tibble: 170 × 11
+    ## # A tibble: 170 × 13
     ## # Rowwise: 
     ##    country       isced…¹ isced…² isced…³ isced…⁴ isced…⁵ isced…⁶ natpo…⁷ natpo…⁸
     ##    <chr>           <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
@@ -1079,10 +1086,10 @@ university_enrollment_data %>%
     ##  8 Aruba          8.48e2    2016     55     2016     0         0  1.06e5    2019
     ##  9 Australia      9.99e5    2018 304632     2018 56110      2018  2.53e7    2019
     ## 10 Austria        1.99e5    2018 135346.    2018 20396.     2018  8.86e6    2019
-    ## # … with 160 more rows, 2 more variables: uni_enr_tot <dbl>,
-    ## #   uni_enr_prop <dbl>, and abbreviated variable names ¹​isced6_enr,
-    ## #   ²​isced6_ref_yr, ³​isced7_enr, ⁴​isced7_ref_yr, ⁵​isced8_enr, ⁶​isced8_ref_yr,
-    ## #   ⁷​natpop_est, ⁸​natpop_ref_yr
+    ## # … with 160 more rows, 4 more variables: pcgni_est <dbl>, pcgni_ref_yr <dbl>,
+    ## #   uni_enr_tot <dbl>, uni_enr_prop <dbl>, and abbreviated variable names
+    ## #   ¹​isced6_enr, ²​isced6_ref_yr, ³​isced7_enr, ⁴​isced7_ref_yr, ⁵​isced8_enr,
+    ## #   ⁶​isced8_ref_yr, ⁷​natpop_est, ⁸​natpop_ref_yr
 
 Next, we will address the first set of cases, where there were
 differences in how the country was named across
@@ -1112,19 +1119,22 @@ university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-din
   mutate(across("series",str_replace, fixed("Enrolment in tertiary education, ISCED 7 programmes, both sexes (number)"),"isced7_enr")) %>%
   mutate(across("series",str_replace, fixed("Enrolment in tertiary education, ISCED 8 programmes, both sexes (number)"),"isced8_enr")) %>%
   mutate(across("series",str_replace, fixed("Population, total"),"nat_pop")) %>%
+  mutate(across("series",str_replace, fixed("GNI per capita, Atlas method (current US$)"),"pc_gni")) %>%
   pivot_wider(names_from="series",
               values_from=c("yr2020","yr2019","yr2018","yr2017","yr2016","yr2015","yr2014","yr2013","yr2012","yr2011","yr2010","yr2009","yr2008","yr2007","yr2006","yr2005","yr2004","yr2003","yr2002","yr2001","yr2000")) %>%
   mutate(isced6_ref_yr=ifelse(yr2020_isced6_enr>0,2020,ifelse(yr2019_isced6_enr>0,2019,ifelse(yr2018_isced6_enr>0,2018,ifelse(yr2017_isced6_enr>0,2017,ifelse(yr2016_isced6_enr>0,2016,ifelse(yr2015_isced6_enr>0,2015,ifelse(yr2014_isced6_enr>0,2014,ifelse(yr2013_isced6_enr>0,2013,ifelse(yr2012_isced6_enr>0,2012,ifelse(yr2011_isced6_enr>0,2011,ifelse(yr2010_isced6_enr>0,2010,ifelse(yr2009_isced6_enr>0,2009,ifelse(yr2008_isced6_enr>0,2008,ifelse(yr2007_isced6_enr>0,2007,ifelse(yr2006_isced6_enr>0,2006,ifelse(yr2005_isced6_enr>0,2005,ifelse(yr2004_isced6_enr>0,2004,ifelse(yr2003_isced6_enr>0,2003,ifelse(yr2002_isced6_enr>0,2002,ifelse(yr2001_isced6_enr>0,2001,ifelse(yr2000_isced6_enr>0,2000,0)))))))))))))))))))))) %>%
   mutate(isced7_ref_yr=ifelse(yr2020_isced7_enr>0,2020,ifelse(yr2019_isced7_enr>0,2019,ifelse(yr2018_isced7_enr>0,2018,ifelse(yr2017_isced7_enr>0,2017,ifelse(yr2016_isced7_enr>0,2016,ifelse(yr2015_isced7_enr>0,2015,ifelse(yr2014_isced7_enr>0,2014,ifelse(yr2013_isced7_enr>0,2013,ifelse(yr2012_isced7_enr>0,2012,ifelse(yr2011_isced7_enr>0,2011,ifelse(yr2010_isced7_enr>0,2010,ifelse(yr2009_isced7_enr>0,2009,ifelse(yr2008_isced7_enr>0,2008,ifelse(yr2007_isced7_enr>0,2007,ifelse(yr2006_isced7_enr>0,2006,ifelse(yr2005_isced7_enr>0,2005,ifelse(yr2004_isced7_enr>0,2004,ifelse(yr2003_isced7_enr>0,2003,ifelse(yr2002_isced7_enr>0,2002,ifelse(yr2001_isced7_enr>0,2001,ifelse(yr2000_isced7_enr>0,2000,0)))))))))))))))))))))) %>%
   mutate(isced8_ref_yr=ifelse(yr2020_isced8_enr>0,2020,ifelse(yr2019_isced8_enr>0,2019,ifelse(yr2018_isced8_enr>0,2018,ifelse(yr2017_isced8_enr>0,2017,ifelse(yr2016_isced8_enr>0,2016,ifelse(yr2015_isced8_enr>0,2015,ifelse(yr2014_isced8_enr>0,2014,ifelse(yr2013_isced8_enr>0,2013,ifelse(yr2012_isced8_enr>0,2012,ifelse(yr2011_isced8_enr>0,2011,ifelse(yr2010_isced8_enr>0,2010,ifelse(yr2009_isced8_enr>0,2009,ifelse(yr2008_isced8_enr>0,2008,ifelse(yr2007_isced8_enr>0,2007,ifelse(yr2006_isced8_enr>0,2006,ifelse(yr2005_isced8_enr>0,2005,ifelse(yr2004_isced8_enr>0,2004,ifelse(yr2003_isced8_enr>0,2003,ifelse(yr2002_isced8_enr>0,2002,ifelse(yr2001_isced8_enr>0,2001,ifelse(yr2000_isced8_enr>0,2000,0)))))))))))))))))))))) %>%
   mutate(natpop_ref_yr=ifelse(yr2020_nat_pop>0,2020,ifelse(yr2019_nat_pop>0,2019,ifelse(yr2018_nat_pop>0,2018,ifelse(yr2017_nat_pop>0,2017,ifelse(yr2016_nat_pop>0,2016,ifelse(yr2015_nat_pop>0,2015,ifelse(yr2014_nat_pop>0,2014,ifelse(yr2013_nat_pop>0,2013,ifelse(yr2012_nat_pop>0,2012,ifelse(yr2011_nat_pop>0,2011,ifelse(yr2010_nat_pop>0,2010,ifelse(yr2009_nat_pop>0,2009,ifelse(yr2008_nat_pop>0,2008,ifelse(yr2007_nat_pop>0,2007,ifelse(yr2006_nat_pop>0,2006,ifelse(yr2005_nat_pop>0,2005,ifelse(yr2004_nat_pop>0,2004,ifelse(yr2003_nat_pop>0,2003,ifelse(yr2002_nat_pop>0,2002,ifelse(yr2001_nat_pop>0,2001,ifelse(yr2000_nat_pop>0,2000,0)))))))))))))))))))))) %>%
+  mutate(pcgni_ref_yr=ifelse(yr2020_pc_gni>0,2020,ifelse(yr2019_pc_gni>0,2019,ifelse(yr2018_pc_gni>0,2018,ifelse(yr2017_pc_gni>0,2017,ifelse(yr2016_pc_gni>0,2016,ifelse(yr2015_pc_gni>0,2015,ifelse(yr2014_pc_gni>0,2014,ifelse(yr2013_pc_gni>0,2013,ifelse(yr2012_pc_gni>0,2012,ifelse(yr2011_pc_gni>0,2011,ifelse(yr2010_pc_gni>0,2010,ifelse(yr2009_pc_gni>0,2009,ifelse(yr2008_pc_gni>0,2008,ifelse(yr2007_pc_gni>0,2007,ifelse(yr2006_pc_gni>0,2006,ifelse(yr2005_pc_gni>0,2005,ifelse(yr2004_pc_gni>0,2004,ifelse(yr2003_pc_gni>0,2003,ifelse(yr2002_pc_gni>0,2002,ifelse(yr2001_pc_gni>0,2001,ifelse(yr2000_pc_gni>0,2000,0)))))))))))))))))))))) %>%
   mutate(isced6_enr=ifelse(yr2020_isced6_enr>0,yr2020_isced6_enr,ifelse(yr2019_isced6_enr>0,yr2019_isced6_enr,ifelse(yr2018_isced6_enr>0,yr2018_isced6_enr,ifelse(yr2017_isced6_enr>0,yr2017_isced6_enr,ifelse(yr2016_isced6_enr>0,yr2016_isced6_enr,ifelse(yr2015_isced6_enr>0,yr2015_isced6_enr,ifelse(yr2014_isced6_enr>0,yr2014_isced6_enr,ifelse(yr2013_isced6_enr>0,yr2013_isced6_enr,ifelse(yr2012_isced6_enr>0,yr2012_isced6_enr,ifelse(yr2011_isced6_enr>0,yr2011_isced6_enr,ifelse(yr2010_isced6_enr>0,yr2010_isced6_enr,ifelse(yr2009_isced6_enr>0,yr2009_isced6_enr,ifelse(yr2008_isced6_enr>0,yr2008_isced6_enr,ifelse(yr2007_isced6_enr>0,yr2007_isced6_enr,ifelse(yr2006_isced6_enr>0,yr2006_isced6_enr,ifelse(yr2005_isced6_enr>0,yr2005_isced6_enr,ifelse(yr2004_isced6_enr>0,yr2004_isced6_enr,ifelse(yr2003_isced6_enr>0,yr2003_isced6_enr,ifelse(yr2002_isced6_enr>0,yr2002_isced6_enr,ifelse(yr2001_isced6_enr>0,yr2001_isced6_enr,ifelse(yr2000_isced6_enr>0,yr2000_isced6_enr,0)))))))))))))))))))))) %>%
   mutate(isced7_enr=ifelse(yr2020_isced7_enr>0,yr2020_isced7_enr,ifelse(yr2019_isced7_enr>0,yr2019_isced7_enr,ifelse(yr2018_isced7_enr>0,yr2018_isced7_enr,ifelse(yr2017_isced7_enr>0,yr2017_isced7_enr,ifelse(yr2016_isced7_enr>0,yr2016_isced7_enr,ifelse(yr2015_isced7_enr>0,yr2015_isced7_enr,ifelse(yr2014_isced7_enr>0,yr2014_isced7_enr,ifelse(yr2013_isced7_enr>0,yr2013_isced7_enr,ifelse(yr2012_isced7_enr>0,yr2012_isced7_enr,ifelse(yr2011_isced7_enr>0,yr2011_isced7_enr,ifelse(yr2010_isced7_enr>0,yr2010_isced7_enr,ifelse(yr2009_isced7_enr>0,yr2009_isced7_enr,ifelse(yr2008_isced7_enr>0,yr2008_isced7_enr,ifelse(yr2007_isced7_enr>0,yr2007_isced7_enr,ifelse(yr2006_isced7_enr>0,yr2006_isced7_enr,ifelse(yr2005_isced7_enr>0,yr2005_isced7_enr,ifelse(yr2004_isced7_enr>0,yr2004_isced7_enr,ifelse(yr2003_isced7_enr>0,yr2003_isced7_enr,ifelse(yr2002_isced7_enr>0,yr2002_isced7_enr,ifelse(yr2001_isced7_enr>0,yr2001_isced7_enr,ifelse(yr2000_isced7_enr>0,yr2000_isced7_enr,0)))))))))))))))))))))) %>%
   mutate(isced8_enr=ifelse(yr2020_isced8_enr>0,yr2020_isced8_enr,ifelse(yr2019_isced8_enr>0,yr2019_isced8_enr,ifelse(yr2018_isced8_enr>0,yr2018_isced8_enr,ifelse(yr2017_isced8_enr>0,yr2017_isced8_enr,ifelse(yr2016_isced8_enr>0,yr2016_isced8_enr,ifelse(yr2015_isced8_enr>0,yr2015_isced8_enr,ifelse(yr2014_isced8_enr>0,yr2014_isced8_enr,ifelse(yr2013_isced8_enr>0,yr2013_isced8_enr,ifelse(yr2012_isced8_enr>0,yr2012_isced8_enr,ifelse(yr2011_isced8_enr>0,yr2011_isced8_enr,ifelse(yr2010_isced8_enr>0,yr2010_isced8_enr,ifelse(yr2009_isced8_enr>0,yr2009_isced8_enr,ifelse(yr2008_isced8_enr>0,yr2008_isced8_enr,ifelse(yr2007_isced8_enr>0,yr2007_isced8_enr,ifelse(yr2006_isced8_enr>0,yr2006_isced8_enr,ifelse(yr2005_isced8_enr>0,yr2005_isced8_enr,ifelse(yr2004_isced8_enr>0,yr2004_isced8_enr,ifelse(yr2003_isced8_enr>0,yr2003_isced8_enr,ifelse(yr2002_isced8_enr>0,yr2002_isced8_enr,ifelse(yr2001_isced8_enr>0,yr2001_isced8_enr,ifelse(yr2000_isced8_enr>0,yr2000_isced8_enr,0)))))))))))))))))))))) %>%
    mutate(natpop_est=ifelse(yr2020_nat_pop>0,yr2020_nat_pop,ifelse(yr2019_nat_pop>0,yr2019_nat_pop,ifelse(yr2018_nat_pop>0,yr2018_nat_pop,ifelse(yr2017_nat_pop>0,yr2017_nat_pop,ifelse(yr2016_nat_pop>0,yr2016_nat_pop,ifelse(yr2015_nat_pop>0,yr2015_nat_pop,ifelse(yr2014_nat_pop>0,yr2014_nat_pop,ifelse(yr2013_nat_pop>0,yr2013_nat_pop,ifelse(yr2012_nat_pop>0,yr2012_nat_pop,ifelse(yr2011_nat_pop>0,yr2011_nat_pop,ifelse(yr2010_nat_pop>0,yr2010_nat_pop,ifelse(yr2009_nat_pop>0,yr2009_nat_pop,ifelse(yr2008_nat_pop>0,yr2008_nat_pop,ifelse(yr2007_nat_pop>0,yr2007_nat_pop,ifelse(yr2006_nat_pop>0,yr2006_nat_pop,ifelse(yr2005_nat_pop>0,yr2005_nat_pop,ifelse(yr2004_nat_pop>0,yr2004_nat_pop,ifelse(yr2003_nat_pop>0,yr2003_nat_pop,ifelse(yr2002_nat_pop>0,yr2002_nat_pop,ifelse(yr2001_nat_pop>0,yr2001_nat_pop,ifelse(yr2000_nat_pop>0,yr2000_nat_pop,0)))))))))))))))))))))) %>%
+    mutate(pcgni_est=ifelse(yr2020_pc_gni>0,yr2020_pc_gni,ifelse(yr2019_pc_gni>0,yr2019_pc_gni,ifelse(yr2018_pc_gni>0,yr2018_pc_gni,ifelse(yr2017_pc_gni>0,yr2017_pc_gni,ifelse(yr2016_pc_gni>0,yr2016_pc_gni,ifelse(yr2015_pc_gni>0,yr2015_pc_gni,ifelse(yr2014_pc_gni>0,yr2014_pc_gni,ifelse(yr2013_pc_gni>0,yr2013_pc_gni,ifelse(yr2012_pc_gni>0,yr2012_pc_gni,ifelse(yr2011_pc_gni>0,yr2011_pc_gni,ifelse(yr2010_pc_gni>0,yr2010_pc_gni,ifelse(yr2009_pc_gni>0,yr2009_pc_gni,ifelse(yr2008_pc_gni>0,yr2008_pc_gni,ifelse(yr2007_pc_gni>0,yr2007_pc_gni,ifelse(yr2006_pc_gni>0,yr2006_pc_gni,ifelse(yr2005_pc_gni>0,yr2005_pc_gni,ifelse(yr2004_pc_gni>0,yr2004_pc_gni,ifelse(yr2003_pc_gni>0,yr2003_pc_gni,ifelse(yr2002_pc_gni>0,yr2002_pc_gni,ifelse(yr2001_pc_gni>0,yr2001_pc_gni,ifelse(yr2000_pc_gni>0,yr2000_pc_gni,0)))))))))))))))))))))) %>%
   rowwise() %>%
   filter(!isced6_ref_yr+isced7_ref_yr+isced8_ref_yr==0) %>%
-  select(country,isced6_enr,isced6_ref_yr,isced7_enr,isced7_ref_yr,isced8_enr,isced8_ref_yr,natpop_est,natpop_ref_yr) %>%
+  select(country,isced6_enr,isced6_ref_yr,isced7_enr,isced7_ref_yr,isced8_enr,isced8_ref_yr,natpop_est,natpop_ref_yr,pcgni_est,pcgni_ref_yr) %>%
   filter_at(vars(country),all_vars(!. %in% c("Arab World","Caribbean small states","Central Europe and the Baltics","Early-demographic dividend","East Asia & Pacific","East Asia & Pacific (excluding high income)","East Asia & Pacific (IDA & IBRD countries)","Euro area","Europe & Central Asia","Europe & Central Asia (excluding high income)","Europe & Central Asia (IDA & IBRD countries)","European Union","Fragile and conflict affected situations","Global Partnership for Education","Heavily indebted poor countries (HIPC)","High income","IBRD only","IDA & IBRD total","IDA blend","IDA only","IDA total","Late-demographic dividend","Latin America & Caribbean","Latin America & Caribbean (excluding high income)","Latin America & the Caribbean (IDA & IBRD countries)","Least developed countries: UN classification","Low & middle income","Low income","Lower middle income","Middle East & North Africa","Middle East & North Africa (excluding high income)","Middle East & North Africa (IDA & IBRD countries)","Middle income","North America","OECD members","Other small states","Pacific island small states","Post-demographic dividend","Pre-demographic dividend","Small states","South Asia","South Asia (IDA & IBRD)","Sub-Saharan Africa","Sub-Saharan Africa (excluding high income)","Sub-Saharan Africa (IDA & IBRD countries)","Upper middle income","World"))) %>%
   mutate(uni_enr_tot=isced6_enr+isced7_enr+isced8_enr) %>%
   mutate(uni_enr_prop=uni_enr_tot/natpop_est) %>%
@@ -1144,10 +1154,10 @@ university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-din
   mutate(across(country,str_replace,"Venezuela, RB","Venezuela (Bolivarian Republic of)")) %>%
   mutate(across(country,str_replace,"Yemen, Rep.","Yemen")) 
 university_enrollment_data %>%
-  add_row(tibble_row(country="China, Taiwan Province of",isced6_enr=985144,isced6_ref_yr=2021,isced7_enr=171779,isced7_ref_yr=2021,isced8_enr=28907,isced8_ref_yr=2021,natpop_est=23186278,natpop_ref_yr=2022,uni_enr_tot=1185830,uni_enr_prop=0.05114361175),.before=1) 
+  add_row(tibble_row(country="China, Taiwan Province of",isced6_enr=985144,isced6_ref_yr=2021,isced7_enr=171779,isced7_ref_yr=2021,isced8_enr=28907,isced8_ref_yr=2021,natpop_est=23186278,natpop_ref_yr=2022,pcgni_est=33756,pcgni_ref_yr=2021,uni_enr_tot=1185830,uni_enr_prop=0.05114361175),.before=1) 
 ```
 
-    ## # A tibble: 170 × 11
+    ## # A tibble: 170 × 13
     ## # Rowwise: 
     ##    country       isced…¹ isced…² isced…³ isced…⁴ isced…⁵ isced…⁶ natpo…⁷ natpo…⁸
     ##    <chr>           <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
@@ -1161,10 +1171,10 @@ university_enrollment_data %>%
     ##  8 Aruba          8.48e2    2016     55     2016     0         0  1.06e5    2019
     ##  9 Australia      9.99e5    2018 304632     2018 56110      2018  2.53e7    2019
     ## 10 Austria        1.99e5    2018 135346.    2018 20396.     2018  8.86e6    2019
-    ## # … with 160 more rows, 2 more variables: uni_enr_tot <dbl>,
-    ## #   uni_enr_prop <dbl>, and abbreviated variable names ¹​isced6_enr,
-    ## #   ²​isced6_ref_yr, ³​isced7_enr, ⁴​isced7_ref_yr, ⁵​isced8_enr, ⁶​isced8_ref_yr,
-    ## #   ⁷​natpop_est, ⁸​natpop_ref_yr
+    ## # … with 160 more rows, 4 more variables: pcgni_est <dbl>, pcgni_ref_yr <dbl>,
+    ## #   uni_enr_tot <dbl>, uni_enr_prop <dbl>, and abbreviated variable names
+    ## #   ¹​isced6_enr, ²​isced6_ref_yr, ³​isced7_enr, ⁴​isced7_ref_yr, ⁵​isced8_enr,
+    ## #   ⁶​isced8_ref_yr, ⁷​natpop_est, ⁸​natpop_ref_yr
 
 Now, we are presented with the choice of either finding data to
 supplement the 16 countries without available university enrollment data
@@ -1466,19 +1476,22 @@ university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-din
   mutate(across("series",str_replace, fixed("Enrolment in tertiary education, ISCED 7 programmes, both sexes (number)"),"isced7_enr")) %>%
   mutate(across("series",str_replace, fixed("Enrolment in tertiary education, ISCED 8 programmes, both sexes (number)"),"isced8_enr")) %>%
   mutate(across("series",str_replace, fixed("Population, total"),"nat_pop")) %>%
+  mutate(across("series",str_replace, fixed("GNI per capita, Atlas method (current US$)"),"pc_gni")) %>%
   pivot_wider(names_from="series",
               values_from=c("yr2020","yr2019","yr2018","yr2017","yr2016","yr2015","yr2014","yr2013","yr2012","yr2011","yr2010","yr2009","yr2008","yr2007","yr2006","yr2005","yr2004","yr2003","yr2002","yr2001","yr2000")) %>%
   mutate(isced6_ref_yr=ifelse(yr2020_isced6_enr>0,2020,ifelse(yr2019_isced6_enr>0,2019,ifelse(yr2018_isced6_enr>0,2018,ifelse(yr2017_isced6_enr>0,2017,ifelse(yr2016_isced6_enr>0,2016,ifelse(yr2015_isced6_enr>0,2015,ifelse(yr2014_isced6_enr>0,2014,ifelse(yr2013_isced6_enr>0,2013,ifelse(yr2012_isced6_enr>0,2012,ifelse(yr2011_isced6_enr>0,2011,ifelse(yr2010_isced6_enr>0,2010,ifelse(yr2009_isced6_enr>0,2009,ifelse(yr2008_isced6_enr>0,2008,ifelse(yr2007_isced6_enr>0,2007,ifelse(yr2006_isced6_enr>0,2006,ifelse(yr2005_isced6_enr>0,2005,ifelse(yr2004_isced6_enr>0,2004,ifelse(yr2003_isced6_enr>0,2003,ifelse(yr2002_isced6_enr>0,2002,ifelse(yr2001_isced6_enr>0,2001,ifelse(yr2000_isced6_enr>0,2000,0)))))))))))))))))))))) %>%
   mutate(isced7_ref_yr=ifelse(yr2020_isced7_enr>0,2020,ifelse(yr2019_isced7_enr>0,2019,ifelse(yr2018_isced7_enr>0,2018,ifelse(yr2017_isced7_enr>0,2017,ifelse(yr2016_isced7_enr>0,2016,ifelse(yr2015_isced7_enr>0,2015,ifelse(yr2014_isced7_enr>0,2014,ifelse(yr2013_isced7_enr>0,2013,ifelse(yr2012_isced7_enr>0,2012,ifelse(yr2011_isced7_enr>0,2011,ifelse(yr2010_isced7_enr>0,2010,ifelse(yr2009_isced7_enr>0,2009,ifelse(yr2008_isced7_enr>0,2008,ifelse(yr2007_isced7_enr>0,2007,ifelse(yr2006_isced7_enr>0,2006,ifelse(yr2005_isced7_enr>0,2005,ifelse(yr2004_isced7_enr>0,2004,ifelse(yr2003_isced7_enr>0,2003,ifelse(yr2002_isced7_enr>0,2002,ifelse(yr2001_isced7_enr>0,2001,ifelse(yr2000_isced7_enr>0,2000,0)))))))))))))))))))))) %>%
   mutate(isced8_ref_yr=ifelse(yr2020_isced8_enr>0,2020,ifelse(yr2019_isced8_enr>0,2019,ifelse(yr2018_isced8_enr>0,2018,ifelse(yr2017_isced8_enr>0,2017,ifelse(yr2016_isced8_enr>0,2016,ifelse(yr2015_isced8_enr>0,2015,ifelse(yr2014_isced8_enr>0,2014,ifelse(yr2013_isced8_enr>0,2013,ifelse(yr2012_isced8_enr>0,2012,ifelse(yr2011_isced8_enr>0,2011,ifelse(yr2010_isced8_enr>0,2010,ifelse(yr2009_isced8_enr>0,2009,ifelse(yr2008_isced8_enr>0,2008,ifelse(yr2007_isced8_enr>0,2007,ifelse(yr2006_isced8_enr>0,2006,ifelse(yr2005_isced8_enr>0,2005,ifelse(yr2004_isced8_enr>0,2004,ifelse(yr2003_isced8_enr>0,2003,ifelse(yr2002_isced8_enr>0,2002,ifelse(yr2001_isced8_enr>0,2001,ifelse(yr2000_isced8_enr>0,2000,0)))))))))))))))))))))) %>%
   mutate(natpop_ref_yr=ifelse(yr2020_nat_pop>0,2020,ifelse(yr2019_nat_pop>0,2019,ifelse(yr2018_nat_pop>0,2018,ifelse(yr2017_nat_pop>0,2017,ifelse(yr2016_nat_pop>0,2016,ifelse(yr2015_nat_pop>0,2015,ifelse(yr2014_nat_pop>0,2014,ifelse(yr2013_nat_pop>0,2013,ifelse(yr2012_nat_pop>0,2012,ifelse(yr2011_nat_pop>0,2011,ifelse(yr2010_nat_pop>0,2010,ifelse(yr2009_nat_pop>0,2009,ifelse(yr2008_nat_pop>0,2008,ifelse(yr2007_nat_pop>0,2007,ifelse(yr2006_nat_pop>0,2006,ifelse(yr2005_nat_pop>0,2005,ifelse(yr2004_nat_pop>0,2004,ifelse(yr2003_nat_pop>0,2003,ifelse(yr2002_nat_pop>0,2002,ifelse(yr2001_nat_pop>0,2001,ifelse(yr2000_nat_pop>0,2000,0)))))))))))))))))))))) %>%
+    mutate(pcgni_ref_yr=ifelse(yr2020_pc_gni>0,2020,ifelse(yr2019_pc_gni>0,2019,ifelse(yr2018_pc_gni>0,2018,ifelse(yr2017_pc_gni>0,2017,ifelse(yr2016_pc_gni>0,2016,ifelse(yr2015_pc_gni>0,2015,ifelse(yr2014_pc_gni>0,2014,ifelse(yr2013_pc_gni>0,2013,ifelse(yr2012_pc_gni>0,2012,ifelse(yr2011_pc_gni>0,2011,ifelse(yr2010_pc_gni>0,2010,ifelse(yr2009_pc_gni>0,2009,ifelse(yr2008_pc_gni>0,2008,ifelse(yr2007_pc_gni>0,2007,ifelse(yr2006_pc_gni>0,2006,ifelse(yr2005_pc_gni>0,2005,ifelse(yr2004_pc_gni>0,2004,ifelse(yr2003_pc_gni>0,2003,ifelse(yr2002_pc_gni>0,2002,ifelse(yr2001_pc_gni>0,2001,ifelse(yr2000_pc_gni>0,2000,0)))))))))))))))))))))) %>%
   mutate(isced6_enr=ifelse(yr2020_isced6_enr>0,yr2020_isced6_enr,ifelse(yr2019_isced6_enr>0,yr2019_isced6_enr,ifelse(yr2018_isced6_enr>0,yr2018_isced6_enr,ifelse(yr2017_isced6_enr>0,yr2017_isced6_enr,ifelse(yr2016_isced6_enr>0,yr2016_isced6_enr,ifelse(yr2015_isced6_enr>0,yr2015_isced6_enr,ifelse(yr2014_isced6_enr>0,yr2014_isced6_enr,ifelse(yr2013_isced6_enr>0,yr2013_isced6_enr,ifelse(yr2012_isced6_enr>0,yr2012_isced6_enr,ifelse(yr2011_isced6_enr>0,yr2011_isced6_enr,ifelse(yr2010_isced6_enr>0,yr2010_isced6_enr,ifelse(yr2009_isced6_enr>0,yr2009_isced6_enr,ifelse(yr2008_isced6_enr>0,yr2008_isced6_enr,ifelse(yr2007_isced6_enr>0,yr2007_isced6_enr,ifelse(yr2006_isced6_enr>0,yr2006_isced6_enr,ifelse(yr2005_isced6_enr>0,yr2005_isced6_enr,ifelse(yr2004_isced6_enr>0,yr2004_isced6_enr,ifelse(yr2003_isced6_enr>0,yr2003_isced6_enr,ifelse(yr2002_isced6_enr>0,yr2002_isced6_enr,ifelse(yr2001_isced6_enr>0,yr2001_isced6_enr,ifelse(yr2000_isced6_enr>0,yr2000_isced6_enr,0)))))))))))))))))))))) %>%
   mutate(isced7_enr=ifelse(yr2020_isced7_enr>0,yr2020_isced7_enr,ifelse(yr2019_isced7_enr>0,yr2019_isced7_enr,ifelse(yr2018_isced7_enr>0,yr2018_isced7_enr,ifelse(yr2017_isced7_enr>0,yr2017_isced7_enr,ifelse(yr2016_isced7_enr>0,yr2016_isced7_enr,ifelse(yr2015_isced7_enr>0,yr2015_isced7_enr,ifelse(yr2014_isced7_enr>0,yr2014_isced7_enr,ifelse(yr2013_isced7_enr>0,yr2013_isced7_enr,ifelse(yr2012_isced7_enr>0,yr2012_isced7_enr,ifelse(yr2011_isced7_enr>0,yr2011_isced7_enr,ifelse(yr2010_isced7_enr>0,yr2010_isced7_enr,ifelse(yr2009_isced7_enr>0,yr2009_isced7_enr,ifelse(yr2008_isced7_enr>0,yr2008_isced7_enr,ifelse(yr2007_isced7_enr>0,yr2007_isced7_enr,ifelse(yr2006_isced7_enr>0,yr2006_isced7_enr,ifelse(yr2005_isced7_enr>0,yr2005_isced7_enr,ifelse(yr2004_isced7_enr>0,yr2004_isced7_enr,ifelse(yr2003_isced7_enr>0,yr2003_isced7_enr,ifelse(yr2002_isced7_enr>0,yr2002_isced7_enr,ifelse(yr2001_isced7_enr>0,yr2001_isced7_enr,ifelse(yr2000_isced7_enr>0,yr2000_isced7_enr,0)))))))))))))))))))))) %>%
   mutate(isced8_enr=ifelse(yr2020_isced8_enr>0,yr2020_isced8_enr,ifelse(yr2019_isced8_enr>0,yr2019_isced8_enr,ifelse(yr2018_isced8_enr>0,yr2018_isced8_enr,ifelse(yr2017_isced8_enr>0,yr2017_isced8_enr,ifelse(yr2016_isced8_enr>0,yr2016_isced8_enr,ifelse(yr2015_isced8_enr>0,yr2015_isced8_enr,ifelse(yr2014_isced8_enr>0,yr2014_isced8_enr,ifelse(yr2013_isced8_enr>0,yr2013_isced8_enr,ifelse(yr2012_isced8_enr>0,yr2012_isced8_enr,ifelse(yr2011_isced8_enr>0,yr2011_isced8_enr,ifelse(yr2010_isced8_enr>0,yr2010_isced8_enr,ifelse(yr2009_isced8_enr>0,yr2009_isced8_enr,ifelse(yr2008_isced8_enr>0,yr2008_isced8_enr,ifelse(yr2007_isced8_enr>0,yr2007_isced8_enr,ifelse(yr2006_isced8_enr>0,yr2006_isced8_enr,ifelse(yr2005_isced8_enr>0,yr2005_isced8_enr,ifelse(yr2004_isced8_enr>0,yr2004_isced8_enr,ifelse(yr2003_isced8_enr>0,yr2003_isced8_enr,ifelse(yr2002_isced8_enr>0,yr2002_isced8_enr,ifelse(yr2001_isced8_enr>0,yr2001_isced8_enr,ifelse(yr2000_isced8_enr>0,yr2000_isced8_enr,0)))))))))))))))))))))) %>%
    mutate(natpop_est=ifelse(yr2020_nat_pop>0,yr2020_nat_pop,ifelse(yr2019_nat_pop>0,yr2019_nat_pop,ifelse(yr2018_nat_pop>0,yr2018_nat_pop,ifelse(yr2017_nat_pop>0,yr2017_nat_pop,ifelse(yr2016_nat_pop>0,yr2016_nat_pop,ifelse(yr2015_nat_pop>0,yr2015_nat_pop,ifelse(yr2014_nat_pop>0,yr2014_nat_pop,ifelse(yr2013_nat_pop>0,yr2013_nat_pop,ifelse(yr2012_nat_pop>0,yr2012_nat_pop,ifelse(yr2011_nat_pop>0,yr2011_nat_pop,ifelse(yr2010_nat_pop>0,yr2010_nat_pop,ifelse(yr2009_nat_pop>0,yr2009_nat_pop,ifelse(yr2008_nat_pop>0,yr2008_nat_pop,ifelse(yr2007_nat_pop>0,yr2007_nat_pop,ifelse(yr2006_nat_pop>0,yr2006_nat_pop,ifelse(yr2005_nat_pop>0,yr2005_nat_pop,ifelse(yr2004_nat_pop>0,yr2004_nat_pop,ifelse(yr2003_nat_pop>0,yr2003_nat_pop,ifelse(yr2002_nat_pop>0,yr2002_nat_pop,ifelse(yr2001_nat_pop>0,yr2001_nat_pop,ifelse(yr2000_nat_pop>0,yr2000_nat_pop,0)))))))))))))))))))))) %>%
+    mutate(pcgni_est=ifelse(yr2020_pc_gni>0,yr2020_pc_gni,ifelse(yr2019_pc_gni>0,yr2019_pc_gni,ifelse(yr2018_pc_gni>0,yr2018_pc_gni,ifelse(yr2017_pc_gni>0,yr2017_pc_gni,ifelse(yr2016_pc_gni>0,yr2016_pc_gni,ifelse(yr2015_pc_gni>0,yr2015_pc_gni,ifelse(yr2014_pc_gni>0,yr2014_pc_gni,ifelse(yr2013_pc_gni>0,yr2013_pc_gni,ifelse(yr2012_pc_gni>0,yr2012_pc_gni,ifelse(yr2011_pc_gni>0,yr2011_pc_gni,ifelse(yr2010_pc_gni>0,yr2010_pc_gni,ifelse(yr2009_pc_gni>0,yr2009_pc_gni,ifelse(yr2008_pc_gni>0,yr2008_pc_gni,ifelse(yr2007_pc_gni>0,yr2007_pc_gni,ifelse(yr2006_pc_gni>0,yr2006_pc_gni,ifelse(yr2005_pc_gni>0,yr2005_pc_gni,ifelse(yr2004_pc_gni>0,yr2004_pc_gni,ifelse(yr2003_pc_gni>0,yr2003_pc_gni,ifelse(yr2002_pc_gni>0,yr2002_pc_gni,ifelse(yr2001_pc_gni>0,yr2001_pc_gni,ifelse(yr2000_pc_gni>0,yr2000_pc_gni,0)))))))))))))))))))))) %>%
   rowwise() %>%
   filter(!isced6_ref_yr+isced7_ref_yr+isced8_ref_yr==0) %>%
-  select(country,isced6_enr,isced6_ref_yr,isced7_enr,isced7_ref_yr,isced8_enr,isced8_ref_yr,natpop_est,natpop_ref_yr) %>%
+  select(country,isced6_enr,isced6_ref_yr,isced7_enr,isced7_ref_yr,isced8_enr,isced8_ref_yr,natpop_est,natpop_ref_yr,pcgni_est,pcgni_ref_yr) %>%
   filter_at(vars(country),all_vars(!. %in% c("Arab World","Caribbean small states","Central Europe and the Baltics","Early-demographic dividend","East Asia & Pacific","East Asia & Pacific (excluding high income)","East Asia & Pacific (IDA & IBRD countries)","Euro area","Europe & Central Asia","Europe & Central Asia (excluding high income)","Europe & Central Asia (IDA & IBRD countries)","European Union","Fragile and conflict affected situations","Global Partnership for Education","Heavily indebted poor countries (HIPC)","High income","IBRD only","IDA & IBRD total","IDA blend","IDA only","IDA total","Late-demographic dividend","Latin America & Caribbean","Latin America & Caribbean (excluding high income)","Latin America & the Caribbean (IDA & IBRD countries)","Least developed countries: UN classification","Low & middle income","Low income","Lower middle income","Middle East & North Africa","Middle East & North Africa (excluding high income)","Middle East & North Africa (IDA & IBRD countries)","Middle income","North America","OECD members","Other small states","Pacific island small states","Post-demographic dividend","Pre-demographic dividend","Small states","South Asia","South Asia (IDA & IBRD)","Sub-Saharan Africa","Sub-Saharan Africa (excluding high income)","Sub-Saharan Africa (IDA & IBRD countries)","Upper middle income","World"))) %>%
    filter_at(vars(country),all_vars(!. %in% c("Andorra","Aruba","Bahrain","Bangladesh","Bhutan","Burundi","Chad","Comoros","Congo, Rep.","Cuba","Curacao","Dominican Republic","Eritrea","Eswatini","Grenada","Guinea","Iraq","Korea, Dem. People's Rep.","Lao PDR","Lesotho","Libya","Liechtenstein","Marshall Islands","Monaco","Mongolia","Mozambique","Myanmar","Nigeria","Puerto Rico","Qatar","Samoa","San Marino","Seychelles","Singapore","Sint Maarten (Dutch part)","St. Kitts and Nevis","St. Lucia","Sudan","Syrian Arab Republic","Tajikistan","Trinidad and Tobago","Turkmenistan","Turks and Caicos Islands","United Arab Emirates","Uzbekistan","Vietnam","West Bank and Gaza"))) %>%
   mutate(uni_enr_tot=isced6_enr+isced7_enr+isced8_enr) %>%
@@ -1498,11 +1511,11 @@ university_enrollment_data <- read.csv("/Users/kenjinchang/github/university-din
   mutate(across(country,str_replace,"United States","United States of America")) %>%
   mutate(across(country,str_replace,"Venezuela, RB","Venezuela (Bolivarian Republic of)")) %>%
   mutate(across(country,str_replace,"Yemen, Rep.","Yemen")) %>%
-  add_row(tibble_row(country="China, Taiwan Province of",isced6_enr=985144,isced6_ref_yr=2021,isced7_enr=171779,isced7_ref_yr=2021,isced8_enr=28907,isced8_ref_yr=2021,natpop_est=23186278,natpop_ref_yr=2022,uni_enr_tot=1185830,uni_enr_prop=0.05114361175),.before=1) 
+  add_row(tibble_row(country="China, Taiwan Province of",isced6_enr=985144,isced6_ref_yr=2021,isced7_enr=171779,isced7_ref_yr=2021,isced8_enr=28907,isced8_ref_yr=2021,natpop_est=23186278,natpop_ref_yr=2022,pcgni_est=33756,pcgni_ref_yr=2021,uni_enr_tot=1185830,uni_enr_prop=0.05114361175),.before=1) 
 university_enrollment_data
 ```
 
-    ## # A tibble: 124 × 11
+    ## # A tibble: 123 × 13
     ## # Rowwise: 
     ##    country       isced…¹ isced…² isced…³ isced…⁴ isced…⁵ isced…⁶ natpo…⁷ natpo…⁸
     ##    <chr>           <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
@@ -1516,10 +1529,10 @@ university_enrollment_data
     ##  8 Austria        1.99e5    2018 135346.    2018  20396.    2018  8.86e6    2019
     ##  9 Azerbaijan     1.61e5    2019  20954     2019   2626     2019  1.00e7    2019
     ## 10 Barbados       0            0      0        0    133     2011  2.87e5    2019
-    ## # … with 114 more rows, 2 more variables: uni_enr_tot <dbl>,
-    ## #   uni_enr_prop <dbl>, and abbreviated variable names ¹​isced6_enr,
-    ## #   ²​isced6_ref_yr, ³​isced7_enr, ⁴​isced7_ref_yr, ⁵​isced8_enr, ⁶​isced8_ref_yr,
-    ## #   ⁷​natpop_est, ⁸​natpop_ref_yr
+    ## # … with 113 more rows, 4 more variables: pcgni_est <dbl>, pcgni_ref_yr <dbl>,
+    ## #   uni_enr_tot <dbl>, uni_enr_prop <dbl>, and abbreviated variable names
+    ## #   ¹​isced6_enr, ²​isced6_ref_yr, ³​isced7_enr, ⁴​isced7_ref_yr, ⁵​isced8_enr,
+    ## #   ⁶​isced8_ref_yr, ⁷​natpop_est, ⁸​natpop_ref_yr
 
 Across each dataset, we are now left with 123 named countries.
 
@@ -1531,7 +1544,7 @@ ue_df_data <- left_join(university_enrollment_data,dietary_footprint_data,by="co
 ue_df_data
 ```
 
-    ## # A tibble: 124 × 56
+    ## # A tibble: 123 × 58
     ## # Rowwise: 
     ##    country       isced…¹ isced…² isced…³ isced…⁴ isced…⁵ isced…⁶ natpo…⁷ natpo…⁸
     ##    <chr>           <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
@@ -1545,8 +1558,8 @@ ue_df_data
     ##  8 Austria        1.99e5    2018 135346.    2018  20396.    2018  8.86e6    2019
     ##  9 Azerbaijan     1.61e5    2019  20954     2019   2626     2019  1.00e7    2019
     ## 10 Barbados       0            0      0        0    133     2011  2.87e5    2019
-    ## # … with 114 more rows, 47 more variables: uni_enr_tot <dbl>,
-    ## #   uni_enr_prop <dbl>, baseline_kg_co2e_excl_luc <dbl>,
+    ## # … with 113 more rows, 49 more variables: pcgni_est <dbl>, pcgni_ref_yr <dbl>,
+    ## #   uni_enr_tot <dbl>, uni_enr_prop <dbl>, baseline_kg_co2e_excl_luc <dbl>,
     ## #   baseline_kg_co2e_total <dbl>, baseline_l_blue_green_wf <dbl>,
     ## #   baseline_l_blue_wf_total <dbl>, baseline_l_green_wf <dbl>,
     ## #   meatless_day_kg_co2e_excl_luc <dbl>, meatless_day_kg_co2e_total <dbl>,
@@ -1606,7 +1619,7 @@ anti_join(ue_df_data,map_data_iso_check,by="country") %>%
   select(country)
 ```
 
-    ## # A tibble: 18 × 1
+    ## # A tibble: 17 × 1
     ## # Rowwise: 
     ##    country                                  
     ##    <chr>                                    
@@ -1617,17 +1630,16 @@ anti_join(ue_df_data,map_data_iso_check,by="country") %>%
     ##  5 Czechia                                  
     ##  6 China, Hong Kong SAR                     
     ##  7 Iran (Islamic Republic of)               
-    ##  8 Korea, Dem. People�s Rep.                
-    ##  9 Republic of Korea                        
-    ## 10 Kyrgyzstan                               
-    ## 11 China, Macao SAR                         
-    ## 12 Republic of Moldova                      
-    ## 13 The former Yugoslav Republic of Macedonia
-    ## 14 Russian Federation                       
-    ## 15 Slovakia                                 
-    ## 16 United Republic of Tanzania              
-    ## 17 United States of America                 
-    ## 18 Venezuela (Bolivarian Republic of)
+    ##  8 Republic of Korea                        
+    ##  9 Kyrgyzstan                               
+    ## 10 China, Macao SAR                         
+    ## 11 Republic of Moldova                      
+    ## 12 The former Yugoslav Republic of Macedonia
+    ## 13 Russian Federation                       
+    ## 14 Slovakia                                 
+    ## 15 United Republic of Tanzania              
+    ## 16 United States of America                 
+    ## 17 Venezuela (Bolivarian Republic of)
 
 Here, we have the 17 row observations that are found in the impact
 modeling data but not the shapefile data.
@@ -1679,7 +1691,7 @@ ue_df_data <- ue_df_data %>%
 ue_df_data
 ```
 
-    ## # A tibble: 124 × 56
+    ## # A tibble: 123 × 58
     ## # Rowwise: 
     ##    country     isced6_…¹ isced…² isced…³ isced…⁴ isced…⁵ isced…⁶ natpo…⁷ natpo…⁸
     ##    <chr>           <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
@@ -1693,8 +1705,8 @@ ue_df_data
     ##  8 Austria       199236.    2018 135346.    2018  20396.    2018  8.86e6    2019
     ##  9 Azerbaijan    160631     2019  20954     2019   2626     2019  1.00e7    2019
     ## 10 Barbados           0        0      0        0    133     2011  2.87e5    2019
-    ## # … with 114 more rows, 47 more variables: uni_enr_tot <dbl>,
-    ## #   uni_enr_prop <dbl>, baseline_kg_co2e_excl_luc <dbl>,
+    ## # … with 113 more rows, 49 more variables: pcgni_est <dbl>, pcgni_ref_yr <dbl>,
+    ## #   uni_enr_tot <dbl>, uni_enr_prop <dbl>, baseline_kg_co2e_excl_luc <dbl>,
     ## #   baseline_kg_co2e_total <dbl>, baseline_l_blue_green_wf <dbl>,
     ## #   baseline_l_blue_wf_total <dbl>, baseline_l_green_wf <dbl>,
     ## #   meatless_day_kg_co2e_excl_luc <dbl>, meatless_day_kg_co2e_total <dbl>,
@@ -1709,11 +1721,9 @@ anti_join(ue_df_data,map_data_iso_check,by="country") %>%
   select(country)
 ```
 
-    ## # A tibble: 1 × 1
+    ## # A tibble: 0 × 1
     ## # Rowwise: 
-    ##   country                  
-    ##   <chr>                    
-    ## 1 Korea, Dem. People�s Rep.
+    ## # … with 1 variable: country <chr>
 
 Now, we can move on with our spatial join.
 
@@ -1722,7 +1732,7 @@ impact_modeling_data <- left_join(map_data_iso,ue_df_data,by="country")
 impact_modeling_data
 ```
 
-    ## # A tibble: 99,467 × 60
+    ## # A tibble: 99,467 × 62
     ##     long   lat group order country     isced6_…¹ isced…² isced…³ isced…⁴ isced…⁵
     ##    <dbl> <dbl> <dbl> <int> <chr>           <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
     ##  1  74.9  37.2     2    12 Afghanistan    365982    2018    4600    2018      28
@@ -1735,9 +1745,9 @@ impact_modeling_data
     ##  8  74.4  37.2     2    19 Afghanistan    365982    2018    4600    2018      28
     ##  9  74.4  37.1     2    20 Afghanistan    365982    2018    4600    2018      28
     ## 10  74.5  37.1     2    21 Afghanistan    365982    2018    4600    2018      28
-    ## # … with 99,457 more rows, 50 more variables: isced8_ref_yr <dbl>,
-    ## #   natpop_est <dbl>, natpop_ref_yr <dbl>, uni_enr_tot <dbl>,
-    ## #   uni_enr_prop <dbl>, baseline_kg_co2e_excl_luc <dbl>,
+    ## # … with 99,457 more rows, 52 more variables: isced8_ref_yr <dbl>,
+    ## #   natpop_est <dbl>, natpop_ref_yr <dbl>, pcgni_est <dbl>, pcgni_ref_yr <dbl>,
+    ## #   uni_enr_tot <dbl>, uni_enr_prop <dbl>, baseline_kg_co2e_excl_luc <dbl>,
     ## #   baseline_kg_co2e_total <dbl>, baseline_l_blue_green_wf <dbl>,
     ## #   baseline_l_blue_wf_total <dbl>, baseline_l_green_wf <dbl>,
     ## #   meatless_day_kg_co2e_excl_luc <dbl>, meatless_day_kg_co2e_total <dbl>,
