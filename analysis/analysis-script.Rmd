@@ -1602,7 +1602,7 @@ xy_pcgni_wf <- reduction_modeling_data %>%
   filter(!pcgni_est==0) %>%
   ggplot(aes(x=pcgni_est,y=baseline_l_blue_green_wf,color=baseline_l_blue_green_wf)) +
   scale_color_viridis(option="G",trans="reverse") +
-  geom_smooth(method="loess",show.legend=FALSE,color="paleturquoise3",fill="azure2",alpha=0.66) +
+  geom_smooth(method="loess",show.legend=FALSE,color="paleturquoise3",fill="azure2") +
   geom_point(size=1.5,alpha=0.66) +
   scale_x_continuous(labels=scales::comma) +
   scale_y_continuous(labels=scales::comma) +
@@ -1611,6 +1611,7 @@ xy_pcgni_wf <- reduction_modeling_data %>%
   ylab("Liters") + 
   ggtitle("Diet-Attributable Water Footprint") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",legend.key.width=unit(3.5,"cm"))
+xy_pcgni_wf
 ```
 
 ```{r}
@@ -1628,6 +1629,7 @@ xy_pcgni_cf <- reduction_modeling_data %>%
   ylab(bquote('Kilograms CO'[2]*'e')) + 
   ggtitle("Diet-Attributable Greenhouse Gas Footprint") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",legend.key.width=unit(3.5,"cm"))
+xy_pcgni_cf
 ```
 
 ```{r}
