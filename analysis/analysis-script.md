@@ -1004,10 +1004,10 @@ meatless_day_cf_dec_pop_rank <- reduction_modeling_data %>%
                values_to="value") %>%
   ggplot(aes(x=value,y=country,fill=factor(indicator,levels=c("dec_pop_meatless_day_kg_co2e_excl_luc","dec_pop_meatless_day_kg_co2e_luc","dec_pop_meatless_day_l_blue_wf_total","dec_pop_meatless_day_l_green_wf")))) + 
   geom_col(color="black",size=0.25,alpha=0.8) + 
-  scale_fill_manual(values=c("tomato","lightsalmon","aquamarine4","darkseagreen"),labels=c("Non-LUC-Attributable Carbon Footprint","LUC-Attributable Carbon Footprint","Blue Water Footprint","Green Water Footprint"),drop=FALSE) +
-  scale_x_continuous(breaks=c(0,8000000000,16000000000,24000000000,32000000000),labels=function(x)x/1000000000) +
+  scale_fill_manual(values=c("salmon","peachpuff1","lightskyblue3","paleturquoise3"),labels=c("Non-LUC-Attributable Carbon Footprint","LUC-Attributable Carbon Footprint","Blue Water Footprint","Green Water Footprint"),drop=FALSE) +
+  scale_x_continuous(breaks=c(0,4000000000,8000000000,12000000000,16000000000,20000000000,24000000000,28000000000,32000000000,36000000000),labels=function(x)x/1000000000) +
   scale_y_discrete(limits=c("Germany","Mexico","Australia","France","Russia","Turkey","Argentina","China","United States","Brazil")) +
-  coord_cartesian(xlim=c(0,34000000000)) +
+  coord_cartesian(xlim=c(0,35500000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Meatless Day") +
@@ -1024,10 +1024,10 @@ no_dairy_cf_dec_pop_rank <- reduction_modeling_data %>%
                values_to="value") %>%
   ggplot(aes(x=value,y=country,fill=indicator)) + 
   geom_col(color="black",size=0.25,alpha=0.8) + 
-  scale_fill_manual(values=c("tomato","lightsalmon"),labels=c("Non-LUC-Attributable Carbon Footprint","LUC-Attributable Carbon Footprint")) +
-  scale_x_continuous(breaks=c(0,8000000000,16000000000,24000000000,32000000000),labels=function(x)x/1000000000) +
+  scale_fill_manual(values=c("salmon","peachpuff1"),labels=c("Non-LUC-Attributable Carbon Footprint","LUC-Attributable Carbon Footprint")) +
+  scale_x_continuous(breaks=c(0,4000000000,8000000000,12000000000,16000000000,20000000000,24000000000,28000000000,32000000000,36000000000),labels=function(x)x/1000000000) +
   scale_y_discrete(limits=c("Mexico","France","Germany","Russia","Argentina","Turkey","China","United States","India","Brazil")) +
-  coord_cartesian(xlim=c(0,34000000000)) +
+  coord_cartesian(xlim=c(0,35500000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("No Dairy") +
@@ -1044,10 +1044,10 @@ low_red_meat_cf_dec_pop_rank <- reduction_modeling_data %>%
                values_to="value") %>%
   ggplot(aes(x=value,y=country,fill=indicator)) + 
   geom_col(color="black",size=0.25,alpha=0.8) + 
-  scale_fill_manual(values=c("tomato","lightsalmon"),labels=c("Non-LUC-Attributable Carbon Footprint","LUC-Attributable Carbon Footprint")) +
-  scale_x_continuous(breaks=c(0,8000000000,16000000000,24000000000,32000000000),labels=function(x)x/1000000000) +
+  scale_fill_manual(values=c("salmon","peachpuff1"),labels=c("Non-LUC-Attributable Carbon Footprint","LUC-Attributable Carbon Footprint")) +
+  scale_x_continuous(breaks=c(0,4000000000,8000000000,12000000000,16000000000,20000000000,24000000000,28000000000,32000000000,36000000000),labels=function(x)x/1000000000) +
   scale_y_discrete(limits=c("Russia","Mexico","Turkey","Germany","France","Australia","China","Argentina","United States","Brazil")) +
-  coord_cartesian(xlim=c(0,34000000000)) +
+  coord_cartesian(xlim=c(0,35500000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Low Red Meat") +
@@ -1064,10 +1064,10 @@ no_red_meat_cf_dec_pop_rank <- reduction_modeling_data %>%
                values_to="value") %>%
   ggplot(aes(x=value,y=country,fill=indicator)) + 
   geom_col(color="black",size=0.25,alpha=0.8) + 
-  scale_fill_manual(values=c("tomato","lightsalmon"),labels=c("Non-LUC-Attributable Carbon Footprint","LUC-Attributable Carbon Footprint")) +
-  scale_x_continuous(breaks=c(0,8000000000,16000000000,24000000000,32000000000),labels=function(x)x/1000000000) +
+  scale_fill_manual(values=c("salmon","peachpuff1"),labels=c("Non-LUC-Attributable Carbon Footprint","LUC-Attributable Carbon Footprint")) +
+  scale_x_continuous(breaks=c(0,4000000000,8000000000,12000000000,16000000000,20000000000,24000000000,28000000000,32000000000,36000000000),labels=function(x)x/1000000000) +
   scale_y_discrete(limits=c("France","United Kingdom","Australia","Chile","Mexico","Russia","Argentina","China","United States","Brazil")) +
-  coord_cartesian(xlim=c(0,34000000000)) +
+  coord_cartesian(xlim=c(0,35500000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("No Red Meat") +
@@ -1084,10 +1084,10 @@ pescetarian_cf_dec_pop_rank <- reduction_modeling_data %>%
                values_to="value") %>%
   ggplot(aes(x=value,y=country,fill=indicator)) + 
   geom_col(color="black",size=0.25,alpha=0.8) + 
-  scale_fill_manual(values=c("tomato","lightsalmon"),labels=c("Non-LUC-Attributable Carbon Footprint","LUC-Attributable Carbon Footprint")) +
-  scale_x_continuous(breaks=c(0,8000000000,16000000000,24000000000,32000000000),labels=function(x)x/1000000000) +
+  scale_fill_manual(values=c("salmon","peachpuff1"),labels=c("Non-LUC-Attributable Carbon Footprint","LUC-Attributable Carbon Footprint")) +
+  scale_x_continuous(breaks=c(0,4000000000,8000000000,12000000000,16000000000,20000000000,24000000000,28000000000,32000000000,36000000000),labels=function(x)x/1000000000) +
   scale_y_discrete(limits=c("United Kingdom","Turkey","Australia","Chile","Mexico","Russia","Argentina","United States","China","Brazil")) +
-  coord_cartesian(xlim=c(0,34000000000)) +
+  coord_cartesian(xlim=c(0,35500000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Pescetarian") +
@@ -1104,10 +1104,10 @@ lacto_ovo_vegetarian_cf_dec_pop_rank <- reduction_modeling_data %>%
                values_to="value") %>%
   ggplot(aes(x=value,y=country,fill=indicator)) + 
   geom_col(color="black",size=0.25,alpha=0.8) + 
-  scale_fill_manual(values=c("tomato","lightsalmon"),labels=c("Non-LUC-Attributable Carbon Footprint","LUC-Attributable Carbon Footprint")) +
-  scale_x_continuous(breaks=c(0,8000000000,16000000000,24000000000,32000000000),labels=function(x)x/1000000000) +
+  scale_fill_manual(values=c("salmon","peachpuff1"),labels=c("Non-LUC-Attributable Carbon Footprint","LUC-Attributable Carbon Footprint")) +
+  scale_x_continuous(breaks=c(0,4000000000,8000000000,12000000000,16000000000,20000000000,24000000000,28000000000,32000000000,36000000000),labels=function(x)x/1000000000) +
   scale_y_discrete(limits=c("France","Australia","South Korea","Chile","Mexico","Russia","Argentina","United States","China","Brazil")) +
-  coord_cartesian(xlim=c(0,34000000000)) +
+  coord_cartesian(xlim=c(0,35500000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Vegetarian") +
@@ -1123,11 +1123,11 @@ X2.3_vegan_cf_dec_pop_rank <- reduction_modeling_data %>%
                names_to="indicator",
                values_to="value") %>%
   ggplot(aes(x=value,y=country,fill=indicator)) + 
-  geom_col(color="black",size=0.25,alpha=0.8) + 
-  scale_fill_manual(values=c("tomato","lightsalmon"),labels=c("Non-LUC-Attributable Carbon Footprint","LUC-Attributable Carbon Footprint")) +
-  scale_x_continuous(breaks=c(0,8000000000,16000000000,24000000000,32000000000),labels=function(x)x/1000000000) +
+  geom_col(color="black",size=0.25,alpha=0.66) + 
+  scale_fill_manual(values=c("salmon","peachpuff1"),labels=c("Non-LUC-Attributable Carbon Footprint","LUC-Attributable Carbon Footprint")) +
+  scale_x_continuous(breaks=c(0,4000000000,8000000000,12000000000,16000000000,20000000000,24000000000,28000000000,32000000000,36000000000),labels=function(x)x/1000000000) +
   scale_y_discrete(limits=c("Australia","Germany","Mexico","Turkey","Russia","India","Argentina","China","United States","Brazil")) +
-  coord_cartesian(xlim=c(0,34000000000)) +  
+  coord_cartesian(xlim=c(0,35500000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("2/3 Vegan") +
@@ -1143,11 +1143,11 @@ vegan_cf_dec_pop_rank <- reduction_modeling_data %>%
                names_to="indicator",
                values_to="value") %>%
   ggplot(aes(x=value,y=country,fill=factor(indicator,levels=c("dec_pop_vegan_kg_co2e_excl_luc","dec_pop_vegan_kg_co2e_luc","dec_pop_vegan_l_blue_wf_total","dec_pop_vegan_l_green_wf")))) + 
-  geom_col(color="black",size=0.25,alpha=0.8) + 
-  scale_fill_manual(values=c("tomato","lightsalmon","aquamarine4","darkseagreen"),labels=c("Non-LUC-Attributable Carbon Footprint","LUC-Attributable Carbon Footprint","Blue Water Footprint","Green Water Footprint"),drop=FALSE) +
-  scale_x_continuous(breaks=c(0,8000000000,16000000000,24000000000,32000000000),labels=function(x)x/1000000000) +
+  geom_col(color="black",size=0.25,alpha=0.66) + 
+  scale_fill_manual(values=c("salmon","peachpuff1","lightskyblue3","paleturquoise3"),labels=c("Non-LUC-Attributable Carbon Footprint","LUC-Attributable Carbon Footprint","Blue Water Footprint","Green Water Footprint"),drop=FALSE) +
+  scale_x_continuous(breaks=c(0,4000000000,8000000000,12000000000,16000000000,20000000000,24000000000,28000000000,32000000000,36000000000),labels=function(x)x/1000000000) +
   scale_y_discrete(limits=c("Germany","Australia","Mexico","Turkey","Russia","Argentina","India","United States","China","Brazil")) +
-  coord_cartesian(xlim=c(0,34000000000)) +
+  coord_cartesian(xlim=c(0,35500000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
   ggtitle("Vegan") +
@@ -1166,11 +1166,11 @@ meatless_day_wf_dec_pop_rank <- reduction_modeling_data %>%
                names_to="indicator",
                values_to="value") %>%
   ggplot(aes(x=value,y=country,fill=indicator)) + 
-  geom_col(color="black",size=0.25,alpha=0.8) + 
-  scale_fill_manual(values=c("aquamarine4","darkseagreen"),labels=c("Blue Water Footprint","Green Water Footprint")) +
-  scale_x_continuous(labels=function(x)x/1000000000000) +
+  geom_col(color="black",size=0.25,alpha=0.66) + 
+  scale_fill_manual(values=c("lightskyblue3","paleturquoise3"),labels=c("Blue Water Footprint","Green Water Footprint")) +
+  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(0,1000000000000,2000000000000,3000000000000,4000000000000,5000000000000,6000000000000,7000000000000,8000000000000,9000000000000)) +
   scale_y_discrete(limits=c("Italy","Iran","Mexico","Argentina","Russia","Egypt","China","Turkey","United States","Brazil")) +
-  coord_cartesian(xlim=c(0,8500000000000)) +
+  coord_cartesian(xlim=c(0,8700000000000)) +
   xlab("Trillion Liters") +
   ylab("") +
   ggtitle("Meatless Day") +
@@ -1186,11 +1186,11 @@ no_dairy_wf_dec_pop_rank <- reduction_modeling_data %>%
                names_to="indicator",
                values_to="value") %>%
   ggplot(aes(x=value,y=country,fill=indicator)) + 
-  geom_col(color="black",size=0.25,alpha=0.8) + 
-  scale_fill_manual(values=c("aquamarine4","darkseagreen"),labels=c("Blue Water Footprint","Green Water Footprint")) +
-  scale_x_continuous(labels=function(x)x/1000000000000) +
+  geom_col(color="black",size=0.25,alpha=0.66) + 
+  scale_fill_manual(values=c("lightskyblue3","paleturquoise3"),labels=c("Blue Water Footprint","Green Water Footprint")) +
+  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(0,1000000000000,2000000000000,3000000000000,4000000000000,5000000000000,6000000000000,7000000000000,8000000000000,9000000000000)) +
   scale_y_discrete(limits=c("Italy","Argentina","Iran","Russia","Egypt","Mexico","China","Turkey","United States","Brazil")) +
-  coord_cartesian(xlim=c(0,8500000000000)) +
+  coord_cartesian(xlim=c(0,8700000000000)) +
   xlab("Trillion Liters") +
   ylab("") +
   ggtitle("No Dairy") +
@@ -1206,11 +1206,11 @@ low_red_meat_wf_dec_pop_rank <- reduction_modeling_data %>%
                names_to="indicator",
                values_to="value") %>%
   ggplot(aes(x=value,y=country,fill=indicator)) + 
-  geom_col(color="black",size=0.25,alpha=0.8) + 
-  scale_fill_manual(values=c("aquamarine4","darkseagreen"),labels=c("Blue Water Footprint","Green Water Footprint")) +
-  scale_x_continuous(labels=function(x)x/1000000000000) +
+  geom_col(color="black",size=0.25,alpha=0.66) + 
+  scale_fill_manual(values=c("lightskyblue3","paleturquoise3"),labels=c("Blue Water Footprint","Green Water Footprint")) +
+  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(0,1000000000000,2000000000000,3000000000000,4000000000000,5000000000000,6000000000000,7000000000000,8000000000000,9000000000000)) +
   scale_y_discrete(limits=c("Italy","Australia","Iran","Mexico","Argentina","Egypt","China","Turkey","United States","Brazil")) +
-  coord_cartesian(xlim=c(0,8500000000000)) +
+  coord_cartesian(xlim=c(0,8700000000000)) +
   xlab("Trillion Liters") +
   ylab("") +
   ggtitle("Low Red Meat") +
@@ -1226,11 +1226,11 @@ no_red_meat_wf_dec_pop_rank <- reduction_modeling_data %>%
                names_to="indicator",
                values_to="value") %>%
   ggplot(aes(x=value,y=country,fill=indicator)) + 
-  geom_col(color="black",size=0.25,alpha=0.8) + 
-  scale_fill_manual(values=c("aquamarine4","darkseagreen"),labels=c("Blue Water Footprint","Green Water Footprint")) +
-  scale_x_continuous(labels=function(x)x/1000000000000) +
+  geom_col(color="black",size=0.25,alpha=0.66) + 
+  scale_fill_manual(values=c("lightskyblue3","paleturquoise3"),labels=c("Blue Water Footprint","Green Water Footprint")) +
+  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(0,1000000000000,2000000000000,3000000000000,4000000000000,5000000000000,6000000000000,7000000000000,8000000000000,9000000000000)) +
   scale_y_discrete(limits=c("South Korea","Argentina","Australia","Egypt","Mexico","Russia","Turkey","China","United States","Brazil")) +
-  coord_cartesian(xlim=c(0,8500000000000)) +
+  coord_cartesian(xlim=c(0,8700000000000)) +
   xlab("Trillion Liters") +
   ylab("") +
   ggtitle("No Red Meat") +
@@ -1246,11 +1246,11 @@ pescetarian_wf_dec_pop_rank <- reduction_modeling_data %>%
                names_to="indicator",
                values_to="value") %>%
   ggplot(aes(x=value,y=country,fill=indicator)) + 
-  geom_col(color="black",size=0.25,alpha=0.8) + 
-  scale_fill_manual(values=c("aquamarine4","darkseagreen"),labels=c("Blue Water Footprint","Green Water Footprint")) +
-  scale_x_continuous(labels=function(x)x/1000000000000) +
+  geom_col(color="black",size=0.25,alpha=0.66) + 
+  scale_fill_manual(values=c("lightskyblue3","paleturquoise3"),labels=c("Blue Water Footprint","Green Water Footprint")) +
+  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(0,1000000000000,2000000000000,3000000000000,4000000000000,5000000000000,6000000000000,7000000000000,8000000000000,9000000000000)) +
   scale_y_discrete(limits=c("South Korea","Argentina","Iran","Egypt","Mexico","Russia","Turkey","China","United States","Brazil")) +
-  coord_cartesian(xlim=c(0,8500000000000)) +
+  coord_cartesian(xlim=c(0,8700000000000)) +
   xlab("Trillion Liters") +
   ylab("") +
   ggtitle("Pescetarian") +
@@ -1266,11 +1266,11 @@ lacto_ovo_vegetarian_wf_dec_pop_rank <- reduction_modeling_data %>%
                names_to="indicator",
                values_to="value") %>%
   ggplot(aes(x=value,y=country,fill=indicator)) + 
-  geom_col(color="black",size=0.25,alpha=0.8) + 
-  scale_fill_manual(values=c("aquamarine4","darkseagreen"),labels=c("Blue Water Footprint","Green Water Footprint")) +
-  scale_x_continuous(labels=function(x)x/1000000000000) +
+  geom_col(color="black",size=0.25,alpha=0.66) + 
+  scale_fill_manual(values=c("lightskyblue3","paleturquoise3"),labels=c("Blue Water Footprint","Green Water Footprint")) +
+  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(0,1000000000000,2000000000000,3000000000000,4000000000000,5000000000000,6000000000000,7000000000000,8000000000000,9000000000000)) +
   scale_y_discrete(limits=c("Iran","Argentina","Australia","Mexico","Egypt","Russia","Turkey","China","United States","Brazil")) +
-  coord_cartesian(xlim=c(0,8500000000000)) +
+  coord_cartesian(xlim=c(0,8700000000000)) +
   xlab("Trillion Liters") +
   ylab("") +
   ggtitle("Vegetarian") +
@@ -1286,11 +1286,11 @@ X2.3_vegan_wf_dec_pop_rank <- reduction_modeling_data %>%
                names_to="indicator",
                values_to="value") %>%
   ggplot(aes(x=value,y=country,fill=indicator)) + 
-  geom_col(color="black",size=0.25,alpha=0.8) + 
-  scale_fill_manual(values=c("aquamarine4","darkseagreen"),labels=c("Blue Water Footprint","Green Water Footprint")) +
-  scale_x_continuous(labels=function(x)x/1000000000000) +
+  geom_col(color="black",size=0.25,alpha=0.66) + 
+  scale_fill_manual(values=c("lightskyblue3","paleturquoise3"),labels=c("Blue Water Footprint","Green Water Footprint")) +
+  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(0,1000000000000,2000000000000,3000000000000,4000000000000,5000000000000,6000000000000,7000000000000,8000000000000,9000000000000)) +
   scale_y_discrete(limits=c("Australia","Argentina","Iran","Egypt","Mexico","Russia","Turkey","China","United States","Brazil")) +
-  coord_cartesian(xlim=c(0,8500000000000)) +
+  coord_cartesian(xlim=c(0,8700000000000)) +
   xlab("Trillion Liters") +
   ylab("") +
   ggtitle("2/3 Vegan") +
@@ -1308,17 +1308,14 @@ vegan_wf_dec_pop_rank <- reduction_modeling_data %>%
   ggplot(aes(x=value,y=country,fill=indicator)) + 
   geom_col(color="black",size=0.25,alpha=0.66) + 
   scale_fill_manual(values=c("lightskyblue3","paleturquoise3"),labels=c("Blue Water Footprint","Green Water Footprint")) +
-  scale_x_continuous(labels=function(x)x/1000000000000) +
+  scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(0,1000000000000,2000000000000,3000000000000,4000000000000,5000000000000,6000000000000,7000000000000,8000000000000,9000000000000)) +
   scale_y_discrete(limits=c("Germany","Australia","Iran","Egypt","Mexico","Russia","Turkey","United States","China","Brazil")) +
-  coord_cartesian(xlim=c(0,8500000000000)) +
+  coord_cartesian(xlim=c(0,8700000000000)) +
   xlab("Trillion Liters") +
   ylab("") +
   ggtitle("Vegan") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom")
-vegan_wf_dec_pop_rank
 ```
-
-![](analysis-script_files/figure-gfm/unnamed-chunk-71-1.png)<!-- -->
 
 Now, we will aggregate these ranking subplots together.
 
@@ -1341,7 +1338,7 @@ impactful countrieseach gross ecological indicator across the eight
 modeled dietary scenarios.”))
 
 ``` r
-ggsave("figure-4.tiff",device="tiff",plot=pop_dec_cf_wf_rank,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=100*(14/5),height=160*(14/5))
+ggsave("figure-4.tiff",device="tiff",plot=pop_dec_cf_wf_rank,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=120*(14/5),height=180*(14/5))
 ```
 
 Now, we will generate box and violin plots looking at the distribution
@@ -1716,5 +1713,7 @@ xy_pcgnni_cf_wf
 ![](analysis-script_files/figure-gfm/unnamed-chunk-102-1.png)<!-- -->
 
 ``` r
-ggsave("figure-6.tiff",device="tiff",plot=pc_baseline_total_cf_wf_choro_bp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=40*(14/5))
+ggsave("figure-6.tiff",device="tiff",plot=xy_pcgnni_cf_wf,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=40*(14/5))
 ```
+
+ERASE V1 DATASET + ALT FIGURES ONCE COMPLETE
