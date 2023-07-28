@@ -1645,3 +1645,4 @@ xy_pcgnni_cf_wf
 ggsave("figure-6.tiff",device="tiff",plot=xy_pcgnni_cf_wf,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=40*(14/5))
 ```
 
+ERASE V1 DATASET + ALT FIGURES ONCE COMPLETE
