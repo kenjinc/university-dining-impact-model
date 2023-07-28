@@ -1601,16 +1601,16 @@ xy_pcgni_wf <- reduction_modeling_data %>%
   rowwise() %>%
   filter(!pcgni_est==0) %>%
   ggplot(aes(x=pcgni_est,y=baseline_l_blue_green_wf,color=baseline_l_blue_green_wf)) +
-  scale_color_viridis(option="G",trans="reverse") +
+  scale_color_viridis(alpha=0.66,name="Liters",option="G",trans="reverse",labels=scales::comma) +
   geom_smooth(method="loess",show.legend=FALSE,color="paleturquoise3",fill="azure2") +
-  geom_point(size=1.5,alpha=0.66) +
-  scale_x_continuous(labels=scales::comma) +
-  scale_y_continuous(labels=scales::comma) +
-  guides(color=guide_colorbar(reverse=TRUE,title.position="top",title.hjust=0.5)) +
+  geom_point(size=2,alpha=0.66) +
+  scale_x_continuous(labels=scales::comma,breaks=c(0,15000,30000,45000,60000,75000,90000,105000)) +
+  scale_y_continuous(labels=scales::comma,breaks=c(500000,1000000,1500000,2000000,2500000,3000000,3500000,4000000,4500000),limits=c(150000,4500000)) +
+  guides(color=guide_colorbar(reverse=TRUE,title="Liters",title.position="left",title.vjust=0.5,alpha=0.66)) +
   xlab("Per Capita Gross National Income") +
-  ylab("Liters") + 
+  ylab("") + 
   ggtitle("Diet-Attributable Water Footprint") +
-  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",legend.key.width=unit(3.5,"cm"))
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="right",legend.key.height=unit(1.5,"cm"))
 xy_pcgni_wf
 ```
 
@@ -1619,16 +1619,16 @@ xy_pcgni_cf <- reduction_modeling_data %>%
   rowwise() %>%
   filter(!pcgni_est==0) %>%
   ggplot(aes(x=pcgni_est,y=baseline_kg_co2e_total,color=baseline_kg_co2e_total)) +
-  scale_color_viridis(option="F",trans="reverse") +
+  scale_color_viridis(labels=scales::comma,alpha=0.66,option="F",trans="reverse") +
   geom_smooth(method="loess",show.legend=FALSE,alpha=0.66,color="lightsalmon2",fill="antiquewhite1") +
-  geom_point(aes(color=baseline_kg_co2e_total),alpha=0.66,size=1.5) +
-  scale_x_continuous(labels=scales::comma) +
-  scale_y_continuous(labels=scales::comma) +
-  guides(fill=guide_colorbar(reverse=TRUE,title.position="top",title.hjust=0.5,alpha=0.66)) +
+  geom_point(size=2,alpha=0.66) +
+  scale_x_continuous(labels=scales::comma,breaks=c(0,15000,30000,45000,60000,75000,90000,105000)) +
+  scale_y_continuous(labels=scales::comma,breaks=c(500,1000,1500,2000,2500,3000,3500,4000,4500),limits=c(150,4500)) +
+  guides(color=guide_colorbar(reverse=TRUE,title=bquote('Kilograms CO'[2]*'e'),title.position="left",title.vjust=0.5,alpha=0.66)) +
   xlab("Per Capita Gross National Income") +
-  ylab(bquote('Kilograms CO'[2]*'e')) + 
+  ylab("") + 
   ggtitle("Diet-Attributable Greenhouse Gas Footprint") +
-  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",legend.key.width=unit(3.5,"cm"))
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="right",legend.key.height=unit(1.5,"cm"))
 xy_pcgni_cf
 ```
 
@@ -1639,5 +1639,9 @@ xy_pcgnni_cf_wf <- ggarrange(xy_pcgni_cf,xy_pcgni_wf,
           labels=c("A","B"),
           font.label=list(size=14,face="bold",color="black"))
 xy_pcgnni_cf_wf
+```
+
+```{r}
+ggsave("figure-6.tiff",device="tiff",plot=xy_pcgnni_cf_wf,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=40*(14/5))
 ```
 
