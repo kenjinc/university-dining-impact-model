@@ -404,20 +404,20 @@ First, we will need to model the potential implications of these changes
 on diet-attributable climate emissions:
 
 ``` r
-vegan_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_vegan_kg_co2e_total,y=income.classification,fill=income.classification)) + 
-  geom_jitter(aes(color=dec_pop_vegan_kg_co2e_total),height=0.33,alpha=0.66) +
-  geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
-  geom_boxplot(size=0.25,fill=NA,outlier.shape=NA,width=0.3) +
-  scale_color_viridis_c(option="F",name="Kilograms",trans="reverse") +
-  scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
+vegan_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_vegan_kg_co2e_total,y=income.classification,color=dec_pop_vegan_kg_co2e_total)) + 
+  geom_jitter(height=0.33,alpha=0.66,size=3) +
+  geom_violin(size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  scale_color_viridis_c(option="F",name=bquote('Billion Kilograms CO'[2]*'e'),trans="reverse",alpha=0.66,labels=function(x)x/1000000000,breaks=c(5000000000,10000000000,15000000000,20000000000,25000000000,30000000000,35000000000)) +
+  scale_y_discrete(limits=c("low","lower middle","upper middle","high"),labels=c("Low (n=12)","Lower Middle (n=26)","Upper Middle (n=36)","High (n=49)"),position="right") +
   scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-16000000000,-8000000000,0,8000000000,16000000000,24000000000,32000000000)) +
   geom_vline(xintercept=0,linetype=2,size=0.25) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
   coord_cartesian(xlim=c(-17000000000,34000000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
+  guides(color=guide_colorbar(reverse=TRUE,title.position="top",title.hjust=0.5)) +
   ggtitle("Vegan") +
-  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="bottom",axis.text.y=element_blank(),axis.ticks.y=element_blank())
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="bottom",legend.key.width=unit(3.5,"cm"))
 vegan_cf_dec_pop_vp
 ```
 
@@ -427,21 +427,24 @@ middle”,“low”),labels=c(“High(n=49)”,“Upper Middle(n=36)”,“Lower
 Middle(n=26)”,“Low(n=12)”)) +
 
 ``` r
-X2.3_vegan_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_X2.3_vegan_kg_co2e_total,y=income.classification,fill=income.classification)) + 
-  geom_jitter(aes(color=income.classification),height=0.33,alpha=0.33) +
-  geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
-  scale_color_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
+X2.3_vegan_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_X2.3_vegan_kg_co2e_total,y=income.classification,color=dec_pop_X2.3_vegan_kg_co2e_total)) + 
+  geom_jitter(height=0.33,alpha=0.66,size=3) +
+  geom_violin(size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
+  scale_color_viridis_c(option="F",name=bquote('Billion Kilograms CO'[2]*'e'),trans="reverse",alpha=0.66,labels=function(x)x/1000000000,breaks=c(5000000000,10000000000,15000000000,20000000000,25000000000,30000000000,35000000000)) +
+  scale_y_discrete(limits=c("low","lower middle","upper middle","high"),labels=c("Low (n=12)","Lower Middle (n=26)","Upper Middle (n=36)","High (n=49)"),position="right") +
   scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-16000000000,-8000000000,0,8000000000,16000000000,24000000000,32000000000)) +
   geom_vline(xintercept=0,linetype=2,size=0.25) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
   coord_cartesian(xlim=c(-17000000000,34000000000)) +
   xlab(bquote('Billion Kilograms CO'[2]*'e')) +
   ylab("") +
+  guides(color=guide_colorbar(reverse=TRUE,title.position="top",title.hjust=0.5)) +
   ggtitle("2/3 Vegan") +
-  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none",axis.text.y=element_blank(),axis.ticks.y=element_blank())
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="bottom",legend.key.width=unit(3.5,"cm"))
+X2.3_vegan_cf_dec_pop_vp
 ```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
 
 ``` r
 lacto_ovo_vegetarian_cf_dec_pop_vp <- ggplot(reduction_modeling_data,aes(x=dec_pop_lacto_ovo_vegetarian_kg_co2e_total,y=income.classification,fill=income.classification)) + 
@@ -1702,5 +1705,3 @@ xy_pcgnni_cf_wf
 ``` r
 ggsave("figure-6.tiff",device="tiff",plot=xy_pcgnni_cf_wf,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=40*(14/5))
 ```
-
-ERASE V1 DATASET + ALT FIGURES ONCE COMPLETE
