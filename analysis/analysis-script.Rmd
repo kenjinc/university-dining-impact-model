@@ -1274,18 +1274,6 @@ ggsave("figure-4.tiff",device="tiff",plot=pop_dec_cf_wf_rank,path=("/Users/kenji
 
 Now, we will generate box and violin plots looking at the distribution of university enrollees across the different income classifications to pair alongside their corresponding choropleths.
 
-kdlsjfkasf;klasjfl; vadspfs
-dfaskjdnf
-dasf;jdsanfsa
-fdsa
-fasd
-fa
-sdf
-asd
-faf
-dsf
-das
-
 
 ```{r}
 uni_enr_tot_income_classification_bp <- ggplot(reduction_modeling_data,aes(x=uni_enr_tot,y=income.classification,fill=income.classification)) + 
@@ -1452,9 +1440,7 @@ uni_enr_tot_prop_choro_bp <- ggarrange(uni_enr_tot_prop_choro,uni_enr_tot_prop_b
 uni_enr_tot_prop_choro_bp
 ```
 
-```{r}
-ggsave("figure-2-alt.tiff",device="tiff",plot=uni_enr_tot_prop_choro_bp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=95*(14/5))
-```
+Alternative visualization option ^
 
 ```{r}
 pc_baseline_total_cf_vp <- ggplot(reduction_modeling_data,aes(x=baseline_kg_co2e_total,y=income.classification,fill=income.classification)) +
@@ -1589,9 +1575,8 @@ pc_baseline_total_cf_wf_choro_bp <- ggarrange(pc_baseline_total_cf_wf_choro,pc_b
 pc_baseline_total_cf_wf_choro_bp
 ```
 
-```{r}
-ggsave("figure-5-alt.tiff",device="tiff",plot=pc_baseline_total_cf_wf_choro_bp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=95*(14/5))
-```
+Alternative visualization option ^
+
 
 Now, we will directly map GNI against the two per capita ecological indicators at baseline.
 
@@ -1610,7 +1595,6 @@ xy_pcgni_wf <- reduction_modeling_data %>%
   ylab("") + 
   ggtitle("Diet-Attributable Water Footprint") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="right",legend.key.height=unit(1.5,"cm"))
-xy_pcgni_wf
 ```
 
 ```{r}
@@ -1628,7 +1612,6 @@ xy_pcgni_cf <- reduction_modeling_data %>%
   ylab("") + 
   ggtitle("Diet-Attributable Greenhouse Gas Footprint") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="right",legend.key.height=unit(1.5,"cm"))
-xy_pcgni_cf
 ```
 
 ```{r}

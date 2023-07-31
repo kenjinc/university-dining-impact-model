@@ -1345,9 +1345,6 @@ Now, we will generate box and violin plots looking at the distribution
 of university enrollees across the different income classifications to
 pair alongside their corresponding choropleths.
 
-kdlsjfkasf;klasjfl; vadspfs dfaskjdnf dasf;jdsanfsa fdsa fasd fa sdf asd
-faf dsf das
-
 ``` r
 uni_enr_tot_income_classification_bp <- ggplot(reduction_modeling_data,aes(x=uni_enr_tot,y=income.classification,fill=income.classification)) + 
   geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) + 
@@ -1516,9 +1513,7 @@ uni_enr_tot_prop_choro_bp
 
 ![](analysis-script_files/figure-gfm/unnamed-chunk-86-1.png)<!-- -->
 
-``` r
-ggsave("figure-2-alt.tiff",device="tiff",plot=uni_enr_tot_prop_choro_bp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=95*(14/5))
-```
+Alternative visualization option ^
 
 ``` r
 pc_baseline_total_cf_vp <- ggplot(reduction_modeling_data,aes(x=baseline_kg_co2e_total,y=income.classification,fill=income.classification)) +
@@ -1617,7 +1612,7 @@ pc_baseline_total_cf_wf_choro_vp <- ggarrange(pc_baseline_total_cf_choro_vp,pc_b
 pc_baseline_total_cf_wf_choro_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-94-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-93-1.png)<!-- -->
 
 ``` r
 ggsave("figure-5.tiff",device="tiff",plot=pc_baseline_total_cf_wf_choro_vp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=90*(14/5))
@@ -1652,11 +1647,9 @@ pc_baseline_total_cf_wf_choro_bp <- ggarrange(pc_baseline_total_cf_wf_choro,pc_b
 pc_baseline_total_cf_wf_choro_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-98-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-97-1.png)<!-- -->
 
-``` r
-ggsave("figure-5-alt.tiff",device="tiff",plot=pc_baseline_total_cf_wf_choro_bp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=95*(14/5))
-```
+Alternative visualization option ^
 
 Now, we will directly map GNI against the two per capita ecological
 indicators at baseline.
@@ -1676,10 +1669,7 @@ xy_pcgni_wf <- reduction_modeling_data %>%
   ylab("") + 
   ggtitle("Diet-Attributable Water Footprint") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="right",legend.key.height=unit(1.5,"cm"))
-xy_pcgni_wf
 ```
-
-![](analysis-script_files/figure-gfm/unnamed-chunk-100-1.png)<!-- -->
 
 ``` r
 xy_pcgni_cf <- reduction_modeling_data %>%
@@ -1696,10 +1686,7 @@ xy_pcgni_cf <- reduction_modeling_data %>%
   ylab("") + 
   ggtitle("Diet-Attributable Greenhouse Gas Footprint") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="right",legend.key.height=unit(1.5,"cm"))
-xy_pcgni_cf
 ```
-
-![](analysis-script_files/figure-gfm/unnamed-chunk-101-1.png)<!-- -->
 
 ``` r
 xy_pcgnni_cf_wf <- ggarrange(xy_pcgni_cf,xy_pcgni_wf,
@@ -1710,7 +1697,7 @@ xy_pcgnni_cf_wf <- ggarrange(xy_pcgni_cf,xy_pcgni_wf,
 xy_pcgnni_cf_wf
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-102-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-100-1.png)<!-- -->
 
 ``` r
 ggsave("figure-6.tiff",device="tiff",plot=xy_pcgnni_cf_wf,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=40*(14/5))
