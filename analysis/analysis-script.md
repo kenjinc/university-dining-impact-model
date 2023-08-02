@@ -7,6 +7,7 @@ Analysis and Visualization Script
 library(tidyverse)
 library(viridis)
 library(RColorBrewer)
+library(colorspace)
 library(ggpubr)
 ```
 
@@ -44,8 +45,8 @@ Comparing university enrollment totals across countries.
 ``` r
 uni_enr_tot_choro <- ggplot(impact_modeling_data,aes(x=long,y=lat,fill=uni_enr_tot,group=group)) + 
   geom_polygon(color="black",size=0.125,alpha=0.66) + 
-  scale_fill_viridis_c(labels=function(x)x/1000000,name="Millions Enrolled",option="A",trans="reverse",na.value="white",breaks=c(0,6000000,12000000,18000000,24000000,30000000),alpha=0.66) +
-  guides(fill=guide_colorbar(reverse=TRUE,title.position="top",title.hjust=0.5)) +
+  scale_fill_continuous_sequential(labels=function(x)x/1000000,name="Millions Enrolled",palette="Purple-Blue",na.value="white",breaks=c(0,6000000,12000000,18000000,24000000,30000000),alpha=0.66) +
+  guides(fill=guide_colorbar(title.position="top",title.hjust=0.5)) +
   xlab("") + 
   ylab("") +
   labs(caption="") +
@@ -64,8 +65,8 @@ function of the national population) across countries.
 ``` r
 uni_enr_prop_choro <- ggplot(impact_modeling_data,aes(x=long,y=lat,fill=uni_enr_prop,group=group)) + 
   geom_polygon(color="black",size=0.125,alpha=0.66) + 
-  scale_fill_viridis_c(alpha=0.66,name="Percentage Enrolled",option="A",trans="reverse",na.value="white",labels=scales::percent,breaks=c(0,0.013,0.026,0.039,0.052,0.065)) +
-  guides(fill=guide_colorbar(reverse=TRUE,title.position="top",title.hjust=0.5)) +
+  scale_fill_continuous_sequential(alpha=0.66,name="Percentage Enrolled",palette="Purple-Blue",na.value="white",labels=scales::percent,breaks=c(0,0.013,0.026,0.039,0.052,0.065)) +
+  guides(fill=guide_colorbar(title.position="top",title.hjust=0.5)) +
   xlab("") + 
   ylab("") +
   labs(caption="") +
@@ -378,7 +379,7 @@ classifications.
 ``` r
 inclusion_income <- left_join(impact_modeling_data,reduction_modeling_data,by="country") %>% ggplot(aes(x=long,y=lat,fill=income.classification,group=group)) + 
   geom_polygon(color="black",size=0.125,alpha=0.66) +
-  scale_fill_viridis_d(option="D",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)","NA"),na.value="white") +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)","NA"),na.value="white") +
   guides() +
   xlab("") + 
   ylab("") +
@@ -724,8 +725,8 @@ environment - this time using box plots.
 ``` r
 vegan_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_vegan_kg_co2e_total,y=income.classification,fill=income.classification)) + 
   geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) +
-  scale_fill_viridis_d(option="D",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_y_discrete(limits=c("low","lower middle","upper middle","high")) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
   scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-750000000,0,750000000,1500000000,2250000000,3000000000,3750000000)) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
@@ -739,8 +740,8 @@ vegan_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_vegan_kg_co2
 ``` r
 X2.3_vegan_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_X2.3_vegan_kg_co2e_total,y=income.classification,fill=income.classification)) + 
   geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) +
-  scale_fill_viridis_d(option="D",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_y_discrete(limits=c("low","lower middle","upper middle","high")) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
   scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-750000000,0,750000000,1500000000,2250000000,3000000000,3750000000)) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
@@ -754,8 +755,8 @@ X2.3_vegan_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_X2.3_ve
 ``` r
 lacto_ovo_vegetarian_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_lacto_ovo_vegetarian_kg_co2e_total,y=income.classification,fill=income.classification)) + 
   geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) +
-  scale_fill_viridis_d(option="D",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_y_discrete(limits=c("low","lower middle","upper middle","high")) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
   scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-750000000,0,750000000,1500000000,2250000000,3000000000,3750000000)) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
@@ -769,8 +770,7 @@ lacto_ovo_vegetarian_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_p
 ``` r
 pescetarian_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_pescetarian_kg_co2e_total,y=income.classification,fill=income.classification)) + 
   geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) +
-  scale_fill_viridis_d(option="D",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_y_discrete(limits=c("low","lower middle","upper middle","high")) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
   scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-750000000,0,750000000,1500000000,2250000000,3000000000,3750000000)) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
@@ -785,8 +785,8 @@ pescetarian_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_pescet
 ``` r
 no_red_meat_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_no_red_meat_kg_co2e_total,y=income.classification,fill=income.classification)) + 
   geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) +
-  scale_fill_viridis_d(option="D",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_y_discrete(limits=c("low","lower middle","upper middle","high")) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
   scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-750000000,0,750000000,1500000000,2250000000,3000000000,3750000000)) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
@@ -800,8 +800,8 @@ no_red_meat_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_no_red
 ``` r
 low_red_meat_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_low_red_meat_kg_co2e_total,y=income.classification,fill=income.classification)) + 
   geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) +
-  scale_fill_viridis_d(option="D",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_y_discrete(limits=c("low","lower middle","upper middle","high")) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
   scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-750000000,0,750000000,1500000000,2250000000,3000000000,3750000000)) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
@@ -815,8 +815,8 @@ low_red_meat_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_low_r
 ``` r
 no_dairy_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_no_dairy_kg_co2e_total,y=income.classification,fill=income.classification)) + 
   geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) +
-  scale_fill_viridis_d(option="D",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_y_discrete(limits=c("low","lower middle","upper middle","high")) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
   scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-750000000,0,750000000,1500000000,2250000000,3000000000,3750000000)) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
@@ -830,8 +830,8 @@ no_dairy_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_no_dairy_
 ``` r
 meatless_day_cf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_meatless_day_kg_co2e_total,y=income.classification,fill=income.classification)) + 
   geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) +
-  scale_fill_viridis_d(option="D",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_y_discrete(limits=c("low","lower middle","upper middle","high")) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
   scale_x_continuous(labels=function(x)x/1000000000,breaks=c(-750000000,0,750000000,1500000000,2250000000,3000000000,3750000000)) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
@@ -848,8 +848,8 @@ water savings estimates across the same lending classifications.
 ``` r
 vegan_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_vegan_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
   geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) +
-  scale_fill_viridis_d(option="D",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_y_discrete(limits=c("low","lower middle","upper middle","high")) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
   scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-250000000000,0,250000000000,500000000000,750000000000,1000000000000,1250000000000)) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
@@ -863,8 +863,8 @@ vegan_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_vegan_l_blue
 ``` r
 X2.3_vegan_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_X2.3_vegan_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
   geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) +
-  scale_fill_viridis_d(option="D",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_y_discrete(limits=c("low","lower middle","upper middle","high")) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
   scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-250000000000,0,250000000000,500000000000,750000000000,1000000000000,1250000000000)) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
@@ -878,8 +878,8 @@ X2.3_vegan_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_X2.3_ve
 ``` r
 lacto_ovo_vegetarian_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_lacto_ovo_vegetarian_l_blue_green_wf,y=income.classification,fill=income.classification)) +
   geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) +
-  scale_fill_viridis_d(option="D",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_y_discrete(limits=c("low","lower middle","upper middle","high")) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
   scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-250000000000,0,250000000000,500000000000,750000000000,1000000000000,1250000000000)) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
@@ -893,8 +893,8 @@ lacto_ovo_vegetarian_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_p
 ``` r
 pescetarian_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_pescetarian_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
   geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) +
-  scale_fill_viridis_d(option="D",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_y_discrete(limits=c("low","lower middle","upper middle","high")) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
   scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-250000000000,0,250000000000,500000000000,750000000000,1000000000000,1250000000000)) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
@@ -908,8 +908,8 @@ pescetarian_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_pescet
 ``` r
 no_red_meat_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_no_red_meat_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
   geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) +
-  scale_fill_viridis_d(option="D",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_y_discrete(limits=c("low","lower middle","upper middle","high")) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
   scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-250000000000,0,250000000000,500000000000,750000000000,1000000000000,1250000000000)) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
@@ -923,8 +923,8 @@ no_red_meat_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_no_red
 ``` r
 low_red_meat_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_low_red_meat_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
   geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) +
-  scale_fill_viridis_d(option="D",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_y_discrete(limits=c("low","lower middle","upper middle","high")) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
   scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-250000000000,0,250000000000,500000000000,750000000000,1000000000000,1250000000000)) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
@@ -938,8 +938,8 @@ low_red_meat_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_low_r
 ``` r
 no_dairy_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_no_dairy_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
   geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) +
-  scale_fill_viridis_d(option="D",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_y_discrete(limits=c("low","lower middle","upper middle","high")) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
   scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-250000000000,0,250000000000,500000000000,750000000000,1000000000000,1250000000000)) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
@@ -953,8 +953,8 @@ no_dairy_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_no_dairy_
 ``` r
 meatless_day_wf_dec_pop_bp <- ggplot(reduction_modeling_data,aes(x=dec_pop_meatless_day_l_blue_green_wf,y=income.classification,fill=income.classification)) + 
   geom_boxplot(size=0.25,outlier.shape=NA,alpha=0.66) +
-  scale_fill_viridis_d(option="D",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_y_discrete(limits=c("low","lower middle","upper middle","high")) +
+  scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
+  scale_y_discrete(limits=c("high","upper middle","lower middle","low")) +
   scale_x_continuous(labels=function(x)x/1000000000000,breaks=c(-250000000000,0,250000000000,500000000000,750000000000,1000000000000,1250000000000)) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
   stat_summary(fun=mean,geom="point",fill="white",shape=21,size=2) +
@@ -1383,7 +1383,7 @@ uni_enr_tot_vp <- ggplot(reduction_modeling_data,aes(x=uni_enr_tot,y=income.clas
   geom_jitter(aes(color=uni_enr_tot),height=0.3,show.legend=FALSE,alpha=0.66,size=3) +
   geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_color_viridis_c(option="A",trans="reverse",alpha=0.66) +
+  scale_color_continuous_sequential(palette="Purple-Blue",alpha=0.66) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High (n=49)","Upper Middle (n=36)","Lower Middle (n=26)","Low (n=12)"),position="right") +
   scale_x_continuous(labels=function(x)x/1000000,breaks=c(0,7000000,14000000,21000000,28000000,35000000)) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
@@ -1435,7 +1435,7 @@ uni_enr_prop_vp <- ggplot(reduction_modeling_data,aes(x=uni_enr_prop,y=income.cl
   geom_jitter(aes(color=uni_enr_prop),height=0.3,show.legend=FALSE,alpha=0.66,size=3) +
   geom_violin(fill=NA,size=0.25,scale="width",draw_quantiles=0.5,adjust=1,alpha=0.66,trim=TRUE) +
   scale_fill_brewer(palette="Set2",limits=c("high","upper middle","lower middle","low"),labels=c("High\n(n=49)","Upper Middle\n(n=36)","Lower Middle\n(n=26)","Low\n(n=12)")) +
-  scale_color_viridis_c(option="A",trans="reverse",alpha=0.66) +
+  scale_color_continuous_sequential(palette="Purple-Blue",alpha=0.66) +
   scale_y_discrete(limits=c("high","upper middle","lower middle","low"),labels=c("High (n=49)","Upper Middle (n=36)","Lower Middle (n=26)","Low (n=12)"),position="right") +
   scale_x_continuous(labels=scales::percent,breaks=c(0,0.015,0.03,0.045,0.06,0.075)) +
   geom_vline(size=0.25,xintercept=0,linetype=2) +
