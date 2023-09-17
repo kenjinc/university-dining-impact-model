@@ -389,8 +389,54 @@ consult the most recent reference year from 2019 on.
 
 ``` r
 reduction_modeling_data <- reduction_modeling_data %>%
-  mutate(availability.classification=case_when(country=="Australia"~113.5364,country=="Austria"~80.757805,country=="Barbados"~73.73382,country=="Belgium"~61.834118,country=="Bermuda"~105.58974,country=="Brunei"~73.71816,country=="Canada"~92.69366,country=="Chile"~86.1724,country=="Croatia"~82.37099,country=="Cyprus"~81.75594,country=="Czech Republic"~80.892815,country=="Denmark"~74.1218,country=="Estonia"~67.56921,country=="Finland"~71.81789,country=="France"~79.379684,country=="Germany"~80.154045,country=="Greece"~79.51641,country=="Hong Kong, China"~131.09276,country=="Hungary"~83.91513,country=="Iceland"~86.076126,country=="Ireland"~80.86589,country=="Israel"~100.03038,country=="Italy"~75.26189,country=="Japan"~51.382828,country=="Kuwait"~69.475334,country=="Latvia"~71.73087,country=="Lithuania"~82.36999,country=="Luxembourg"~78.49805,country=="Macao, China"~92.845276,country=="Malta"~61.05685,country=="Netherlands"~52.148273,country=="New Zealand"~86.9317,country=="Norway"~68.21777,country=="Oman"~51.870903,country=="Panama"~90.18525,country=="Poland"~84.60712,country=="Portugal"~94.31224,country=="Romania"~65.886795,country=="Saudi Arabia"~50.68443,country=="Slovak Republic"~61.50469,country=="Slovenia"~74.01035,country=="South Korea"~78.46385,country=="Spain"~104.55724,country=="Sweden"~69.64331,country=="Switzerland"~65.770706,country=="Taiwan"~84.156334,country=="United Kingdom"~79.838486,country=="United States"~126.3031,country=="Uruguay"~66.51014,country=="Afghanistan"~8.3396845,country=="Burkina Faso"~35.83849,country=="Congo, Dem. Rep."~36.316055,country=="Ethiopia"~7.4541984,country=="Madagascar"~6.7978826,country=="Malawi"~25.52311,country=="Mali"~10.8003645,country=="Niger"~8.00444,country=="Rwanda"~8.63766,country=="Togo"~13.403464,country=="Uganda"~9.544708,country=="Yemen"~17.138468,country=="Algeria"~19.941036,country=="Benin"~15.43024,country=="Cambodia"~11.443514,country=="Cameroon"~11.993587,country=="Cape Verde"~30.344278,country=="Cote d'Ivoire"~11.7628565,country=="Egypt"~25.47277,country=="Ghana"~13.519137,country=="Honduras"~33.939266,country=="India"~5.058201,country=="Iran"~34.68307,country=="Jordan"~32.716515,country=="Kenya"~12.578182,country=="Krygyz Republic"~34.22183,country=="Lebanon"~38.26308,country=="Mauritania"~32.106297,country=="Morocco"~38.48661,country=="Nepal"~16.352087,country=="Pakistan"~18.136559,country=="Philippines"~35.956985,country=="Senegal"~17.73161,country=="Sri Lanka"~9.947946,country=="Tanzania"~10.279127,country=="Tunisia"~26.583939,country=="Ukraine"~52.07261,country=="Zimbabwe"~50.275642,country=="Albania"~41.180588,country=="Argentina"~110.226555,country=="Armenia"~57.86262,country=="Azerbaijan"~35.201714,country=="Belarus"~84.05967,country=="Belize"~53.63133,country=="Bosnia and Herzegovina"~44.386997,country=="Botswana"~22.606571,country=="Brazil"~99.51421,country=="Bulgaria"~60.26872,country=="China"~61.763466,country=="Colombia"~62.227943,country=="Costa Rica"~63.574398,country=="Ecuador"~46.1094,country=="El Salvador"~38.69938,country=="Fiji"~50.37552,country=="Georgia"~38.867252,country=="Guatemala"~42.22101,country=="Indonesia"~19.043371,country=="Jamaica"~66.493515,country=="Kazakhstan"~68.70878,country=="Malaysia"~59.479687,country=="Maldives"~23.994505,country=="Mauritius"~54.154842,country=="Mexico"~72.58686,country=="Moldova"~46.732574,country=="Montenegro"~75.629395,country=="Namibia"~25.570827,country=="North Macedonia"~39.211926,country=="Peru"~54.839634,country=="Russia"~76.43811,country=="Serbia"~72.89403,country=="South Africa"~63.097736,country=="Thailand"~25.816267,country=="Turkey"~35.10809,country=="Venezuela"~34.252438))
+  mutate(pc.meat.availability=case_when(country=="Australia"~113.5364,country=="Austria"~80.757805,country=="Barbados"~73.73382,country=="Belgium"~61.834118,country=="Bermuda"~105.58974,country=="Brunei"~73.71816,country=="Canada"~92.69366,country=="Chile"~86.1724,country=="Croatia"~82.37099,country=="Cyprus"~81.75594,country=="Czech Republic"~80.892815,country=="Denmark"~74.1218,country=="Estonia"~67.56921,country=="Finland"~71.81789,country=="France"~79.379684,country=="Germany"~80.154045,country=="Greece"~79.51641,country=="Hong Kong, China"~131.09276,country=="Hungary"~83.91513,country=="Iceland"~86.076126,country=="Ireland"~80.86589,country=="Israel"~100.03038,country=="Italy"~75.26189,country=="Japan"~51.382828,country=="Kuwait"~69.475334,country=="Latvia"~71.73087,country=="Lithuania"~82.36999,country=="Luxembourg"~78.49805,country=="Macao, China"~92.845276,country=="Malta"~61.05685,country=="Netherlands"~52.148273,country=="New Zealand"~86.9317,country=="Norway"~68.21777,country=="Oman"~51.870903,country=="Panama"~90.18525,country=="Poland"~84.60712,country=="Portugal"~94.31224,country=="Romania"~65.886795,country=="Saudi Arabia"~50.68443,country=="Slovak Republic"~61.50469,country=="Slovenia"~74.01035,country=="South Korea"~78.46385,country=="Spain"~104.55724,country=="Sweden"~69.64331,country=="Switzerland"~65.770706,country=="Taiwan"~84.156334,country=="United Kingdom"~79.838486,country=="United States"~126.3031,country=="Uruguay"~66.51014,country=="Afghanistan"~8.3396845,country=="Burkina Faso"~35.83849,country=="Congo, Dem. Rep."~36.316055,country=="Ethiopia"~7.4541984,country=="Madagascar"~6.7978826,country=="Malawi"~25.52311,country=="Mali"~10.8003645,country=="Niger"~8.00444,country=="Rwanda"~8.63766,country=="Togo"~13.403464,country=="Uganda"~9.544708,country=="Yemen"~17.138468,country=="Algeria"~19.941036,country=="Benin"~15.43024,country=="Cambodia"~11.443514,country=="Cameroon"~11.993587,country=="Cape Verde"~30.344278,country=="Cote d'Ivoire"~11.7628565,country=="Egypt"~25.47277,country=="Ghana"~13.519137,country=="Honduras"~33.939266,country=="India"~5.058201,country=="Iran"~34.68307,country=="Jordan"~32.716515,country=="Kenya"~12.578182,country=="Krygyz Republic"~34.22183,country=="Lebanon"~38.26308,country=="Mauritania"~32.106297,country=="Morocco"~38.48661,country=="Nepal"~16.352087,country=="Pakistan"~18.136559,country=="Philippines"~35.956985,country=="Senegal"~17.73161,country=="Sri Lanka"~9.947946,country=="Tanzania"~10.279127,country=="Tunisia"~26.583939,country=="Ukraine"~52.07261,country=="Zimbabwe"~50.275642,country=="Albania"~41.180588,country=="Argentina"~110.226555,country=="Armenia"~57.86262,country=="Azerbaijan"~35.201714,country=="Belarus"~84.05967,country=="Belize"~53.63133,country=="Bosnia and Herzegovina"~44.386997,country=="Botswana"~22.606571,country=="Brazil"~99.51421,country=="Bulgaria"~60.26872,country=="China"~61.763466,country=="Colombia"~62.227943,country=="Costa Rica"~63.574398,country=="Ecuador"~46.1094,country=="El Salvador"~38.69938,country=="Fiji"~50.37552,country=="Georgia"~38.867252,country=="Guatemala"~42.22101,country=="Indonesia"~19.043371,country=="Jamaica"~66.493515,country=="Kazakhstan"~68.70878,country=="Malaysia"~59.479687,country=="Maldives"~23.994505,country=="Mauritius"~54.154842,country=="Mexico"~72.58686,country=="Moldova"~46.732574,country=="Montenegro"~75.629395,country=="Namibia"~25.570827,country=="North Macedonia"~39.211926,country=="Peru"~54.839634,country=="Russia"~76.43811,country=="Serbia"~72.89403,country=="South Africa"~63.097736,country=="Thailand"~25.816267,country=="Turkey"~35.10809,country=="Venezuela"~34.252438))
 ```
+
+\*\*\* repasting this - need to make equal size bins to income
+designation
+
+``` r
+xy_pc_meat_availability_wf <- reduction_modeling_data %>%
+  rowwise() %>%
+  filter(!pc.meat.availability==0) %>%
+  ggplot(aes(x=pc.meat.availability,y=baseline_l_blue_green_wf,color=baseline_l_blue_green_wf)) +
+  scale_color_viridis(alpha=0.66,name="Liters",option="G",trans="reverse",labels=scales::comma) +
+  geom_smooth(method="loess",show.legend=FALSE,color="paleturquoise3",fill="azure2") +
+  geom_point(size=2,alpha=0.66) +
+  guides(color=guide_colorbar(reverse=TRUE,title="Liters",title.position="left",title.vjust=0.5,alpha=0.66)) +
+  xlab("Per Capita Meat Availability") +
+  ylab("") + 
+  ggtitle("Diet-Attributable Water Footprint") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="right",legend.key.height=unit(1.5,"cm"))
+xy_pc_meat_availability_wf
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+
+``` r
+xy_pc_meat_availability_cf <- reduction_modeling_data %>%
+  rowwise() %>%
+  filter(!pc.meat.availability==0) %>%
+  ggplot(aes(x=pc.meat.availability,y=baseline_kg_co2e_total,color=baseline_kg_co2e_total)) +
+  scale_color_viridis(labels=scales::comma,alpha=0.66,option="F",trans="reverse") +
+  geom_smooth(method="loess",show.legend=FALSE,alpha=0.66,color="lightsalmon2",fill="antiquewhite1") +
+  geom_point(size=2,alpha=0.66) +
+  guides(color=guide_colorbar(reverse=TRUE,title=bquote('Kilograms CO'[2]*'e'),title.position="left",title.vjust=0.5,alpha=0.66)) +
+  xlab("Per Capita Meat Availability") +
+  ylab("") + 
+  ggtitle("Diet-Attributable Greenhouse Gas Footprint") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="right",legend.key.height=unit(1.5,"cm"))
+xy_pc_meat_availability_cf
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+
+could maybe do simple OLS comparison between grouping schemes
+continuously and do proportion comparison using equal-sized bins across
+strata for categorical
+
+reduction_modeling_data \<- reduction_modeling_data %\>%
+mutate(availability.classification=case_when(
 
 Now, we will use the `count` function to see how many countries fall
 into each group of observations. \*\*\* EDIT \*\*\*
@@ -419,7 +465,7 @@ inclusion_income <- left_join(impact_modeling_data,reduction_modeling_data,by="c
 inclusion_income
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
 
 ggtitle(“Figure X. Choropleth map highlighting the 123 countries
 included in our analyses.”) +
@@ -734,7 +780,7 @@ pop_dec_cf_wf_vp <- ggarrange(meatless_day_cf_dec_pop_vp,meatless_day_wf_dec_pop
 pop_dec_cf_wf_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-37-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-39-1.png)<!-- -->
 %\>% annotate_figure(top=text_grob(“Figure X. Violin plot array
 comparing the anticipated mitigation and savings potential associated
 with each of the eight modeled dietary scenarios across the four
@@ -1010,7 +1056,7 @@ pop_dec_cf_wf_bp <- ggarrange(meatless_day_cf_dec_pop_bp,meatless_day_wf_dec_pop
 pop_dec_cf_wf_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-55-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-57-1.png)<!-- -->
 
 ``` r
 ggsave("figure-3.tiff",device="tiff",plot=pop_dec_cf_wf_bp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=120*(14/5),height=180*(14/5))
@@ -1360,7 +1406,7 @@ pop_dec_cf_wf_rank <- ggarrange(meatless_day_cf_dec_pop_rank,meatless_day_wf_dec
 pop_dec_cf_wf_rank
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-73-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-75-1.png)<!-- -->
 
 %\>% annotate_figure(top=text_grob(“Figure X. Bar plot array comparing
 the anticipated mitigationsavings potential associated with the 10 most
@@ -1508,7 +1554,7 @@ uni_enr_tot_prop_choro_vp <- ggarrange(uni_enr_tot_choro_vp,uni_enr_prop_choro_v
 uni_enr_tot_prop_choro_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-83-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-85-1.png)<!-- -->
 
 ``` r
 ggsave("figure-2.tiff",device="tiff",plot=uni_enr_tot_prop_choro_vp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=90*(14/5))
@@ -1541,7 +1587,7 @@ uni_enr_tot_prop_choro_bp <- ggarrange(uni_enr_tot_prop_choro,uni_enr_tot_prop_b
 uni_enr_tot_prop_choro_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-87-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-89-1.png)<!-- -->
 
 Alternative visualization option ^
 
@@ -1642,7 +1688,7 @@ pc_baseline_total_cf_wf_choro_vp <- ggarrange(pc_baseline_total_cf_choro_vp,pc_b
 pc_baseline_total_cf_wf_choro_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-94-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-96-1.png)<!-- -->
 
 ``` r
 ggsave("figure-5.tiff",device="tiff",plot=pc_baseline_total_cf_wf_choro_vp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=90*(14/5))
@@ -1677,7 +1723,7 @@ pc_baseline_total_cf_wf_choro_bp <- ggarrange(pc_baseline_total_cf_wf_choro,pc_b
 pc_baseline_total_cf_wf_choro_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-98-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-100-1.png)<!-- -->
 
 Alternative visualization option ^
 
@@ -1727,7 +1773,7 @@ xy_pcgnni_cf_wf <- ggarrange(xy_pcgni_cf,xy_pcgni_wf,
 xy_pcgnni_cf_wf
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-101-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-103-1.png)<!-- -->
 
 ``` r
 ggsave("figure-6.tiff",device="tiff",plot=xy_pcgnni_cf_wf,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=40*(14/5))
