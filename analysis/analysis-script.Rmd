@@ -342,8 +342,6 @@ reduction_modeling_data <- reduction_modeling_data %>%
 
 ```{r}
 xy_pc_meat_availability_wf <- reduction_modeling_data %>%
-  rowwise() %>%
-  filter(!pc.meat.availability==0) %>%
   ggplot(aes(x=pc.meat.availability,y=baseline_l_blue_green_wf,color=baseline_l_blue_green_wf)) +
   scale_color_viridis(alpha=0.66,name="Liters",option="G",trans="reverse",labels=scales::comma) +
   geom_smooth(method="loess",show.legend=FALSE,color="paleturquoise3",fill="azure2") +
@@ -355,11 +353,14 @@ xy_pc_meat_availability_wf <- reduction_modeling_data %>%
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="right",legend.key.height=unit(1.5,"cm"))
 xy_pc_meat_availability_wf
 ```
+```{r}
+cor.test(reduction_modeling_data$pc.meat.availability,reduction_modeling_data$baseline_l_blue_green_wf)
+```
+
+
 
 ```{r}
 xy_pc_meat_availability_cf <- reduction_modeling_data %>%
-  rowwise() %>%
-  filter(!pc.meat.availability==0) %>%
   ggplot(aes(x=pc.meat.availability,y=baseline_kg_co2e_total,color=baseline_kg_co2e_total)) +
   scale_color_viridis(labels=scales::comma,alpha=0.66,option="F",trans="reverse") +
   geom_smooth(method="loess",show.legend=FALSE,alpha=0.66,color="lightsalmon2",fill="antiquewhite1") +
@@ -371,6 +372,24 @@ xy_pc_meat_availability_cf <- reduction_modeling_data %>%
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="right",legend.key.height=unit(1.5,"cm"))
 xy_pc_meat_availability_cf
 ```
+
+```{r}
+cor.test(reduction_modeling_data$pc.meat.availability,reduction_modeling_data$baseline_kg_co2e_total)
+```
+
+```{r}
+cor.test(reduction_modeling_data$pcgni_est,reduction_modeling_data$baseline_kg_co2e_total)
+```
+
+```{r}
+mlr <- lm (baseline_kg_co2e_total~pcgni_est+pc.meat.availability,data=reduction_modeling_data)
+summary(mlr)
+```
+
+```{r}
+confint(mlr)
+```
+
 
 could maybe do simple OLS comparison between grouping schemes continuously and do proportion comparison using equal-sized bins across strata for categorical
 

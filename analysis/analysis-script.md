@@ -397,8 +397,6 @@ designation
 
 ``` r
 xy_pc_meat_availability_wf <- reduction_modeling_data %>%
-  rowwise() %>%
-  filter(!pc.meat.availability==0) %>%
   ggplot(aes(x=pc.meat.availability,y=baseline_l_blue_green_wf,color=baseline_l_blue_green_wf)) +
   scale_color_viridis(alpha=0.66,name="Liters",option="G",trans="reverse",labels=scales::comma) +
   geom_smooth(method="loess",show.legend=FALSE,color="paleturquoise3",fill="azure2") +
@@ -414,9 +412,23 @@ xy_pc_meat_availability_wf
 ![](analysis-script_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
 
 ``` r
+cor.test(reduction_modeling_data$pc.meat.availability,reduction_modeling_data$baseline_l_blue_green_wf)
+```
+
+    ## 
+    ##  Pearson's product-moment correlation
+    ## 
+    ## data:  reduction_modeling_data$pc.meat.availability and reduction_modeling_data$baseline_l_blue_green_wf
+    ## t = -1.8377, df = 121, p-value = 0.06857
+    ## alternative hypothesis: true correlation is not equal to 0
+    ## 95 percent confidence interval:
+    ##  -0.33212163  0.01262712
+    ## sample estimates:
+    ##        cor 
+    ## -0.1647756
+
+``` r
 xy_pc_meat_availability_cf <- reduction_modeling_data %>%
-  rowwise() %>%
-  filter(!pc.meat.availability==0) %>%
   ggplot(aes(x=pc.meat.availability,y=baseline_kg_co2e_total,color=baseline_kg_co2e_total)) +
   scale_color_viridis(labels=scales::comma,alpha=0.66,option="F",trans="reverse") +
   geom_smooth(method="loess",show.legend=FALSE,alpha=0.66,color="lightsalmon2",fill="antiquewhite1") +
@@ -429,7 +441,74 @@ xy_pc_meat_availability_cf <- reduction_modeling_data %>%
 xy_pc_meat_availability_cf
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+
+``` r
+cor.test(reduction_modeling_data$pc.meat.availability,reduction_modeling_data$baseline_kg_co2e_total)
+```
+
+    ## 
+    ##  Pearson's product-moment correlation
+    ## 
+    ## data:  reduction_modeling_data$pc.meat.availability and reduction_modeling_data$baseline_kg_co2e_total
+    ## t = 9.081, df = 121, p-value = 2.486e-15
+    ## alternative hypothesis: true correlation is not equal to 0
+    ## 95 percent confidence interval:
+    ##  0.5179804 0.7312527
+    ## sample estimates:
+    ##       cor 
+    ## 0.6366351
+
+``` r
+cor.test(reduction_modeling_data$pcgni_est,reduction_modeling_data$baseline_kg_co2e_total)
+```
+
+    ## 
+    ##  Pearson's product-moment correlation
+    ## 
+    ## data:  reduction_modeling_data$pcgni_est and reduction_modeling_data$baseline_kg_co2e_total
+    ## t = 5.5518, df = 121, p-value = 1.701e-07
+    ## alternative hypothesis: true correlation is not equal to 0
+    ## 95 percent confidence interval:
+    ##  0.2972471 0.5812418
+    ## sample estimates:
+    ##       cor 
+    ## 0.4505711
+
+``` r
+mlr <- lm (baseline_kg_co2e_total~pcgni_est+pc.meat.availability,data=reduction_modeling_data)
+summary(mlr)
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = baseline_kg_co2e_total ~ pcgni_est + pc.meat.availability, 
+    ##     data = reduction_modeling_data)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -818.38 -347.25  -58.03  158.64 2303.99 
+    ## 
+    ## Coefficients:
+    ##                       Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)          7.205e+02  9.953e+01   7.240 4.66e-11 ***
+    ## pcgni_est            2.043e-03  2.799e-03   0.730    0.467    
+    ## pc.meat.availability 1.329e+01  2.063e+00   6.445 2.52e-09 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 516.5 on 120 degrees of freedom
+    ## Multiple R-squared:  0.4079, Adjusted R-squared:  0.3981 
+    ## F-statistic: 41.34 on 2 and 120 DF,  p-value: 2.199e-14
+
+``` r
+confint(mlr)
+```
+
+    ##                              2.5 %       97.5 %
+    ## (Intercept)          523.491895643 917.59829109
+    ## pcgni_est             -0.003498907   0.00758522
+    ## pc.meat.availability   9.209444652  17.37760169
 
 could maybe do simple OLS comparison between grouping schemes
 continuously and do proportion comparison using equal-sized bins across
@@ -465,7 +544,7 @@ inclusion_income <- left_join(impact_modeling_data,reduction_modeling_data,by="c
 inclusion_income
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
 
 ggtitle(“Figure X. Choropleth map highlighting the 123 countries
 included in our analyses.”) +
@@ -780,7 +859,7 @@ pop_dec_cf_wf_vp <- ggarrange(meatless_day_cf_dec_pop_vp,meatless_day_wf_dec_pop
 pop_dec_cf_wf_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-39-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-44-1.png)<!-- -->
 %\>% annotate_figure(top=text_grob(“Figure X. Violin plot array
 comparing the anticipated mitigation and savings potential associated
 with each of the eight modeled dietary scenarios across the four
@@ -1056,7 +1135,7 @@ pop_dec_cf_wf_bp <- ggarrange(meatless_day_cf_dec_pop_bp,meatless_day_wf_dec_pop
 pop_dec_cf_wf_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-57-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-62-1.png)<!-- -->
 
 ``` r
 ggsave("figure-3.tiff",device="tiff",plot=pop_dec_cf_wf_bp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=120*(14/5),height=180*(14/5))
@@ -1406,7 +1485,7 @@ pop_dec_cf_wf_rank <- ggarrange(meatless_day_cf_dec_pop_rank,meatless_day_wf_dec
 pop_dec_cf_wf_rank
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-75-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-80-1.png)<!-- -->
 
 %\>% annotate_figure(top=text_grob(“Figure X. Bar plot array comparing
 the anticipated mitigationsavings potential associated with the 10 most
@@ -1554,7 +1633,7 @@ uni_enr_tot_prop_choro_vp <- ggarrange(uni_enr_tot_choro_vp,uni_enr_prop_choro_v
 uni_enr_tot_prop_choro_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-85-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-90-1.png)<!-- -->
 
 ``` r
 ggsave("figure-2.tiff",device="tiff",plot=uni_enr_tot_prop_choro_vp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=90*(14/5))
@@ -1587,7 +1666,7 @@ uni_enr_tot_prop_choro_bp <- ggarrange(uni_enr_tot_prop_choro,uni_enr_tot_prop_b
 uni_enr_tot_prop_choro_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-89-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-94-1.png)<!-- -->
 
 Alternative visualization option ^
 
@@ -1688,7 +1767,7 @@ pc_baseline_total_cf_wf_choro_vp <- ggarrange(pc_baseline_total_cf_choro_vp,pc_b
 pc_baseline_total_cf_wf_choro_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-96-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-101-1.png)<!-- -->
 
 ``` r
 ggsave("figure-5.tiff",device="tiff",plot=pc_baseline_total_cf_wf_choro_vp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=90*(14/5))
@@ -1723,7 +1802,7 @@ pc_baseline_total_cf_wf_choro_bp <- ggarrange(pc_baseline_total_cf_wf_choro,pc_b
 pc_baseline_total_cf_wf_choro_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-100-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-105-1.png)<!-- -->
 
 Alternative visualization option ^
 
@@ -1773,7 +1852,7 @@ xy_pcgnni_cf_wf <- ggarrange(xy_pcgni_cf,xy_pcgni_wf,
 xy_pcgnni_cf_wf
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-103-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-108-1.png)<!-- -->
 
 ``` r
 ggsave("figure-6.tiff",device="tiff",plot=xy_pcgnni_cf_wf,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=40*(14/5))
