@@ -513,6 +513,30 @@ confint(emissions_req_mlr)
     ## uni_enr_prop         -5.687056e+03 8.842039e+03
 
 ``` r
+emissions_req_mlr_v2 <- lm (baseline_kg_co2e_total~pc.meat.availability,data=reduction_modeling_data)
+summary(emissions_req_mlr_v2)
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = baseline_kg_co2e_total ~ pc.meat.availability, data = reduction_modeling_data)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -853.96 -335.86  -53.42  194.34 2241.70 
+    ## 
+    ## Coefficients:
+    ##                      Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)           704.671     96.932   7.270 3.88e-11 ***
+    ## pc.meat.availability   14.267      1.571   9.081 2.49e-15 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 515.5 on 121 degrees of freedom
+    ## Multiple R-squared:  0.4053, Adjusted R-squared:  0.4004 
+    ## F-statistic: 82.47 on 1 and 121 DF,  p-value: 2.486e-15
+
+``` r
 water_req_mlr <- lm (baseline_l_blue_green_wf~pcgni_est+pc.meat.availability+uni_enr_prop,data=reduction_modeling_data)
 summary(water_req_mlr)
 ```
@@ -549,6 +573,30 @@ confint(water_req_mlr)
     ## pc.meat.availability -2.108492e+03  4.710704e+03
     ## uni_enr_prop         -9.233857e+06  1.500353e+06
 
+``` r
+water_req_mlr_v2 <- lm (baseline_l_blue_green_wf~pcgni_est,data=reduction_modeling_data)
+summary(water_req_mlr_v2)
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = baseline_l_blue_green_wf ~ pcgni_est, data = reduction_modeling_data)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -511843 -202598 -100034  116479 3030982 
+    ## 
+    ## Coefficients:
+    ##               Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  1.243e+06  4.480e+04  27.739  < 2e-16 ***
+    ## pcgni_est   -4.819e+00  1.584e+00  -3.042  0.00288 ** 
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 383000 on 121 degrees of freedom
+    ## Multiple R-squared:  0.07106,    Adjusted R-squared:  0.06339 
+    ## F-statistic: 9.257 on 1 and 121 DF,  p-value: 0.002878
+
 could maybe do simple OLS comparison between grouping schemes
 continuously and do proportion comparison using equal-sized bins across
 strata for categorical
@@ -583,7 +631,7 @@ inclusion_income <- left_join(impact_modeling_data,reduction_modeling_data,by="c
 inclusion_income
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-29-1.png)<!-- -->
 
 ggtitle(“Figure X. Choropleth map highlighting the 123 countries
 included in our analyses.”) +
@@ -898,7 +946,7 @@ pop_dec_cf_wf_vp <- ggarrange(meatless_day_cf_dec_pop_vp,meatless_day_wf_dec_pop
 pop_dec_cf_wf_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-46-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-48-1.png)<!-- -->
 %\>% annotate_figure(top=text_grob(“Figure X. Violin plot array
 comparing the anticipated mitigation and savings potential associated
 with each of the eight modeled dietary scenarios across the four
@@ -1174,7 +1222,7 @@ pop_dec_cf_wf_bp <- ggarrange(meatless_day_cf_dec_pop_bp,meatless_day_wf_dec_pop
 pop_dec_cf_wf_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-64-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-66-1.png)<!-- -->
 
 ``` r
 ggsave("figure-3.tiff",device="tiff",plot=pop_dec_cf_wf_bp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=120*(14/5),height=180*(14/5))
@@ -1524,7 +1572,7 @@ pop_dec_cf_wf_rank <- ggarrange(meatless_day_cf_dec_pop_rank,meatless_day_wf_dec
 pop_dec_cf_wf_rank
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-82-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-84-1.png)<!-- -->
 
 %\>% annotate_figure(top=text_grob(“Figure X. Bar plot array comparing
 the anticipated mitigationsavings potential associated with the 10 most
@@ -1672,7 +1720,7 @@ uni_enr_tot_prop_choro_vp <- ggarrange(uni_enr_tot_choro_vp,uni_enr_prop_choro_v
 uni_enr_tot_prop_choro_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-92-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-94-1.png)<!-- -->
 
 ``` r
 ggsave("figure-2.tiff",device="tiff",plot=uni_enr_tot_prop_choro_vp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=90*(14/5))
@@ -1705,7 +1753,7 @@ uni_enr_tot_prop_choro_bp <- ggarrange(uni_enr_tot_prop_choro,uni_enr_tot_prop_b
 uni_enr_tot_prop_choro_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-96-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-98-1.png)<!-- -->
 
 Alternative visualization option ^
 
@@ -1806,7 +1854,7 @@ pc_baseline_total_cf_wf_choro_vp <- ggarrange(pc_baseline_total_cf_choro_vp,pc_b
 pc_baseline_total_cf_wf_choro_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-103-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-105-1.png)<!-- -->
 
 ``` r
 ggsave("figure-5.tiff",device="tiff",plot=pc_baseline_total_cf_wf_choro_vp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=90*(14/5))
@@ -1841,7 +1889,7 @@ pc_baseline_total_cf_wf_choro_bp <- ggarrange(pc_baseline_total_cf_wf_choro,pc_b
 pc_baseline_total_cf_wf_choro_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-107-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-109-1.png)<!-- -->
 
 Alternative visualization option ^
 
@@ -1891,7 +1939,7 @@ xy_pcgnni_cf_wf <- ggarrange(xy_pcgni_cf,xy_pcgni_wf,
 xy_pcgnni_cf_wf
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-110-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-112-1.png)<!-- -->
 
 ``` r
 ggsave("figure-6.tiff",device="tiff",plot=xy_pcgnni_cf_wf,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=40*(14/5))

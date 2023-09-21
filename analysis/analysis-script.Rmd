@@ -391,12 +391,23 @@ confint(emissions_req_mlr)
 ```
 
 ```{r}
+emissions_req_mlr_v2 <- lm (baseline_kg_co2e_total~pc.meat.availability,data=reduction_modeling_data)
+summary(emissions_req_mlr_v2)
+```
+
+
+```{r}
 water_req_mlr <- lm (baseline_l_blue_green_wf~pcgni_est+pc.meat.availability+uni_enr_prop,data=reduction_modeling_data)
 summary(water_req_mlr)
 ```
 
 ```{r}
 confint(water_req_mlr)
+```
+
+```{r}
+water_req_mlr_v2 <- lm (baseline_l_blue_green_wf~pcgni_est,data=reduction_modeling_data)
+summary(water_req_mlr_v2)
 ```
 
 
