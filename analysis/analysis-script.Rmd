@@ -382,12 +382,21 @@ cor.test(reduction_modeling_data$pcgni_est,reduction_modeling_data$baseline_kg_c
 ```
 
 ```{r}
-mlr <- lm (baseline_kg_co2e_total~pcgni_est+pc.meat.availability,data=reduction_modeling_data)
-summary(mlr)
+emissions_req_mlr <- lm (baseline_kg_co2e_total~pcgni_est+pc.meat.availability+uni_enr_prop,data=reduction_modeling_data)
+summary(emissions_req_mlr)
 ```
 
 ```{r}
-confint(mlr)
+confint(emissions_req_mlr)
+```
+
+```{r}
+water_req_mlr <- lm (baseline_l_blue_green_wf~pcgni_est+pc.meat.availability+uni_enr_prop,data=reduction_modeling_data)
+summary(water_req_mlr)
+```
+
+```{r}
+confint(water_req_mlr)
 ```
 
 
