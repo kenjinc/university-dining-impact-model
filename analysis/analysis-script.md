@@ -400,6 +400,44 @@ regression modeling.
 reduction_modeling_data <- reduction_modeling_data %>% rowwise() %>% mutate(sum_dec_pop_kg_co2e_total=sum(dec_pop_meatless_day_kg_co2e_total,dec_pop_low_red_meat_kg_co2e_total,dec_pop_no_red_meat_kg_co2e_total,dec_pop_no_dairy_kg_co2e_total,dec_pop_pescetarian_kg_co2e_total,dec_pop_lacto_ovo_vegetarian_kg_co2e_total,dec_pop_X2.3_vegan_kg_co2e_total,dec_pop_vegan_kg_co2e_total)) %>% mutate(mean_dec_pop_kg_co2e_total=sum(dec_pop_meatless_day_kg_co2e_total,dec_pop_low_red_meat_kg_co2e_total,dec_pop_no_red_meat_kg_co2e_total,dec_pop_no_dairy_kg_co2e_total,dec_pop_pescetarian_kg_co2e_total,dec_pop_lacto_ovo_vegetarian_kg_co2e_total,dec_pop_X2.3_vegan_kg_co2e_total,dec_pop_vegan_kg_co2e_total)/8) %>% mutate(sum_dec_pop_l_blue_green_wf=sum(dec_pop_meatless_day_l_blue_green_wf,dec_pop_low_red_meat_l_blue_green_wf,dec_pop_no_red_meat_l_blue_green_wf,dec_pop_no_dairy_l_blue_green_wf,dec_pop_pescetarian_l_blue_green_wf,dec_pop_lacto_ovo_vegetarian_l_blue_green_wf,dec_pop_X2.3_vegan_l_blue_green_wf,dec_pop_vegan_l_blue_green_wf)) %>% mutate(mean_dec_pop_l_blue_green_wf=sum(dec_pop_meatless_day_l_blue_green_wf,dec_pop_low_red_meat_l_blue_green_wf,dec_pop_no_red_meat_l_blue_green_wf,dec_pop_no_dairy_l_blue_green_wf,dec_pop_pescetarian_l_blue_green_wf,dec_pop_lacto_ovo_vegetarian_l_blue_green_wf,dec_pop_X2.3_vegan_l_blue_green_wf,dec_pop_vegan_l_blue_green_wf)/8)
 ```
 
+Now, we can map the mean reduction potentials across indicators to our
+shapefile data to look at how changes in the water requirements and
+emissions costs differ spatially.
+
+This will require us to join our reduction and impact modeling datasets.
+
+``` r
+impact_reduction_modeling_data <- left_join(impact_modeling_data,reduction_modeling_data,by="country")
+```
+
+``` r
+ggplot(impact_reduction_modeling_data,aes(x=long,y=lat,fill=mean_dec_pop_kg_co2e_total,group=group)) + 
+  geom_polygon(color="black",size=0.125,alpha=0.66) + 
+  scale_fill_viridis_c(alpha=0.66,name=bquote('Kilograms CO'[2]*'e'),option="F",trans="reverse",na.value="white",labels=scales::comma) +
+  guides(fill=guide_colorbar(title.position="top",title.hjust=0.5)) +
+  xlab("") + 
+  ylab("") +
+  labs(caption="") +
+  ggtitle("mean_dec_pop_kg_co2e_total") +
+  theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank(),legend.key.width=unit(3.5,"cm"))
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+
+``` r
+ggplot(impact_reduction_modeling_data,aes(x=long,y=lat,fill=mean_dec_pop_l_blue_green_wf,group=group)) + 
+  geom_polygon(color="black",size=0.125,alpha=0.66) + 
+  scale_fill_viridis_c(alpha=0.66,name=bquote('Kilograms CO'[2]*'e'),option="G",trans="reverse",na.value="white",labels=scales::comma) +
+  guides(fill=guide_colorbar(title.position="top",title.hjust=0.5)) +
+  xlab("") + 
+  ylab("") +
+  labs(caption="") +
+  ggtitle("mean_dec_pop_l_blue_green_wf") +
+  theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank(),legend.key.width=unit(3.5,"cm"))
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
+
 ``` r
 xy_pc_meat_availability_wf <- reduction_modeling_data %>%
   ggplot(aes(x=pc.meat.availability,y=baseline_l_blue_green_wf,color=baseline_l_blue_green_wf)) +
@@ -414,7 +452,7 @@ xy_pc_meat_availability_wf <- reduction_modeling_data %>%
 xy_pc_meat_availability_wf
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
 
 ``` r
 cor.test(reduction_modeling_data$pc.meat.availability,reduction_modeling_data$baseline_l_blue_green_wf)
@@ -446,7 +484,7 @@ xy_pc_meat_availability_cf <- reduction_modeling_data %>%
 xy_pc_meat_availability_cf
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
 
 ``` r
 cor.test(reduction_modeling_data$pc.meat.availability,reduction_modeling_data$baseline_kg_co2e_total)
@@ -622,7 +660,7 @@ xy_mean_dec_pop_meat_availability_cf <- reduction_modeling_data %>%
 xy_mean_dec_pop_meat_availability_cf
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-30-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-33-1.png)<!-- -->
 
 ``` r
 xy_sum_dec_pop_meat_availability_cf <- reduction_modeling_data %>%
@@ -639,7 +677,7 @@ xy_sum_dec_pop_meat_availability_cf <- reduction_modeling_data %>%
 xy_sum_dec_pop_meat_availability_cf
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-31-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-34-1.png)<!-- -->
 
 ``` r
 xy_mean_dec_pop_meat_availability_wf <- reduction_modeling_data %>%
@@ -656,7 +694,7 @@ xy_mean_dec_pop_meat_availability_wf <- reduction_modeling_data %>%
 xy_mean_dec_pop_meat_availability_wf
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-32-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-35-1.png)<!-- -->
 
 ``` r
 xy_sum_dec_pop_meat_availability_wf <- reduction_modeling_data %>%
@@ -673,7 +711,7 @@ xy_sum_dec_pop_meat_availability_wf <- reduction_modeling_data %>%
 xy_mean_dec_pop_meat_availability_wf
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-33-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-36-1.png)<!-- -->
 
 Here, we have two options:
 
@@ -840,7 +878,7 @@ inclusion_income <- left_join(impact_modeling_data,reduction_modeling_data,by="c
 inclusion_income
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-39-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-42-1.png)<!-- -->
 
 ggtitle(“Figure X. Choropleth map highlighting the 123 countries
 included in our analyses.”) +
@@ -1155,7 +1193,7 @@ pop_dec_cf_wf_vp <- ggarrange(meatless_day_cf_dec_pop_vp,meatless_day_wf_dec_pop
 pop_dec_cf_wf_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-58-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-61-1.png)<!-- -->
 %\>% annotate_figure(top=text_grob(“Figure X. Violin plot array
 comparing the anticipated mitigation and savings potential associated
 with each of the eight modeled dietary scenarios across the four
@@ -1431,7 +1469,7 @@ pop_dec_cf_wf_bp <- ggarrange(meatless_day_cf_dec_pop_bp,meatless_day_wf_dec_pop
 pop_dec_cf_wf_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-76-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-79-1.png)<!-- -->
 
 ``` r
 ggsave("figure-3.tiff",device="tiff",plot=pop_dec_cf_wf_bp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=120*(14/5),height=180*(14/5))
@@ -1781,7 +1819,7 @@ pop_dec_cf_wf_rank <- ggarrange(meatless_day_cf_dec_pop_rank,meatless_day_wf_dec
 pop_dec_cf_wf_rank
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-94-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-97-1.png)<!-- -->
 
 %\>% annotate_figure(top=text_grob(“Figure X. Bar plot array comparing
 the anticipated mitigationsavings potential associated with the 10 most
@@ -1929,7 +1967,7 @@ uni_enr_tot_prop_choro_vp <- ggarrange(uni_enr_tot_choro_vp,uni_enr_prop_choro_v
 uni_enr_tot_prop_choro_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-104-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-107-1.png)<!-- -->
 
 ``` r
 ggsave("figure-2.tiff",device="tiff",plot=uni_enr_tot_prop_choro_vp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=90*(14/5))
@@ -1962,7 +2000,7 @@ uni_enr_tot_prop_choro_bp <- ggarrange(uni_enr_tot_prop_choro,uni_enr_tot_prop_b
 uni_enr_tot_prop_choro_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-108-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-111-1.png)<!-- -->
 
 Alternative visualization option ^
 
@@ -2063,7 +2101,7 @@ pc_baseline_total_cf_wf_choro_vp <- ggarrange(pc_baseline_total_cf_choro_vp,pc_b
 pc_baseline_total_cf_wf_choro_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-115-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-118-1.png)<!-- -->
 
 ``` r
 ggsave("figure-5.tiff",device="tiff",plot=pc_baseline_total_cf_wf_choro_vp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=90*(14/5))
@@ -2098,7 +2136,7 @@ pc_baseline_total_cf_wf_choro_bp <- ggarrange(pc_baseline_total_cf_wf_choro,pc_b
 pc_baseline_total_cf_wf_choro_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-119-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-122-1.png)<!-- -->
 
 Alternative visualization option ^
 
@@ -2148,7 +2186,7 @@ xy_pcgnni_cf_wf <- ggarrange(xy_pcgni_cf,xy_pcgni_wf,
 xy_pcgnni_cf_wf
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-122-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-125-1.png)<!-- -->
 
 ``` r
 ggsave("figure-6.tiff",device="tiff",plot=xy_pcgnni_cf_wf,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=40*(14/5))

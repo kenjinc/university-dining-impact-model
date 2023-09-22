@@ -346,6 +346,41 @@ reduction_modeling_data <- reduction_modeling_data %>% rowwise() %>% mutate(sum_
 ```
 
 
+Now, we can map the mean reduction potentials across indicators to our shapefile data to look at how changes in the water requirements and emissions costs differ spatially.
+
+This will require us to join our reduction and impact modeling datasets.
+
+```{r}
+impact_reduction_modeling_data <- left_join(impact_modeling_data,reduction_modeling_data,by="country")
+```
+
+
+```{r}
+ggplot(impact_reduction_modeling_data,aes(x=long,y=lat,fill=mean_dec_pop_kg_co2e_total,group=group)) + 
+  geom_polygon(color="black",size=0.125,alpha=0.66) + 
+  scale_fill_viridis_c(alpha=0.66,name=bquote('Kilograms CO'[2]*'e'),option="F",trans="reverse",na.value="white",labels=scales::comma) +
+  guides(fill=guide_colorbar(title.position="top",title.hjust=0.5)) +
+  xlab("") + 
+  ylab("") +
+  labs(caption="") +
+  ggtitle("mean_dec_pop_kg_co2e_total") +
+  theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank(),legend.key.width=unit(3.5,"cm"))
+```
+
+```{r}
+ggplot(impact_reduction_modeling_data,aes(x=long,y=lat,fill=mean_dec_pop_l_blue_green_wf,group=group)) + 
+  geom_polygon(color="black",size=0.125,alpha=0.66) + 
+  scale_fill_viridis_c(alpha=0.66,name=bquote('Kilograms CO'[2]*'e'),option="G",trans="reverse",na.value="white",labels=scales::comma) +
+  guides(fill=guide_colorbar(title.position="top",title.hjust=0.5)) +
+  xlab("") + 
+  ylab("") +
+  labs(caption="") +
+  ggtitle("mean_dec_pop_l_blue_green_wf") +
+  theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank(),legend.key.width=unit(3.5,"cm"))
+```
+
+
+
 ```{r}
 xy_pc_meat_availability_wf <- reduction_modeling_data %>%
   ggplot(aes(x=pc.meat.availability,y=baseline_l_blue_green_wf,color=baseline_l_blue_green_wf)) +
