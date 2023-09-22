@@ -392,8 +392,13 @@ reduction_modeling_data <- reduction_modeling_data %>%
   mutate(pc.meat.availability=case_when(country=="Australia"~113.5364,country=="Austria"~80.757805,country=="Barbados"~73.73382,country=="Belgium"~61.834118,country=="Bermuda"~105.58974,country=="Brunei"~73.71816,country=="Canada"~92.69366,country=="Chile"~86.1724,country=="Croatia"~82.37099,country=="Cyprus"~81.75594,country=="Czech Republic"~80.892815,country=="Denmark"~74.1218,country=="Estonia"~67.56921,country=="Finland"~71.81789,country=="France"~79.379684,country=="Germany"~80.154045,country=="Greece"~79.51641,country=="Hong Kong, China"~131.09276,country=="Hungary"~83.91513,country=="Iceland"~86.076126,country=="Ireland"~80.86589,country=="Israel"~100.03038,country=="Italy"~75.26189,country=="Japan"~51.382828,country=="Kuwait"~69.475334,country=="Latvia"~71.73087,country=="Lithuania"~82.36999,country=="Luxembourg"~78.49805,country=="Macao, China"~92.845276,country=="Malta"~61.05685,country=="Netherlands"~52.148273,country=="New Zealand"~86.9317,country=="Norway"~68.21777,country=="Oman"~51.870903,country=="Panama"~90.18525,country=="Poland"~84.60712,country=="Portugal"~94.31224,country=="Romania"~65.886795,country=="Saudi Arabia"~50.68443,country=="Slovak Republic"~61.50469,country=="Slovenia"~74.01035,country=="South Korea"~78.46385,country=="Spain"~104.55724,country=="Sweden"~69.64331,country=="Switzerland"~65.770706,country=="Taiwan"~84.156334,country=="United Kingdom"~79.838486,country=="United States"~126.3031,country=="Uruguay"~66.51014,country=="Afghanistan"~8.3396845,country=="Burkina Faso"~35.83849,country=="Congo, Dem. Rep."~36.316055,country=="Ethiopia"~7.4541984,country=="Madagascar"~6.7978826,country=="Malawi"~25.52311,country=="Mali"~10.8003645,country=="Niger"~8.00444,country=="Rwanda"~8.63766,country=="Togo"~13.403464,country=="Uganda"~9.544708,country=="Yemen"~17.138468,country=="Algeria"~19.941036,country=="Benin"~15.43024,country=="Cambodia"~11.443514,country=="Cameroon"~11.993587,country=="Cape Verde"~30.344278,country=="Cote d'Ivoire"~11.7628565,country=="Egypt"~25.47277,country=="Ghana"~13.519137,country=="Honduras"~33.939266,country=="India"~5.058201,country=="Iran"~34.68307,country=="Jordan"~32.716515,country=="Kenya"~12.578182,country=="Krygyz Republic"~34.22183,country=="Lebanon"~38.26308,country=="Mauritania"~32.106297,country=="Morocco"~38.48661,country=="Nepal"~16.352087,country=="Pakistan"~18.136559,country=="Philippines"~35.956985,country=="Senegal"~17.73161,country=="Sri Lanka"~9.947946,country=="Tanzania"~10.279127,country=="Tunisia"~26.583939,country=="Ukraine"~52.07261,country=="Zimbabwe"~50.275642,country=="Albania"~41.180588,country=="Argentina"~110.226555,country=="Armenia"~57.86262,country=="Azerbaijan"~35.201714,country=="Belarus"~84.05967,country=="Belize"~53.63133,country=="Bosnia and Herzegovina"~44.386997,country=="Botswana"~22.606571,country=="Brazil"~99.51421,country=="Bulgaria"~60.26872,country=="China"~61.763466,country=="Colombia"~62.227943,country=="Costa Rica"~63.574398,country=="Ecuador"~46.1094,country=="El Salvador"~38.69938,country=="Fiji"~50.37552,country=="Georgia"~38.867252,country=="Guatemala"~42.22101,country=="Indonesia"~19.043371,country=="Jamaica"~66.493515,country=="Kazakhstan"~68.70878,country=="Malaysia"~59.479687,country=="Maldives"~23.994505,country=="Mauritius"~54.154842,country=="Mexico"~72.58686,country=="Moldova"~46.732574,country=="Montenegro"~75.629395,country=="Namibia"~25.570827,country=="North Macedonia"~39.211926,country=="Peru"~54.839634,country=="Russia"~76.43811,country=="Serbia"~72.89403,country=="South Africa"~63.097736,country=="Thailand"~25.816267,country=="Turkey"~35.10809,country=="Venezuela"~34.252438))
 ```
 
-\*\*\* repasting this - need to make equal size bins to income
-designation
+Adding aggregate variables that sum and average the pop-level decreases
+in water and emissions costs across scenarios in prep for multivariate
+regression modeling.
+
+``` r
+reduction_modeling_data <- reduction_modeling_data %>% rowwise() %>% mutate(sum_dec_pop_kg_co2e_total=sum(dec_pop_meatless_day_kg_co2e_total,dec_pop_low_red_meat_kg_co2e_total,dec_pop_no_red_meat_kg_co2e_total,dec_pop_no_dairy_kg_co2e_total,dec_pop_pescetarian_kg_co2e_total,dec_pop_lacto_ovo_vegetarian_kg_co2e_total,dec_pop_X2.3_vegan_kg_co2e_total,dec_pop_vegan_kg_co2e_total)) %>% mutate(mean_dec_pop_kg_co2e_total=sum(dec_pop_meatless_day_kg_co2e_total,dec_pop_low_red_meat_kg_co2e_total,dec_pop_no_red_meat_kg_co2e_total,dec_pop_no_dairy_kg_co2e_total,dec_pop_pescetarian_kg_co2e_total,dec_pop_lacto_ovo_vegetarian_kg_co2e_total,dec_pop_X2.3_vegan_kg_co2e_total,dec_pop_vegan_kg_co2e_total)/8) %>% mutate(sum_dec_pop_l_blue_green_wf=sum(dec_pop_meatless_day_l_blue_green_wf,dec_pop_low_red_meat_l_blue_green_wf,dec_pop_no_red_meat_l_blue_green_wf,dec_pop_no_dairy_l_blue_green_wf,dec_pop_pescetarian_l_blue_green_wf,dec_pop_lacto_ovo_vegetarian_l_blue_green_wf,dec_pop_X2.3_vegan_l_blue_green_wf,dec_pop_vegan_l_blue_green_wf)) %>% mutate(mean_dec_pop_l_blue_green_wf=sum(dec_pop_meatless_day_l_blue_green_wf,dec_pop_low_red_meat_l_blue_green_wf,dec_pop_no_red_meat_l_blue_green_wf,dec_pop_no_dairy_l_blue_green_wf,dec_pop_pescetarian_l_blue_green_wf,dec_pop_lacto_ovo_vegetarian_l_blue_green_wf,dec_pop_X2.3_vegan_l_blue_green_wf,dec_pop_vegan_l_blue_green_wf)/8)
+```
 
 ``` r
 xy_pc_meat_availability_wf <- reduction_modeling_data %>%
@@ -409,7 +414,7 @@ xy_pc_meat_availability_wf <- reduction_modeling_data %>%
 xy_pc_meat_availability_wf
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 
 ``` r
 cor.test(reduction_modeling_data$pc.meat.availability,reduction_modeling_data$baseline_l_blue_green_wf)
@@ -441,7 +446,7 @@ xy_pc_meat_availability_cf <- reduction_modeling_data %>%
 xy_pc_meat_availability_cf
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
 
 ``` r
 cor.test(reduction_modeling_data$pc.meat.availability,reduction_modeling_data$baseline_kg_co2e_total)
@@ -476,8 +481,8 @@ cor.test(reduction_modeling_data$pcgni_est,reduction_modeling_data$baseline_kg_c
     ## 0.4505711
 
 ``` r
-emissions_req_mlr <- lm (baseline_kg_co2e_total~pcgni_est+pc.meat.availability+uni_enr_prop,data=reduction_modeling_data)
-summary(emissions_req_mlr)
+baseline_emissions_req_mlr <- lm(baseline_kg_co2e_total~pcgni_est+pc.meat.availability+uni_enr_prop,data=reduction_modeling_data)
+summary(baseline_emissions_req_mlr)
 ```
 
     ## 
@@ -503,7 +508,7 @@ summary(emissions_req_mlr)
     ## F-statistic: 27.43 on 3 and 119 DF,  p-value: 1.477e-13
 
 ``` r
-confint(emissions_req_mlr)
+confint(baseline_emissions_req_mlr)
 ```
 
     ##                              2.5 %       97.5 %
@@ -513,8 +518,8 @@ confint(emissions_req_mlr)
     ## uni_enr_prop         -5.687056e+03 8.842039e+03
 
 ``` r
-emissions_req_mlr_v2 <- lm (baseline_kg_co2e_total~pc.meat.availability,data=reduction_modeling_data)
-summary(emissions_req_mlr_v2)
+baseline_emissions_req_mlr_v2 <- lm(baseline_kg_co2e_total~pc.meat.availability,data=reduction_modeling_data)
+summary(baseline_emissions_req_mlr_v2)
 ```
 
     ## 
@@ -537,8 +542,8 @@ summary(emissions_req_mlr_v2)
     ## F-statistic: 82.47 on 1 and 121 DF,  p-value: 2.486e-15
 
 ``` r
-water_req_mlr <- lm (baseline_l_blue_green_wf~pcgni_est+pc.meat.availability+uni_enr_prop,data=reduction_modeling_data)
-summary(water_req_mlr)
+baseline_water_req_mlr <- lm(baseline_l_blue_green_wf~pcgni_est+pc.meat.availability+uni_enr_prop,data=reduction_modeling_data)
+summary(baseline_water_req_mlr)
 ```
 
     ## 
@@ -564,7 +569,7 @@ summary(water_req_mlr)
     ## F-statistic: 3.769 on 3 and 119 DF,  p-value: 0.01258
 
 ``` r
-confint(water_req_mlr)
+confint(baseline_water_req_mlr)
 ```
 
     ##                              2.5 %        97.5 %
@@ -574,8 +579,8 @@ confint(water_req_mlr)
     ## uni_enr_prop         -9.233857e+06  1.500353e+06
 
 ``` r
-water_req_mlr_v2 <- lm (baseline_l_blue_green_wf~pcgni_est,data=reduction_modeling_data)
-summary(water_req_mlr_v2)
+baseline_water_req_mlr_v2 <- lm(baseline_l_blue_green_wf~pcgni_est,data=reduction_modeling_data)
+summary(baseline_water_req_mlr_v2)
 ```
 
     ## 
@@ -597,12 +602,216 @@ summary(water_req_mlr_v2)
     ## Multiple R-squared:  0.07106,    Adjusted R-squared:  0.06339 
     ## F-statistic: 9.257 on 1 and 121 DF,  p-value: 0.002878
 
-could maybe do simple OLS comparison between grouping schemes
-continuously and do proportion comparison using equal-sized bins across
-strata for categorical
+Now that we have generated mlr models for our baseline dietary patterns
+(to understand how our variable differentially predict the water and
+emissions costs of the standard diets for our 123 countries), we will do
+the same for our reduction scenarios.
 
-reduction_modeling_data \<- reduction_modeling_data %\>%
-mutate(availability.classification=case_when(
+``` r
+xy_mean_dec_pop_meat_availability_cf <- reduction_modeling_data %>%
+  ggplot(aes(x=pc.meat.availability,y=mean_dec_pop_kg_co2e_total,color=mean_dec_pop_kg_co2e_total)) +
+  scale_color_viridis(labels=scales::comma,alpha=0.66,option="F",trans="reverse") +
+  geom_smooth(method="loess",show.legend=FALSE,alpha=0.66,color="lightsalmon2",fill="antiquewhite1") +
+  geom_point(size=2,alpha=0.66) +
+  geom_text(aes(label=country),size=3.5,vjust=1.5,color="black") +
+  guides(color=guide_colorbar(reverse=TRUE,title=bquote('Kilograms CO'[2]*'e'),title.position="left",title.vjust=0.5,alpha=0.66)) +
+  xlab("Per Capita Meat Availability") +
+  ylab("") + 
+  ggtitle("Mean Reduction in Diet-Attributable Greenhouse Gas Footprint") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="right",legend.key.height=unit(1.5,"cm"))
+xy_mean_dec_pop_meat_availability_cf
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-30-1.png)<!-- -->
+
+``` r
+xy_sum_dec_pop_meat_availability_cf <- reduction_modeling_data %>%
+  ggplot(aes(x=pc.meat.availability,y=sum_dec_pop_kg_co2e_total,color=sum_dec_pop_kg_co2e_total)) +
+  scale_color_viridis(labels=scales::comma,alpha=0.66,option="F",trans="reverse") +
+  geom_smooth(method="loess",show.legend=FALSE,alpha=0.66,color="lightsalmon2",fill="antiquewhite1") +
+  geom_point(size=2,alpha=0.66) +
+  geom_text(aes(label=country),size=3.5,vjust=1.5,color="black") +
+  guides(color=guide_colorbar(reverse=TRUE,title=bquote('Kilograms CO'[2]*'e'),title.position="left",title.vjust=0.5,alpha=0.66)) +
+  xlab("Per Capita Meat Availability") +
+  ylab("") + 
+  ggtitle("Summative Reduction in Diet-Attributable Greenhouse Gas Footprint") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="right",legend.key.height=unit(1.5,"cm"))
+xy_sum_dec_pop_meat_availability_cf
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-31-1.png)<!-- -->
+
+``` r
+xy_mean_dec_pop_meat_availability_wf <- reduction_modeling_data %>%
+  ggplot(aes(x=pc.meat.availability,y=mean_dec_pop_l_blue_green_wf,color=mean_dec_pop_l_blue_green_wf)) +
+  scale_color_viridis(alpha=0.66,name="Liters",option="G",trans="reverse",labels=scales::comma) +
+  geom_smooth(method="loess",show.legend=FALSE,color="paleturquoise3",fill="azure2") +
+  geom_point(size=2,alpha=0.66) +
+  geom_text(aes(label=country),size=3.5,vjust=1.5,color="black") +
+  guides(color=guide_colorbar(reverse=TRUE,title="Liters",title.position="left",title.vjust=0.5,alpha=0.66)) +
+  xlab("Per Capita Meat Availability") +
+  ylab("") + 
+  ggtitle("Mean Reduction in Diet-Attributable Water Footprint") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="right",legend.key.height=unit(1.5,"cm"))
+xy_mean_dec_pop_meat_availability_wf
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-32-1.png)<!-- -->
+
+``` r
+xy_sum_dec_pop_meat_availability_wf <- reduction_modeling_data %>%
+  ggplot(aes(x=pc.meat.availability,y=sum_dec_pop_l_blue_green_wf,color=sum_dec_pop_l_blue_green_wf)) +
+  scale_color_viridis(alpha=0.66,name="Liters",option="G",trans="reverse",labels=scales::comma) +
+  geom_smooth(method="loess",show.legend=FALSE,color="paleturquoise3",fill="azure2") +
+  geom_point(size=2,alpha=0.66) +
+  geom_text(aes(label=country),size=3.5,vjust=1.5,color="black") +
+  guides(color=guide_colorbar(reverse=TRUE,title="Liters",title.position="left",title.vjust=0.5,alpha=0.66)) +
+  xlab("Per Capita Meat Availability") +
+  ylab("") + 
+  ggtitle("Summative Reduction in Diet-Attributable Water Footprint") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="right",legend.key.height=unit(1.5,"cm"))
+xy_mean_dec_pop_meat_availability_wf
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-33-1.png)<!-- -->
+
+Here, we have two options:
+
+``` r
+mean_dec_pop_emissions_req_mlr <- lm(mean_dec_pop_kg_co2e_total~pcgni_est+pc.meat.availability+uni_enr_prop,data=reduction_modeling_data)
+summary(mean_dec_pop_emissions_req_mlr)
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = mean_dec_pop_kg_co2e_total ~ pcgni_est + pc.meat.availability + 
+    ##     uni_enr_prop, data = reduction_modeling_data)
+    ## 
+    ## Residuals:
+    ##        Min         1Q     Median         3Q        Max 
+    ## -3.396e+09 -9.448e+08 -2.315e+08  5.132e+08  1.853e+10 
+    ## 
+    ## Coefficients:
+    ##                        Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)          -1.083e+09  4.830e+08  -2.242 0.026795 *  
+    ## pcgni_est            -2.486e+04  1.278e+04  -1.945 0.054154 .  
+    ## pc.meat.availability  4.046e+07  1.059e+07   3.822 0.000212 ***
+    ## uni_enr_prop          3.508e+08  1.666e+10   0.021 0.983239    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 2.354e+09 on 119 degrees of freedom
+    ## Multiple R-squared:  0.1428, Adjusted R-squared:  0.1212 
+    ## F-statistic:  6.61 on 3 and 119 DF,  p-value: 0.0003606
+
+``` r
+sum_dec_pop_emissions_req_mlr <- lm(sum_dec_pop_kg_co2e_total~pcgni_est+pc.meat.availability+uni_enr_prop,data=reduction_modeling_data)
+summary(sum_dec_pop_emissions_req_mlr)
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = sum_dec_pop_kg_co2e_total ~ pcgni_est + pc.meat.availability + 
+    ##     uni_enr_prop, data = reduction_modeling_data)
+    ## 
+    ## Residuals:
+    ##        Min         1Q     Median         3Q        Max 
+    ## -2.717e+10 -7.558e+09 -1.852e+09  4.106e+09  1.482e+11 
+    ## 
+    ## Coefficients:
+    ##                        Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)          -8.664e+09  3.864e+09  -2.242 0.026795 *  
+    ## pcgni_est            -1.989e+05  1.022e+05  -1.945 0.054154 .  
+    ## pc.meat.availability  3.237e+08  8.468e+07   3.822 0.000212 ***
+    ## uni_enr_prop          2.806e+09  1.333e+11   0.021 0.983239    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.883e+10 on 119 degrees of freedom
+    ## Multiple R-squared:  0.1428, Adjusted R-squared:  0.1212 
+    ## F-statistic:  6.61 on 3 and 119 DF,  p-value: 0.0003606
+
+``` r
+mean_dec_pop_water_req_mlr <- lm(mean_dec_pop_l_blue_green_wf~pcgni_est+pc.meat.availability+uni_enr_prop,data=reduction_modeling_data)
+summary(mean_dec_pop_water_req_mlr)
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = mean_dec_pop_l_blue_green_wf ~ pcgni_est + pc.meat.availability + 
+    ##     uni_enr_prop, data = reduction_modeling_data)
+    ## 
+    ## Residuals:
+    ##        Min         1Q     Median         3Q        Max 
+    ## -5.819e+12 -3.220e+11 -7.694e+10  2.146e+11  5.139e+12 
+    ## 
+    ## Coefficients:
+    ##                        Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)          -4.672e+11  1.981e+11  -2.358 0.019992 *  
+    ## pcgni_est            -8.114e+06  5.242e+06  -1.548 0.124346    
+    ## pc.meat.availability  1.553e+10  4.342e+09   3.576 0.000505 ***
+    ## uni_enr_prop         -7.297e+11  6.835e+12  -0.107 0.915158    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 9.654e+11 on 119 degrees of freedom
+    ## Multiple R-squared:  0.1284, Adjusted R-squared:  0.1065 
+    ## F-statistic: 5.845 on 3 and 119 DF,  p-value: 0.0009273
+
+``` r
+sum_dec_pop_water_req_mlr <- lm(sum_dec_pop_l_blue_green_wf~pcgni_est+pc.meat.availability+uni_enr_prop,data=reduction_modeling_data)
+summary(sum_dec_pop_water_req_mlr)
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = sum_dec_pop_l_blue_green_wf ~ pcgni_est + pc.meat.availability + 
+    ##     uni_enr_prop, data = reduction_modeling_data)
+    ## 
+    ## Residuals:
+    ##        Min         1Q     Median         3Q        Max 
+    ## -4.655e+13 -2.576e+12 -6.155e+11  1.717e+12  4.111e+13 
+    ## 
+    ## Coefficients:
+    ##                        Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)          -3.737e+12  1.585e+12  -2.358 0.019992 *  
+    ## pcgni_est            -6.491e+07  4.194e+07  -1.548 0.124346    
+    ## pc.meat.availability  1.242e+11  3.473e+10   3.576 0.000505 ***
+    ## uni_enr_prop         -5.837e+12  5.468e+13  -0.107 0.915158    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 7.723e+12 on 119 degrees of freedom
+    ## Multiple R-squared:  0.1284, Adjusted R-squared:  0.1065 
+    ## F-statistic: 5.845 on 3 and 119 DF,  p-value: 0.0009273
+
+is it better than ols?
+
+``` r
+sum_dec_pop_water_req_ols <- lm(sqrt(sum_dec_pop_l_blue_green_wf)~sqrt(pc.meat.availability),data=reduction_modeling_data)
+summary(sum_dec_pop_water_req_ols)
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = sqrt(sum_dec_pop_l_blue_green_wf) ~ sqrt(pc.meat.availability), 
+    ##     data = reduction_modeling_data)
+    ## 
+    ## Residuals:
+    ##      Min       1Q   Median       3Q      Max 
+    ## -1529291  -740033  -365284   352920  5510575 
+    ## 
+    ## Coefficients:
+    ##                            Estimate Std. Error t value Pr(>|t|)  
+    ## (Intercept)                 -191076     537653  -0.355   0.7231  
+    ## sqrt(pc.meat.availability)   167749      67792   2.474   0.0152 *
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1244000 on 92 degrees of freedom
+    ##   (29 observations deleted due to missingness)
+    ## Multiple R-squared:  0.0624, Adjusted R-squared:  0.05221 
+    ## F-statistic: 6.123 on 1 and 92 DF,  p-value: 0.01518
 
 Now, we will use the `count` function to see how many countries fall
 into each group of observations. \*\*\* EDIT \*\*\*
@@ -631,7 +840,7 @@ inclusion_income <- left_join(impact_modeling_data,reduction_modeling_data,by="c
 inclusion_income
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-29-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-39-1.png)<!-- -->
 
 ggtitle(“Figure X. Choropleth map highlighting the 123 countries
 included in our analyses.”) +
@@ -946,7 +1155,7 @@ pop_dec_cf_wf_vp <- ggarrange(meatless_day_cf_dec_pop_vp,meatless_day_wf_dec_pop
 pop_dec_cf_wf_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-48-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-58-1.png)<!-- -->
 %\>% annotate_figure(top=text_grob(“Figure X. Violin plot array
 comparing the anticipated mitigation and savings potential associated
 with each of the eight modeled dietary scenarios across the four
@@ -1222,7 +1431,7 @@ pop_dec_cf_wf_bp <- ggarrange(meatless_day_cf_dec_pop_bp,meatless_day_wf_dec_pop
 pop_dec_cf_wf_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-66-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-76-1.png)<!-- -->
 
 ``` r
 ggsave("figure-3.tiff",device="tiff",plot=pop_dec_cf_wf_bp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=120*(14/5),height=180*(14/5))
@@ -1572,7 +1781,7 @@ pop_dec_cf_wf_rank <- ggarrange(meatless_day_cf_dec_pop_rank,meatless_day_wf_dec
 pop_dec_cf_wf_rank
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-84-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-94-1.png)<!-- -->
 
 %\>% annotate_figure(top=text_grob(“Figure X. Bar plot array comparing
 the anticipated mitigationsavings potential associated with the 10 most
@@ -1720,7 +1929,7 @@ uni_enr_tot_prop_choro_vp <- ggarrange(uni_enr_tot_choro_vp,uni_enr_prop_choro_v
 uni_enr_tot_prop_choro_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-94-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-104-1.png)<!-- -->
 
 ``` r
 ggsave("figure-2.tiff",device="tiff",plot=uni_enr_tot_prop_choro_vp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=90*(14/5))
@@ -1753,7 +1962,7 @@ uni_enr_tot_prop_choro_bp <- ggarrange(uni_enr_tot_prop_choro,uni_enr_tot_prop_b
 uni_enr_tot_prop_choro_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-98-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-108-1.png)<!-- -->
 
 Alternative visualization option ^
 
@@ -1854,7 +2063,7 @@ pc_baseline_total_cf_wf_choro_vp <- ggarrange(pc_baseline_total_cf_choro_vp,pc_b
 pc_baseline_total_cf_wf_choro_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-105-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-115-1.png)<!-- -->
 
 ``` r
 ggsave("figure-5.tiff",device="tiff",plot=pc_baseline_total_cf_wf_choro_vp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=90*(14/5))
@@ -1889,7 +2098,7 @@ pc_baseline_total_cf_wf_choro_bp <- ggarrange(pc_baseline_total_cf_wf_choro,pc_b
 pc_baseline_total_cf_wf_choro_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-109-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-119-1.png)<!-- -->
 
 Alternative visualization option ^
 
@@ -1939,7 +2148,7 @@ xy_pcgnni_cf_wf <- ggarrange(xy_pcgni_cf,xy_pcgni_wf,
 xy_pcgnni_cf_wf
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-112-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-122-1.png)<!-- -->
 
 ``` r
 ggsave("figure-6.tiff",device="tiff",plot=xy_pcgnni_cf_wf,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=40*(14/5))
