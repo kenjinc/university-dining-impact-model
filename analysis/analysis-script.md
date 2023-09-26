@@ -851,6 +851,143 @@ summary(sum_dec_pop_water_req_ols)
     ## Multiple R-squared:  0.0624, Adjusted R-squared:  0.05221 
     ## F-statistic: 6.123 on 1 and 92 DF,  p-value: 0.01518
 
+RESULTS MAIN FINDINGS
+
+SUM OF MEAN REDUCTIONS IN GREENHOUSE GAS EMISSIONS AMD WATER USAGE
+ACROSS ALL COUNTRIES AND SCENARIOS
+
+``` r
+sum(reduction_modeling_data$mean_dec_pop_kg_co2e_total)
+```
+
+    ## [1] 82288308837
+
+``` r
+sum(reduction_modeling_data$mean_dec_pop_l_blue_green_wf)
+```
+
+    ## [1] 2.55726e+13
+
+SUM OF REDUCTIONS IN GREENHOUSE GAS EMISSIONS AND WATER USAGE ACROSS ALL
+COUNTRIES FOR MEATLESS DAY SCENARIO
+
+``` r
+sum(reduction_modeling_data$dec_pop_meatless_day_kg_co2e_total)
+```
+
+    ## [1] 6811218782
+
+``` r
+sum(reduction_modeling_data$dec_pop_meatless_day_l_blue_green_wf)
+```
+
+    ## [1] 9.246755e+12
+
+SUM OF REDUCTIONS IN GREENHOUSE GAS EMISSIONS AND WATER USAGE ACROSS ALL
+COUNTRIES FOR NO DAIRY SCENARIO
+
+``` r
+sum(reduction_modeling_data$dec_pop_no_dairy_kg_co2e_total)
+```
+
+    ## [1] 67887008674
+
+``` r
+sum(reduction_modeling_data$dec_pop_no_dairy_l_blue_green_wf)
+```
+
+    ## [1] 9.330179e+12
+
+SUM OF REDUCTIONS IN GREENHOUSE GAS EMISSIONS AND WATER USAGE ACROSS ALL
+COUNTRIES FOR LOW RED MEAT SCENARIO
+
+``` r
+sum(reduction_modeling_data$dec_pop_low_red_meat_kg_co2e_total)
+```
+
+    ## [1] 13260977697
+
+``` r
+sum(reduction_modeling_data$dec_pop_low_red_meat_l_blue_green_wf)
+```
+
+    ## [1] 6.458015e+12
+
+SUM OF REDUCTIONS IN GREENHOUSE GAS EMISSIONS AND WATER USAGE ACROSS ALL
+COUNTRIES FOR NO RED MEAT SCENARIO
+
+``` r
+sum(reduction_modeling_data$dec_pop_no_red_meat_kg_co2e_total)
+```
+
+    ## [1] 81742812166
+
+``` r
+sum(reduction_modeling_data$dec_pop_no_red_meat_l_blue_green_wf)
+```
+
+    ## [1] 2.571486e+13
+
+SUM OF REDUCTIONS IN GREENHOUSE GAS EMISSIONS AND WATER USAGE ACROSS ALL
+COUNTRIES FOR PESCETARIAN SCENARIO
+
+``` r
+sum(reduction_modeling_data$dec_pop_pescetarian_kg_co2e_total)
+```
+
+    ## [1] 115255663323
+
+``` r
+sum(reduction_modeling_data$dec_pop_pescetarian_l_blue_green_wf)
+```
+
+    ## [1] 3.772486e+13
+
+SUM OF REDUCTIONS IN GREENHOUSE GAS EMISSIONS AND WATER USAGE ACROSS ALL
+COUNTRIES FOR VEGETARIAN SCENARIO
+
+``` r
+sum(reduction_modeling_data$dec_pop_lacto_ovo_vegetarian_kg_co2e_total)
+```
+
+    ## [1] 55874112155
+
+``` r
+sum(reduction_modeling_data$dec_pop_lacto_ovo_vegetarian_l_blue_green_wf)
+```
+
+    ## [1] 2.734249e+13
+
+SUM OF REDUCTIONS IN GREENHOUSE GAS EMISSIONS AND WATER USAGE ACROSS ALL
+COUNTRIES FOR 2/3 VEGAN SCENARIO
+
+``` r
+sum(reduction_modeling_data$dec_pop_X2.3_vegan_kg_co2e_total)
+```
+
+    ## [1] 126716644876
+
+``` r
+sum(reduction_modeling_data$dec_pop_X2.3_vegan_l_blue_green_wf)
+```
+
+    ## [1] 3.67516e+13
+
+SUM OF REDUCTIONS IN GREENHOUSE GAS EMISSIONS AND WATER USAGE ACROSS ALL
+COUNTRIES FOR VEGAN SCENARIO
+
+``` r
+sum(reduction_modeling_data$dec_pop_vegan_kg_co2e_total)
+```
+
+    ## [1] 1.90758e+11
+
+``` r
+sum(reduction_modeling_data$dec_pop_vegan_l_blue_green_wf)
+```
+
+    ## [1] 5.2012e+13
+
 Now, we will use the `count` function to see how many countries fall
 into each group of observations. \*\*\* EDIT \*\*\*
 
@@ -878,7 +1015,7 @@ inclusion_income <- left_join(impact_modeling_data,reduction_modeling_data,by="c
 inclusion_income
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-42-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-60-1.png)<!-- -->
 
 ggtitle(“Figure X. Choropleth map highlighting the 123 countries
 included in our analyses.”) +
@@ -1193,7 +1330,7 @@ pop_dec_cf_wf_vp <- ggarrange(meatless_day_cf_dec_pop_vp,meatless_day_wf_dec_pop
 pop_dec_cf_wf_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-61-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-79-1.png)<!-- -->
 %\>% annotate_figure(top=text_grob(“Figure X. Violin plot array
 comparing the anticipated mitigation and savings potential associated
 with each of the eight modeled dietary scenarios across the four
@@ -1469,7 +1606,7 @@ pop_dec_cf_wf_bp <- ggarrange(meatless_day_cf_dec_pop_bp,meatless_day_wf_dec_pop
 pop_dec_cf_wf_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-79-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-97-1.png)<!-- -->
 
 ``` r
 ggsave("figure-3.tiff",device="tiff",plot=pop_dec_cf_wf_bp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=120*(14/5),height=180*(14/5))
@@ -1819,7 +1956,7 @@ pop_dec_cf_wf_rank <- ggarrange(meatless_day_cf_dec_pop_rank,meatless_day_wf_dec
 pop_dec_cf_wf_rank
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-97-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-115-1.png)<!-- -->
 
 %\>% annotate_figure(top=text_grob(“Figure X. Bar plot array comparing
 the anticipated mitigationsavings potential associated with the 10 most
@@ -1967,7 +2104,7 @@ uni_enr_tot_prop_choro_vp <- ggarrange(uni_enr_tot_choro_vp,uni_enr_prop_choro_v
 uni_enr_tot_prop_choro_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-107-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-125-1.png)<!-- -->
 
 ``` r
 ggsave("figure-2.tiff",device="tiff",plot=uni_enr_tot_prop_choro_vp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=90*(14/5))
@@ -2000,7 +2137,7 @@ uni_enr_tot_prop_choro_bp <- ggarrange(uni_enr_tot_prop_choro,uni_enr_tot_prop_b
 uni_enr_tot_prop_choro_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-111-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-129-1.png)<!-- -->
 
 Alternative visualization option ^
 
@@ -2101,7 +2238,7 @@ pc_baseline_total_cf_wf_choro_vp <- ggarrange(pc_baseline_total_cf_choro_vp,pc_b
 pc_baseline_total_cf_wf_choro_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-118-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-136-1.png)<!-- -->
 
 ``` r
 ggsave("figure-5.tiff",device="tiff",plot=pc_baseline_total_cf_wf_choro_vp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=90*(14/5))
@@ -2136,7 +2273,7 @@ pc_baseline_total_cf_wf_choro_bp <- ggarrange(pc_baseline_total_cf_wf_choro,pc_b
 pc_baseline_total_cf_wf_choro_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-122-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-140-1.png)<!-- -->
 
 Alternative visualization option ^
 
@@ -2186,7 +2323,7 @@ xy_pcgnni_cf_wf <- ggarrange(xy_pcgni_cf,xy_pcgni_wf,
 xy_pcgnni_cf_wf
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-125-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-143-1.png)<!-- -->
 
 ``` r
 ggsave("figure-6.tiff",device="tiff",plot=xy_pcgnni_cf_wf,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=40*(14/5))

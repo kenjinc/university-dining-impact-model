@@ -546,6 +546,101 @@ summary(sum_dec_pop_water_req_ols)
 
 
 
+RESULTS MAIN FINDINGS
+
+SUM OF MEAN REDUCTIONS IN GREENHOUSE GAS EMISSIONS AMD WATER USAGE ACROSS ALL COUNTRIES AND SCENARIOS
+
+```{r}
+sum(reduction_modeling_data$mean_dec_pop_kg_co2e_total)
+```
+
+
+```{r}
+sum(reduction_modeling_data$mean_dec_pop_l_blue_green_wf)
+```
+
+SUM OF REDUCTIONS IN GREENHOUSE GAS EMISSIONS AND WATER USAGE ACROSS ALL COUNTRIES FOR MEATLESS DAY SCENARIO
+
+```{r}
+sum(reduction_modeling_data$dec_pop_meatless_day_kg_co2e_total)
+```
+
+```{r}
+sum(reduction_modeling_data$dec_pop_meatless_day_l_blue_green_wf)
+```
+
+SUM OF REDUCTIONS IN GREENHOUSE GAS EMISSIONS AND WATER USAGE ACROSS ALL COUNTRIES FOR NO DAIRY SCENARIO
+
+```{r}
+sum(reduction_modeling_data$dec_pop_no_dairy_kg_co2e_total)
+```
+
+
+```{r}
+sum(reduction_modeling_data$dec_pop_no_dairy_l_blue_green_wf)
+```
+
+SUM OF REDUCTIONS IN GREENHOUSE GAS EMISSIONS AND WATER USAGE ACROSS ALL COUNTRIES FOR LOW RED MEAT SCENARIO
+
+```{r}
+sum(reduction_modeling_data$dec_pop_low_red_meat_kg_co2e_total)
+```
+
+```{r}
+sum(reduction_modeling_data$dec_pop_low_red_meat_l_blue_green_wf)
+```
+
+SUM OF REDUCTIONS IN GREENHOUSE GAS EMISSIONS AND WATER USAGE ACROSS ALL COUNTRIES FOR NO RED MEAT SCENARIO
+
+```{r}
+sum(reduction_modeling_data$dec_pop_no_red_meat_kg_co2e_total)
+```
+
+```{r}
+sum(reduction_modeling_data$dec_pop_no_red_meat_l_blue_green_wf)
+```
+
+SUM OF REDUCTIONS IN GREENHOUSE GAS EMISSIONS AND WATER USAGE ACROSS ALL COUNTRIES FOR PESCETARIAN SCENARIO
+
+
+```{r}
+sum(reduction_modeling_data$dec_pop_pescetarian_kg_co2e_total)
+```
+
+```{r}
+sum(reduction_modeling_data$dec_pop_pescetarian_l_blue_green_wf)
+```
+
+SUM OF REDUCTIONS IN GREENHOUSE GAS EMISSIONS AND WATER USAGE ACROSS ALL COUNTRIES FOR VEGETARIAN SCENARIO
+
+```{r}
+sum(reduction_modeling_data$dec_pop_lacto_ovo_vegetarian_kg_co2e_total)
+```
+
+```{r}
+sum(reduction_modeling_data$dec_pop_lacto_ovo_vegetarian_l_blue_green_wf)
+```
+
+SUM OF REDUCTIONS IN GREENHOUSE GAS EMISSIONS AND WATER USAGE ACROSS ALL COUNTRIES FOR 2/3 VEGAN SCENARIO
+
+```{r}
+sum(reduction_modeling_data$dec_pop_X2.3_vegan_kg_co2e_total)
+```
+
+```{r}
+sum(reduction_modeling_data$dec_pop_X2.3_vegan_l_blue_green_wf)
+```
+
+SUM OF REDUCTIONS IN GREENHOUSE GAS EMISSIONS AND WATER USAGE ACROSS ALL COUNTRIES FOR VEGAN SCENARIO
+
+```{r}
+sum(reduction_modeling_data$dec_pop_vegan_kg_co2e_total)
+```
+
+```{r}
+sum(reduction_modeling_data$dec_pop_vegan_l_blue_green_wf)
+```
+
 Now, we will use the `count` function to see how many countries fall into each group of observations. *** EDIT ***
 
 
