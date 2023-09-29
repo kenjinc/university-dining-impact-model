@@ -411,32 +411,42 @@ impact_reduction_modeling_data <- left_join(impact_modeling_data,reduction_model
 ```
 
 ``` r
-ggplot(impact_reduction_modeling_data,aes(x=long,y=lat,fill=mean_dec_pop_kg_co2e_total,group=group)) + 
+mean_dec_pop_kg_co2e_total_choro <- ggplot(impact_reduction_modeling_data,aes(x=long,y=lat,fill=mean_dec_pop_kg_co2e_total,group=group)) + 
   geom_polygon(color="black",size=0.125,alpha=0.66) + 
-  scale_fill_viridis_c(alpha=0.66,name=bquote('Kilograms CO'[2]*'e'),option="F",trans="reverse",na.value="white",labels=scales::comma) +
-  guides(fill=guide_colorbar(title.position="top",title.hjust=0.5)) +
+  scale_fill_viridis_c(alpha=0.66,name=bquote('Billion Kilograms CO'[2]*'e'),option="F",trans="reverse",na.value="white",labels=function(x)x/1000000000) +
+  guides(fill=guide_colorbar(reverse=TRUE,title.position="top",title.hjust=0.5)) +
   xlab("") + 
   ylab("") +
   labs(caption="") +
-  ggtitle("mean_dec_pop_kg_co2e_total") +
+  ggtitle("Mean Reduction in Emissions Costs Across Scenarios") +
   theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank(),legend.key.width=unit(3.5,"cm"))
 ```
-
-![](analysis-script_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
 
 ``` r
-ggplot(impact_reduction_modeling_data,aes(x=long,y=lat,fill=mean_dec_pop_l_blue_green_wf,group=group)) + 
+mean_dec_pop_l_blue_green_wf_choro <- ggplot(impact_reduction_modeling_data,aes(x=long,y=lat,fill=mean_dec_pop_l_blue_green_wf,group=group)) + 
   geom_polygon(color="black",size=0.125,alpha=0.66) + 
-  scale_fill_viridis_c(alpha=0.66,name=bquote('Kilograms CO'[2]*'e'),option="G",trans="reverse",na.value="white",labels=scales::comma) +
-  guides(fill=guide_colorbar(title.position="top",title.hjust=0.5)) +
+  scale_fill_viridis_c(alpha=0.66,name="Trillion Liters",option="G",trans="reverse",na.value="white",labels=function(x)x/1000000000000) +
+  guides(fill=guide_colorbar(reverse=TRUE,title.position="top",title.hjust=0.5)) +
   xlab("") + 
   ylab("") +
   labs(caption="") +
-  ggtitle("mean_dec_pop_l_blue_green_wf") +
+  ggtitle("Mean Reduction in Water Requirements Across Scenarios") +
   theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank(),legend.key.width=unit(3.5,"cm"))
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
+``` r
+mean_dec_pop_choro <- ggarrange(mean_dec_pop_kg_co2e_total_choro,mean_dec_pop_l_blue_green_wf_choro,
+          labels=c("A","B"),
+          ncol=2,
+          nrow=1)
+mean_dec_pop_choro
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
+
+``` r
+ggsave("mean_dec_pop_choro.tiff",device="tiff",plot=mean_dec_pop_choro,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=70*(14/5))
+```
 
 ``` r
 xy_pc_meat_availability_wf <- reduction_modeling_data %>%
@@ -452,7 +462,7 @@ xy_pc_meat_availability_wf <- reduction_modeling_data %>%
 xy_pc_meat_availability_wf
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
 
 ``` r
 cor.test(reduction_modeling_data$pc.meat.availability,reduction_modeling_data$baseline_l_blue_green_wf)
@@ -484,7 +494,7 @@ xy_pc_meat_availability_cf <- reduction_modeling_data %>%
 xy_pc_meat_availability_cf
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-26-1.png)<!-- -->
 
 ``` r
 cor.test(reduction_modeling_data$pc.meat.availability,reduction_modeling_data$baseline_kg_co2e_total)
@@ -646,13 +656,53 @@ emissions costs of the standard diets for our 123 countries), we will do
 the same for our reduction scenarios.
 
 ``` r
-xy_mean_dec_pop_meat_availability_cf <- reduction_modeling_data %>%
-  ggplot(aes(x=pc.meat.availability,y=mean_dec_pop_kg_co2e_total,color=mean_dec_pop_kg_co2e_total)) +
-  scale_color_viridis(labels=scales::comma,alpha=0.66,option="F",trans="reverse") +
+xy_mean_dec_pop_uni_enr_prop_cf <- reduction_modeling_data %>%
+  ggplot(aes(x=uni_enr_prop,y=mean_dec_pop_kg_co2e_total,color=mean_dec_pop_kg_co2e_total)) +
+  scale_color_viridis(labels=function(x)x/1000000000,alpha=0.66,option="F",trans="reverse") +
   geom_smooth(method="loess",show.legend=FALSE,alpha=0.66,color="lightsalmon2",fill="antiquewhite1") +
   geom_point(size=2,alpha=0.66) +
   geom_text(aes(label=country),size=3.5,vjust=1.5,color="black") +
-  guides(color=guide_colorbar(reverse=TRUE,title=bquote('Kilograms CO'[2]*'e'),title.position="left",title.vjust=0.5,alpha=0.66)) +
+  scale_y_continuous(labels=function(x)x/1000000000) +
+  guides(color=guide_colorbar(reverse=TRUE,title=bquote('Billion Kilograms CO'[2]*'e'),title.position="left",title.vjust=0.5,alpha=0.66)) +
+  stat_cor(p.accuracy=0.05,r.accuracy=0.001) +
+  xlab("Proportional Enrollment") +
+  ylab("") + 
+  ggtitle("Mean Reduction in Diet-Attributable Greenhouse Gas Footprint") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="right",legend.key.height=unit(1.5,"cm"))
+xy_mean_dec_pop_uni_enr_prop_cf
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-35-1.png)<!-- -->
+
+``` r
+xy_mean_dec_pop_pc_gni_cf <- reduction_modeling_data %>%
+  ggplot(aes(x=pcgni_est,y=mean_dec_pop_kg_co2e_total,color=mean_dec_pop_kg_co2e_total)) +
+  scale_color_viridis(labels=function(x)x/1000000000,alpha=0.66,option="F",trans="reverse") +
+  geom_smooth(method="loess",show.legend=FALSE,alpha=0.66,color="lightsalmon2",fill="antiquewhite1") +
+  geom_point(size=2,alpha=0.66) +
+  geom_text(aes(label=country),size=3.5,vjust=1.5,color="black") +
+  scale_y_continuous(labels=function(x)x/1000000000) +
+  guides(color=guide_colorbar(reverse=TRUE,title=bquote('Billion Kilograms CO'[2]*'e'),title.position="left",title.vjust=0.5,alpha=0.66)) +
+  stat_cor(p.accuracy=0.05,r.accuracy=0.001,vjust=3) +
+  xlab("Per Capita Gross National Income") +
+  ylab("") + 
+  ggtitle("Mean Reduction in Diet-Attributable Greenhouse Gas Footprint") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="right",legend.key.height=unit(1.5,"cm"))
+xy_mean_dec_pop_pc_gni_cf
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-36-1.png)<!-- -->
+
+``` r
+xy_mean_dec_pop_meat_availability_cf <- reduction_modeling_data %>%
+  ggplot(aes(x=pc.meat.availability,y=mean_dec_pop_kg_co2e_total,color=mean_dec_pop_kg_co2e_total)) +
+  scale_color_viridis(labels=function(x)x/1000000000,alpha=0.66,option="F",trans="reverse") +
+  geom_smooth(method="loess",show.legend=FALSE,alpha=0.66,color="lightsalmon2",fill="antiquewhite1") +
+  geom_point(size=2,alpha=0.66) +
+  geom_text(aes(label=country),size=3.5,vjust=1.5,color="black") +
+  scale_y_continuous(labels=function(x)x/1000000000) +
+  guides(color=guide_colorbar(reverse=TRUE,title=bquote('Billion Kilograms CO'[2]*'e'),title.position="left",title.vjust=0.5,alpha=0.66)) +
+  stat_cor(p.accuracy=0.05,r.accuracy=0.001) +
   xlab("Per Capita Meat Availability") +
   ylab("") + 
   ggtitle("Mean Reduction in Diet-Attributable Greenhouse Gas Footprint") +
@@ -660,7 +710,16 @@ xy_mean_dec_pop_meat_availability_cf <- reduction_modeling_data %>%
 xy_mean_dec_pop_meat_availability_cf
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-33-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-37-1.png)<!-- -->
+
+``` r
+ggarrange(xy_mean_dec_pop_uni_enr_prop_cf,xy_mean_dec_pop_pc_gni_cf,xy_mean_dec_pop_meat_availability_cf,
+          labels=c("A","B","C"),
+          ncol=1,
+          nrow=3)
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-38-1.png)<!-- -->
 
 ``` r
 xy_sum_dec_pop_meat_availability_cf <- reduction_modeling_data %>%
@@ -677,16 +736,18 @@ xy_sum_dec_pop_meat_availability_cf <- reduction_modeling_data %>%
 xy_sum_dec_pop_meat_availability_cf
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-34-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-39-1.png)<!-- -->
 
 ``` r
 xy_mean_dec_pop_meat_availability_wf <- reduction_modeling_data %>%
   ggplot(aes(x=pc.meat.availability,y=mean_dec_pop_l_blue_green_wf,color=mean_dec_pop_l_blue_green_wf)) +
-  scale_color_viridis(alpha=0.66,name="Liters",option="G",trans="reverse",labels=scales::comma) +
+  scale_color_viridis(alpha=0.66,name="Trillion Liters",option="G",trans="reverse",labels=function(x)x/1000000000000) +
   geom_smooth(method="loess",show.legend=FALSE,color="paleturquoise3",fill="azure2") +
   geom_point(size=2,alpha=0.66) +
   geom_text(aes(label=country),size=3.5,vjust=1.5,color="black") +
   guides(color=guide_colorbar(reverse=TRUE,title="Liters",title.position="left",title.vjust=0.5,alpha=0.66)) +
+  scale_y_continuous(labels=function(x)x/1000000000000) +
+  stat_cor(p.accuracy=0.05,r.accuracy=0.001) +
   xlab("Per Capita Meat Availability") +
   ylab("") + 
   ggtitle("Mean Reduction in Diet-Attributable Water Footprint") +
@@ -694,7 +755,55 @@ xy_mean_dec_pop_meat_availability_wf <- reduction_modeling_data %>%
 xy_mean_dec_pop_meat_availability_wf
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-35-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-40-1.png)<!-- -->
+
+``` r
+xy_mean_dec_pop_pc_gni_wf <- reduction_modeling_data %>%
+  ggplot(aes(x=pcgni_est,y=mean_dec_pop_l_blue_green_wf,color=mean_dec_pop_l_blue_green_wf)) +
+  scale_color_viridis(alpha=0.66,name="Trillion Liters",option="G",trans="reverse",labels=function(x)x/1000000000000) +
+  geom_smooth(method="loess",show.legend=FALSE,color="paleturquoise3",fill="azure2") +
+  geom_point(size=2,alpha=0.66) +
+  geom_text(aes(label=country),size=3.5,vjust=1.5,color="black") +
+  guides(color=guide_colorbar(reverse=TRUE,title="Liters",title.position="left",title.vjust=0.5,alpha=0.66)) +
+  scale_y_continuous(labels=function(x)x/1000000000000) +
+  scale_x_continuous(labels=scales::comma) +
+  stat_cor(p.accuracy=0.05,r.accuracy=0.001,vjust=3) +
+  xlab("Per Capita Gross National Income") +
+  ylab("") + 
+  ggtitle("Mean Reduction in Diet-Attributable Water Footprint") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="right",legend.key.height=unit(1.5,"cm"))
+xy_mean_dec_pop_pc_gni_wf
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-41-1.png)<!-- -->
+
+``` r
+xy_mean_dec_pop_uni_enr_prop_wf <- reduction_modeling_data %>%
+  ggplot(aes(x=uni_enr_prop,y=mean_dec_pop_l_blue_green_wf,color=mean_dec_pop_l_blue_green_wf)) +
+  scale_color_viridis(alpha=0.66,name="Trillion Liters",option="G",trans="reverse",labels=function(x)x/1000000000000) +
+  geom_smooth(method="loess",show.legend=FALSE,color="paleturquoise3",fill="azure2") +
+  geom_point(size=2,alpha=0.66) +
+  geom_text(aes(label=country),size=3.5,vjust=1.5,color="black") +
+  guides(color=guide_colorbar(reverse=TRUE,title="Liters",title.position="left",title.vjust=0.5,alpha=0.66)) +
+  scale_y_continuous(labels=function(x)x/1000000000000) +
+  stat_cor(p.accuracy=0.05,r.accuracy=0.001) +
+  xlab("Proportional Enrollment") +
+  ylab("") + 
+  ggtitle("Mean Reduction in Diet-Attributable Water Footprint") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="right",legend.key.height=unit(1.5,"cm"))
+xy_mean_dec_pop_uni_enr_prop_wf
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-42-1.png)<!-- -->
+
+``` r
+ggarrange(xy_mean_dec_pop_uni_enr_prop_wf,xy_mean_dec_pop_pc_gni_wf,xy_mean_dec_pop_meat_availability_wf,
+          labels=c("D","E","F"),
+          ncol=1,
+          nrow=3)
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-43-1.png)<!-- -->
 
 ``` r
 xy_sum_dec_pop_meat_availability_wf <- reduction_modeling_data %>%
@@ -711,7 +820,7 @@ xy_sum_dec_pop_meat_availability_wf <- reduction_modeling_data %>%
 xy_mean_dec_pop_meat_availability_wf
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-36-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-44-1.png)<!-- -->
 
 Here, we have two options:
 
@@ -1010,6 +1119,21 @@ reduction_modeling_data %>% select(country,mean_dec_pop_kg_co2e_total) %>% arran
     ## 10 France                       1934957078.
 
 ``` r
+reduction_modeling_data %>% select(country,mean_dec_pop_kg_co2e_total) %>% arrange(desc(mean_dec_pop_kg_co2e_total)) %>% head(10) %>% 
+  ggplot(aes(x=mean_dec_pop_kg_co2e_total,y=country,fill=country)) + 
+  geom_col(color="black",size=0.25,alpha=0.66) + 
+  xlab(bquote('Billion Kilograms CO'[2]*'e')) + 
+  ylab("") +
+  scale_fill_manual(values=c("salmon","salmon","salmon","salmon","salmon","salmon","salmon","salmon","salmon","salmon")) +
+  scale_y_discrete(limits=c("France","Germany","Australia","Turkey","Mexico","Russia","Argentina","China","United States","Brazil")) + 
+  scale_x_continuous(labels=function(x)x/1000000000) +
+  ggtitle("Mean Emissions Reductions Across Countries") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none")
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-69-1.png)<!-- -->
+
+``` r
 reduction_modeling_data %>% select(country,mean_dec_pop_l_blue_green_wf) %>% arrange(desc(mean_dec_pop_l_blue_green_wf)) %>% head(10)
 ```
 
@@ -1027,6 +1151,21 @@ reduction_modeling_data %>% select(country,mean_dec_pop_l_blue_green_wf) %>% arr
     ##  8 Iran                               7.65e11
     ##  9 Argentina                          7.57e11
     ## 10 Australia                          6.91e11
+
+``` r
+reduction_modeling_data %>% select(country,mean_dec_pop_l_blue_green_wf) %>% arrange(desc(mean_dec_pop_l_blue_green_wf)) %>% head(10) %>% 
+  ggplot(aes(x=mean_dec_pop_l_blue_green_wf,y=country,fill=country)) + 
+  geom_col(color="black",size=0.25,alpha=0.66) + 
+  xlab("Trillion Liters") + 
+  ylab("") +
+  scale_fill_manual(values=c("lightskyblue3","lightskyblue3","lightskyblue3","lightskyblue3","lightskyblue3","lightskyblue3","lightskyblue3","lightskyblue3","lightskyblue3","lightskyblue3")) +
+  scale_y_discrete(limits=c("Australia","Argentina","Iran","Egypt","Mexico","Russia","Turkey","China","United States","Brazil")) + 
+  scale_x_continuous(labels=function(x)x/1000000000000) +
+  ggtitle("Mean Reductions in Water Use Across Countries") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none")
+```
+
+![](analysis-script_files/figure-gfm/unnamed-chunk-71-1.png)<!-- -->
 
 TOP 10 Meatless Day
 
@@ -1349,14 +1488,7 @@ reduction_modeling_data %>% select(country,dec_pop_vegan_l_blue_wf_total) %>% ar
     ## 10 Mexico                              1.42e11
 
 Now, we will use the `count` function to see how many countries fall
-into each group of observations. \*\*\* EDIT \*\*\*
-
-asdkjfhsadlkjfhlksajdfhdsakfhjsk \*\*\* Ejdshfjklahfdlks
-
-Need to also add grouping mechanism for enrollment before continuing
-with below v
-
-klsfjask;dfhja;ksdljdf
+into each group of observations.
 
 After rejoining this new dataframe with our original working dataset
 (with the shapefile data), we can reconstruct our initial figure - this
@@ -1375,7 +1507,7 @@ inclusion_income <- left_join(impact_modeling_data,reduction_modeling_data,by="c
 inclusion_income
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-78-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-88-1.png)<!-- -->
 
 ggtitle(“Figure X. Choropleth map highlighting the 123 countries
 included in our analyses.”) +
@@ -1690,7 +1822,7 @@ pop_dec_cf_wf_vp <- ggarrange(meatless_day_cf_dec_pop_vp,meatless_day_wf_dec_pop
 pop_dec_cf_wf_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-97-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-107-1.png)<!-- -->
 %\>% annotate_figure(top=text_grob(“Figure X. Violin plot array
 comparing the anticipated mitigation and savings potential associated
 with each of the eight modeled dietary scenarios across the four
@@ -1966,7 +2098,7 @@ pop_dec_cf_wf_bp <- ggarrange(meatless_day_cf_dec_pop_bp,meatless_day_wf_dec_pop
 pop_dec_cf_wf_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-115-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-125-1.png)<!-- -->
 
 ``` r
 ggsave("figure-3.tiff",device="tiff",plot=pop_dec_cf_wf_bp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=120*(14/5),height=180*(14/5))
@@ -2316,7 +2448,7 @@ pop_dec_cf_wf_rank <- ggarrange(meatless_day_cf_dec_pop_rank,meatless_day_wf_dec
 pop_dec_cf_wf_rank
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-133-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-143-1.png)<!-- -->
 
 %\>% annotate_figure(top=text_grob(“Figure X. Bar plot array comparing
 the anticipated mitigationsavings potential associated with the 10 most
@@ -2464,7 +2596,7 @@ uni_enr_tot_prop_choro_vp <- ggarrange(uni_enr_tot_choro_vp,uni_enr_prop_choro_v
 uni_enr_tot_prop_choro_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-143-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-153-1.png)<!-- -->
 
 ``` r
 ggsave("figure-2.tiff",device="tiff",plot=uni_enr_tot_prop_choro_vp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=90*(14/5))
@@ -2497,7 +2629,7 @@ uni_enr_tot_prop_choro_bp <- ggarrange(uni_enr_tot_prop_choro,uni_enr_tot_prop_b
 uni_enr_tot_prop_choro_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-147-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-157-1.png)<!-- -->
 
 Alternative visualization option ^
 
@@ -2598,7 +2730,7 @@ pc_baseline_total_cf_wf_choro_vp <- ggarrange(pc_baseline_total_cf_choro_vp,pc_b
 pc_baseline_total_cf_wf_choro_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-154-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-164-1.png)<!-- -->
 
 ``` r
 ggsave("figure-5.tiff",device="tiff",plot=pc_baseline_total_cf_wf_choro_vp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=90*(14/5))
@@ -2633,7 +2765,7 @@ pc_baseline_total_cf_wf_choro_bp <- ggarrange(pc_baseline_total_cf_wf_choro,pc_b
 pc_baseline_total_cf_wf_choro_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-158-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-168-1.png)<!-- -->
 
 Alternative visualization option ^
 
@@ -2683,7 +2815,7 @@ xy_pcgnni_cf_wf <- ggarrange(xy_pcgni_cf,xy_pcgni_wf,
 xy_pcgnni_cf_wf
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-161-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-171-1.png)<!-- -->
 
 ``` r
 ggsave("figure-6.tiff",device="tiff",plot=xy_pcgnni_cf_wf,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=40*(14/5))

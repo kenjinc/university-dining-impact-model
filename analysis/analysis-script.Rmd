@@ -356,29 +356,40 @@ impact_reduction_modeling_data <- left_join(impact_modeling_data,reduction_model
 
 
 ```{r}
-ggplot(impact_reduction_modeling_data,aes(x=long,y=lat,fill=mean_dec_pop_kg_co2e_total,group=group)) + 
+mean_dec_pop_kg_co2e_total_choro <- ggplot(impact_reduction_modeling_data,aes(x=long,y=lat,fill=mean_dec_pop_kg_co2e_total,group=group)) + 
   geom_polygon(color="black",size=0.125,alpha=0.66) + 
-  scale_fill_viridis_c(alpha=0.66,name=bquote('Kilograms CO'[2]*'e'),option="F",trans="reverse",na.value="white",labels=scales::comma) +
-  guides(fill=guide_colorbar(title.position="top",title.hjust=0.5)) +
+  scale_fill_viridis_c(alpha=0.66,name=bquote('Billion Kilograms CO'[2]*'e'),option="F",trans="reverse",na.value="white",labels=function(x)x/1000000000) +
+  guides(fill=guide_colorbar(reverse=TRUE,title.position="top",title.hjust=0.5)) +
   xlab("") + 
   ylab("") +
   labs(caption="") +
-  ggtitle("mean_dec_pop_kg_co2e_total") +
+  ggtitle("Mean Reduction in Emissions Costs Across Scenarios") +
+  theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank(),legend.key.width=unit(3.5,"cm"))
+```
+
+
+```{r}
+mean_dec_pop_l_blue_green_wf_choro <- ggplot(impact_reduction_modeling_data,aes(x=long,y=lat,fill=mean_dec_pop_l_blue_green_wf,group=group)) + 
+  geom_polygon(color="black",size=0.125,alpha=0.66) + 
+  scale_fill_viridis_c(alpha=0.66,name="Trillion Liters",option="G",trans="reverse",na.value="white",labels=function(x)x/1000000000000) +
+  guides(fill=guide_colorbar(reverse=TRUE,title.position="top",title.hjust=0.5)) +
+  xlab("") + 
+  ylab("") +
+  labs(caption="") +
+  ggtitle("Mean Reduction in Water Requirements Across Scenarios") +
   theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank(),legend.key.width=unit(3.5,"cm"))
 ```
 
 ```{r}
-ggplot(impact_reduction_modeling_data,aes(x=long,y=lat,fill=mean_dec_pop_l_blue_green_wf,group=group)) + 
-  geom_polygon(color="black",size=0.125,alpha=0.66) + 
-  scale_fill_viridis_c(alpha=0.66,name=bquote('Kilograms CO'[2]*'e'),option="G",trans="reverse",na.value="white",labels=scales::comma) +
-  guides(fill=guide_colorbar(title.position="top",title.hjust=0.5)) +
-  xlab("") + 
-  ylab("") +
-  labs(caption="") +
-  ggtitle("mean_dec_pop_l_blue_green_wf") +
-  theme(legend.position="bottom",panel.grid=element_blank(),panel.background=element_rect(fill="aliceblue"),panel.border=element_rect(fill=NA),axis.text=element_blank(),axis.ticks=element_blank(),legend.key.width=unit(3.5,"cm"))
+mean_dec_pop_choro <- ggarrange(mean_dec_pop_kg_co2e_total_choro,mean_dec_pop_l_blue_green_wf_choro,
+          labels=c("A","B"),
+          ncol=2,
+          nrow=1)
+mean_dec_pop_choro
 ```
-
+```{r}
+ggsave("mean_dec_pop_choro.tiff",device="tiff",plot=mean_dec_pop_choro,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=70*(14/5))
+```
 
 
 ```{r}
@@ -455,19 +466,64 @@ summary(baseline_water_req_mlr_v2)
 Now that we have generated mlr models for our baseline dietary patterns (to understand how our variable differentially predict the water and emissions costs of the standard diets for our 123 countries), we will do the same for our reduction scenarios.
 
 ```{r}
-xy_mean_dec_pop_meat_availability_cf <- reduction_modeling_data %>%
-  ggplot(aes(x=pc.meat.availability,y=mean_dec_pop_kg_co2e_total,color=mean_dec_pop_kg_co2e_total)) +
-  scale_color_viridis(labels=scales::comma,alpha=0.66,option="F",trans="reverse") +
+xy_mean_dec_pop_uni_enr_prop_cf <- reduction_modeling_data %>%
+  ggplot(aes(x=uni_enr_prop,y=mean_dec_pop_kg_co2e_total,color=mean_dec_pop_kg_co2e_total)) +
+  scale_color_viridis(labels=function(x)x/1000000000,alpha=0.66,option="F",trans="reverse") +
   geom_smooth(method="loess",show.legend=FALSE,alpha=0.66,color="lightsalmon2",fill="antiquewhite1") +
   geom_point(size=2,alpha=0.66) +
   geom_text(aes(label=country),size=3.5,vjust=1.5,color="black") +
-  guides(color=guide_colorbar(reverse=TRUE,title=bquote('Kilograms CO'[2]*'e'),title.position="left",title.vjust=0.5,alpha=0.66)) +
+  scale_y_continuous(labels=function(x)x/1000000000) +
+  guides(color=guide_colorbar(reverse=TRUE,title=bquote('Billion Kilograms CO'[2]*'e'),title.position="left",title.vjust=0.5,alpha=0.66)) +
+  stat_cor(p.accuracy=0.05,r.accuracy=0.001) +
+  xlab("Proportional Enrollment") +
+  ylab("") + 
+  ggtitle("Mean Reduction in Diet-Attributable Greenhouse Gas Footprint") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="right",legend.key.height=unit(1.5,"cm"))
+xy_mean_dec_pop_uni_enr_prop_cf
+```
+
+
+```{r}
+xy_mean_dec_pop_pc_gni_cf <- reduction_modeling_data %>%
+  ggplot(aes(x=pcgni_est,y=mean_dec_pop_kg_co2e_total,color=mean_dec_pop_kg_co2e_total)) +
+  scale_color_viridis(labels=function(x)x/1000000000,alpha=0.66,option="F",trans="reverse") +
+  geom_smooth(method="loess",show.legend=FALSE,alpha=0.66,color="lightsalmon2",fill="antiquewhite1") +
+  geom_point(size=2,alpha=0.66) +
+  geom_text(aes(label=country),size=3.5,vjust=1.5,color="black") +
+  scale_y_continuous(labels=function(x)x/1000000000) +
+  guides(color=guide_colorbar(reverse=TRUE,title=bquote('Billion Kilograms CO'[2]*'e'),title.position="left",title.vjust=0.5,alpha=0.66)) +
+  stat_cor(p.accuracy=0.05,r.accuracy=0.001,vjust=3) +
+  xlab("Per Capita Gross National Income") +
+  ylab("") + 
+  ggtitle("Mean Reduction in Diet-Attributable Greenhouse Gas Footprint") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="right",legend.key.height=unit(1.5,"cm"))
+xy_mean_dec_pop_pc_gni_cf
+```
+
+```{r}
+xy_mean_dec_pop_meat_availability_cf <- reduction_modeling_data %>%
+  ggplot(aes(x=pc.meat.availability,y=mean_dec_pop_kg_co2e_total,color=mean_dec_pop_kg_co2e_total)) +
+  scale_color_viridis(labels=function(x)x/1000000000,alpha=0.66,option="F",trans="reverse") +
+  geom_smooth(method="loess",show.legend=FALSE,alpha=0.66,color="lightsalmon2",fill="antiquewhite1") +
+  geom_point(size=2,alpha=0.66) +
+  geom_text(aes(label=country),size=3.5,vjust=1.5,color="black") +
+  scale_y_continuous(labels=function(x)x/1000000000) +
+  guides(color=guide_colorbar(reverse=TRUE,title=bquote('Billion Kilograms CO'[2]*'e'),title.position="left",title.vjust=0.5,alpha=0.66)) +
+  stat_cor(p.accuracy=0.05,r.accuracy=0.001) +
   xlab("Per Capita Meat Availability") +
   ylab("") + 
   ggtitle("Mean Reduction in Diet-Attributable Greenhouse Gas Footprint") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="right",legend.key.height=unit(1.5,"cm"))
 xy_mean_dec_pop_meat_availability_cf
 ```
+```{r}
+ggarrange(xy_mean_dec_pop_uni_enr_prop_cf,xy_mean_dec_pop_pc_gni_cf,xy_mean_dec_pop_meat_availability_cf,
+          labels=c("A","B","C"),
+          ncol=1,
+          nrow=3)
+```
+
+
 ```{r}
 xy_sum_dec_pop_meat_availability_cf <- reduction_modeling_data %>%
   ggplot(aes(x=pc.meat.availability,y=sum_dec_pop_kg_co2e_total,color=sum_dec_pop_kg_co2e_total)) +
@@ -487,17 +543,60 @@ xy_sum_dec_pop_meat_availability_cf
 ```{r}
 xy_mean_dec_pop_meat_availability_wf <- reduction_modeling_data %>%
   ggplot(aes(x=pc.meat.availability,y=mean_dec_pop_l_blue_green_wf,color=mean_dec_pop_l_blue_green_wf)) +
-  scale_color_viridis(alpha=0.66,name="Liters",option="G",trans="reverse",labels=scales::comma) +
+  scale_color_viridis(alpha=0.66,name="Trillion Liters",option="G",trans="reverse",labels=function(x)x/1000000000000) +
   geom_smooth(method="loess",show.legend=FALSE,color="paleturquoise3",fill="azure2") +
   geom_point(size=2,alpha=0.66) +
   geom_text(aes(label=country),size=3.5,vjust=1.5,color="black") +
   guides(color=guide_colorbar(reverse=TRUE,title="Liters",title.position="left",title.vjust=0.5,alpha=0.66)) +
+  scale_y_continuous(labels=function(x)x/1000000000000) +
+  stat_cor(p.accuracy=0.05,r.accuracy=0.001) +
   xlab("Per Capita Meat Availability") +
   ylab("") + 
   ggtitle("Mean Reduction in Diet-Attributable Water Footprint") +
   theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="right",legend.key.height=unit(1.5,"cm"))
 xy_mean_dec_pop_meat_availability_wf
 ```
+
+```{r}
+xy_mean_dec_pop_pc_gni_wf <- reduction_modeling_data %>%
+  ggplot(aes(x=pcgni_est,y=mean_dec_pop_l_blue_green_wf,color=mean_dec_pop_l_blue_green_wf)) +
+  scale_color_viridis(alpha=0.66,name="Trillion Liters",option="G",trans="reverse",labels=function(x)x/1000000000000) +
+  geom_smooth(method="loess",show.legend=FALSE,color="paleturquoise3",fill="azure2") +
+  geom_point(size=2,alpha=0.66) +
+  geom_text(aes(label=country),size=3.5,vjust=1.5,color="black") +
+  guides(color=guide_colorbar(reverse=TRUE,title="Liters",title.position="left",title.vjust=0.5,alpha=0.66)) +
+  scale_y_continuous(labels=function(x)x/1000000000000) +
+  scale_x_continuous(labels=scales::comma) +
+  stat_cor(p.accuracy=0.05,r.accuracy=0.001,vjust=3) +
+  xlab("Per Capita Gross National Income") +
+  ylab("") + 
+  ggtitle("Mean Reduction in Diet-Attributable Water Footprint") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="right",legend.key.height=unit(1.5,"cm"))
+xy_mean_dec_pop_pc_gni_wf
+```
+```{r}
+xy_mean_dec_pop_uni_enr_prop_wf <- reduction_modeling_data %>%
+  ggplot(aes(x=uni_enr_prop,y=mean_dec_pop_l_blue_green_wf,color=mean_dec_pop_l_blue_green_wf)) +
+  scale_color_viridis(alpha=0.66,name="Trillion Liters",option="G",trans="reverse",labels=function(x)x/1000000000000) +
+  geom_smooth(method="loess",show.legend=FALSE,color="paleturquoise3",fill="azure2") +
+  geom_point(size=2,alpha=0.66) +
+  geom_text(aes(label=country),size=3.5,vjust=1.5,color="black") +
+  guides(color=guide_colorbar(reverse=TRUE,title="Liters",title.position="left",title.vjust=0.5,alpha=0.66)) +
+  scale_y_continuous(labels=function(x)x/1000000000000) +
+  stat_cor(p.accuracy=0.05,r.accuracy=0.001) +
+  xlab("Proportional Enrollment") +
+  ylab("") + 
+  ggtitle("Mean Reduction in Diet-Attributable Water Footprint") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.position="right",legend.key.height=unit(1.5,"cm"))
+xy_mean_dec_pop_uni_enr_prop_wf
+```
+```{r}
+ggarrange(xy_mean_dec_pop_uni_enr_prop_wf,xy_mean_dec_pop_pc_gni_wf,xy_mean_dec_pop_meat_availability_wf,
+          labels=c("D","E","F"),
+          ncol=1,
+          nrow=3)
+```
+
 
 ```{r}
 xy_sum_dec_pop_meat_availability_wf <- reduction_modeling_data %>%
@@ -647,10 +746,35 @@ TOP 10 MOST IMPACT OVERALL ACROSS SCENARIOS FOR BOTH SETS OF INDICATORS
 reduction_modeling_data %>% select(country,mean_dec_pop_kg_co2e_total) %>% arrange(desc(mean_dec_pop_kg_co2e_total)) %>% head(10)
 ```
 
+```{r}
+reduction_modeling_data %>% select(country,mean_dec_pop_kg_co2e_total) %>% arrange(desc(mean_dec_pop_kg_co2e_total)) %>% head(10) %>% 
+  ggplot(aes(x=mean_dec_pop_kg_co2e_total,y=country,fill=country)) + 
+  geom_col(color="black",size=0.25,alpha=0.66) + 
+  xlab(bquote('Billion Kilograms CO'[2]*'e')) + 
+  ylab("") +
+  scale_fill_manual(values=c("salmon","salmon","salmon","salmon","salmon","salmon","salmon","salmon","salmon","salmon")) +
+  scale_y_discrete(limits=c("France","Germany","Australia","Turkey","Mexico","Russia","Argentina","China","United States","Brazil")) + 
+  scale_x_continuous(labels=function(x)x/1000000000) +
+  ggtitle("Mean Emissions Reductions Across Countries") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none")
+```
 
 ```{r}
 reduction_modeling_data %>% select(country,mean_dec_pop_l_blue_green_wf) %>% arrange(desc(mean_dec_pop_l_blue_green_wf)) %>% head(10)
 ```
+```{r}
+reduction_modeling_data %>% select(country,mean_dec_pop_l_blue_green_wf) %>% arrange(desc(mean_dec_pop_l_blue_green_wf)) %>% head(10) %>% 
+  ggplot(aes(x=mean_dec_pop_l_blue_green_wf,y=country,fill=country)) + 
+  geom_col(color="black",size=0.25,alpha=0.66) + 
+  xlab("Trillion Liters") + 
+  ylab("") +
+  scale_fill_manual(values=c("lightskyblue3","lightskyblue3","lightskyblue3","lightskyblue3","lightskyblue3","lightskyblue3","lightskyblue3","lightskyblue3","lightskyblue3","lightskyblue3")) +
+  scale_y_discrete(limits=c("Australia","Argentina","Iran","Egypt","Mexico","Russia","Turkey","China","United States","Brazil")) + 
+  scale_x_continuous(labels=function(x)x/1000000000000) +
+  ggtitle("Mean Reductions in Water Use Across Countries") +
+  theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none")
+```
+
 
 TOP 10 Meatless Day
 
@@ -729,15 +853,9 @@ reduction_modeling_data %>% select(country,dec_pop_vegan_l_blue_wf_total) %>% ar
 ```
 
 
-Now, we will use the `count` function to see how many countries fall into each group of observations. *** EDIT ***
 
 
-asdkjfhsadlkjfhlksajdfhdsakfhjsk *** Ejdshfjklahfdlks
-
-Need to also add grouping mechanism for enrollment before continuing with below v
-
-klsfjask;dfhja;ksdljdf
-
+Now, we will use the `count` function to see how many countries fall into each group of observations.
 
 
 After rejoining this new dataframe with our original working dataset (with the shapefile data), we can reconstruct our initial figure - this time designating the included countries according to their income classifications.
