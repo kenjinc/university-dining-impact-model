@@ -988,6 +988,366 @@ sum(reduction_modeling_data$dec_pop_vegan_l_blue_green_wf)
 
     ## [1] 5.2012e+13
 
+TOP 10 MOST IMPACT OVERALL ACROSS SCENARIOS FOR BOTH SETS OF INDICATORS
+
+``` r
+reduction_modeling_data %>% select(country,mean_dec_pop_kg_co2e_total) %>% arrange(desc(mean_dec_pop_kg_co2e_total)) %>% head(10)
+```
+
+    ## # A tibble: 10 × 2
+    ## # Rowwise: 
+    ##    country       mean_dec_pop_kg_co2e_total
+    ##    <chr>                              <dbl>
+    ##  1 Brazil                      21259089616.
+    ##  2 United States               12294336771.
+    ##  3 China                       11194346178.
+    ##  4 Argentina                    5014534540.
+    ##  5 Russia                       2951111580.
+    ##  6 Mexico                       2338131471.
+    ##  7 Turkey                       2157645707.
+    ##  8 Australia                    2155057560.
+    ##  9 Germany                      1981995716.
+    ## 10 France                       1934957078.
+
+``` r
+reduction_modeling_data %>% select(country,mean_dec_pop_l_blue_green_wf) %>% arrange(desc(mean_dec_pop_l_blue_green_wf)) %>% head(10)
+```
+
+    ## # A tibble: 10 × 2
+    ## # Rowwise: 
+    ##    country       mean_dec_pop_l_blue_green_wf
+    ##    <chr>                                <dbl>
+    ##  1 Brazil                             6.11e12
+    ##  2 United States                      4.99e12
+    ##  3 China                              4.04e12
+    ##  4 Turkey                             2.34e12
+    ##  5 Russia                             1.41e12
+    ##  6 Mexico                             1.12e12
+    ##  7 Egypt                              1.00e12
+    ##  8 Iran                               7.65e11
+    ##  9 Argentina                          7.57e11
+    ## 10 Australia                          6.91e11
+
+TOP 10 Meatless Day
+
+``` r
+reduction_modeling_data %>% select(country,dec_pop_meatless_day_kg_co2e_total) %>% arrange(desc(dec_pop_meatless_day_kg_co2e_total)) %>% head(10)
+```
+
+    ## # A tibble: 10 × 2
+    ## # Rowwise: 
+    ##    country       dec_pop_meatless_day_kg_co2e_total
+    ##    <chr>                                      <dbl>
+    ##  1 Brazil                              10025292908.
+    ##  2 United States                        5288540683.
+    ##  3 China                                2875512542.
+    ##  4 Argentina                            2411486833.
+    ##  5 Turkey                                998249702.
+    ##  6 Russia                                949291594.
+    ##  7 France                                828694791.
+    ##  8 Mexico                                776143100.
+    ##  9 Germany                               769026749.
+    ## 10 Australia                             689331344.
+
+``` r
+reduction_modeling_data %>% select(country,dec_pop_meatless_day_l_blue_wf_total) %>% arrange(desc(dec_pop_meatless_day_l_blue_wf_total)) %>% head(10)
+```
+
+    ## # A tibble: 10 × 2
+    ## # Rowwise: 
+    ##    country       dec_pop_meatless_day_l_blue_wf_total
+    ##    <chr>                                        <dbl>
+    ##  1 United States                        381099408064.
+    ##  2 Egypt                                373800381473.
+    ##  3 China                                233579069756.
+    ##  4 Iran                                 218308397354.
+    ##  5 Turkey                               203588782221.
+    ##  6 Brazil                               168572271998.
+    ##  7 Mexico                                60946751135.
+    ##  8 Saudi Arabia                          46713113852.
+    ##  9 Russia                                44021680526.
+    ## 10 Italy                                 39244983017.
+
+TOP 10 No Dairy
+
+``` r
+reduction_modeling_data %>% select(country,dec_pop_no_dairy_kg_co2e_total) %>% arrange(desc(dec_pop_no_dairy_kg_co2e_total)) %>% head(10)
+```
+
+    ## # A tibble: 10 × 2
+    ## # Rowwise: 
+    ##    country       dec_pop_no_dairy_kg_co2e_total
+    ##    <chr>                                  <dbl>
+    ##  1 Brazil                          14651998966.
+    ##  2 India                           10178251775.
+    ##  3 United States                    9139681139.
+    ##  4 China                            3550663427.
+    ##  5 Turkey                           2769098887.
+    ##  6 Argentina                        2541278008.
+    ##  7 Russia                           2259074703.
+    ##  8 Germany                          1918817819.
+    ##  9 France                           1551836550.
+    ## 10 Mexico                           1373202210.
+
+``` r
+reduction_modeling_data %>% select(country,dec_pop_no_dairy_l_blue_wf_total) %>% arrange(desc(dec_pop_no_dairy_l_blue_wf_total)) %>% head(10)
+```
+
+    ## # A tibble: 10 × 2
+    ## # Rowwise: 
+    ##    country       dec_pop_no_dairy_l_blue_wf_total
+    ##    <chr>                                    <dbl>
+    ##  1 Egypt                            394163405546.
+    ##  2 United States                    235444451492.
+    ##  3 Iran                             218710280025.
+    ##  4 Turkey                           211953172800.
+    ##  5 China                            126995619546.
+    ##  6 Brazil                            98244348859.
+    ##  7 Mexico                            54302558045.
+    ##  8 Spain                             50000567175.
+    ##  9 Italy                             37798399760.
+    ## 10 Morocco                           37524165718.
+
+TOP 10 LOW RED MEAT
+
+``` r
+reduction_modeling_data %>% select(country,dec_pop_low_red_meat_kg_co2e_total) %>% arrange(desc(dec_pop_low_red_meat_kg_co2e_total)) %>% head(10)
+```
+
+    ## # A tibble: 10 × 2
+    ## # Rowwise: 
+    ##    country       dec_pop_low_red_meat_kg_co2e_total
+    ##    <chr>                                      <dbl>
+    ##  1 Brazil                              10454933515.
+    ##  2 United States                        7247635892.
+    ##  3 Argentina                            3358791400.
+    ##  4 China                                2577067167.
+    ##  5 Australia                            1446249107.
+    ##  6 France                               1084737733.
+    ##  7 Germany                              1084007024.
+    ##  8 Turkey                               1033849620.
+    ##  9 Mexico                                802890871.
+    ## 10 Russia                                798621652.
+
+``` r
+reduction_modeling_data %>% select(country,dec_pop_low_red_meat_l_blue_wf_total) %>% arrange(desc(dec_pop_low_red_meat_l_blue_wf_total)) %>% head(10)
+```
+
+    ## # A tibble: 10 × 2
+    ## # Rowwise: 
+    ##    country       dec_pop_low_red_meat_l_blue_wf_total
+    ##    <chr>                                        <dbl>
+    ##  1 Egypt                                356434745553.
+    ##  2 United States                        319980532800.
+    ##  3 Iran                                 217479323511.
+    ##  4 Turkey                               198722191094.
+    ##  5 Brazil                               122232153460.
+    ##  6 China                                 92379255721.
+    ##  7 Mexico                                47234997553.
+    ##  8 Spain                                 45088421201.
+    ##  9 Italy                                 39652962708.
+    ## 10 Kazakhstan                            38605062892.
+
+TOP 10 NO RED MEAT
+
+``` r
+reduction_modeling_data %>% select(country,dec_pop_no_red_meat_kg_co2e_total) %>% arrange(desc(dec_pop_no_red_meat_kg_co2e_total)) %>% head(10)
+```
+
+    ## # A tibble: 10 × 2
+    ## # Rowwise: 
+    ##    country        dec_pop_no_red_meat_kg_co2e_total
+    ##    <chr>                                      <dbl>
+    ##  1 Brazil                              24558408882.
+    ##  2 United States                       14478263781.
+    ##  3 China                               14028328445.
+    ##  4 Argentina                            6168922599.
+    ##  5 Russia                               3605474038.
+    ##  6 Mexico                               2784760919.
+    ##  7 Chile                                2725459392.
+    ##  8 Australia                            2700198202.
+    ##  9 United Kingdom                       2155520706.
+    ## 10 France                               2092507114.
+
+``` r
+reduction_modeling_data %>% select(country,dec_pop_no_red_meat_l_blue_wf_total) %>% arrange(desc(dec_pop_no_red_meat_l_blue_wf_total)) %>% head(10)
+```
+
+    ## # A tibble: 10 × 2
+    ## # Rowwise: 
+    ##    country       dec_pop_no_red_meat_l_blue_wf_total
+    ##    <chr>                                       <dbl>
+    ##  1 United States                       418351079579.
+    ##  2 Egypt                               416685854684.
+    ##  3 Turkey                              203525078769.
+    ##  4 Iran                                192817932032.
+    ##  5 Brazil                              154874386169.
+    ##  6 Spain                                70381415227.
+    ##  7 Russia                               64785428844.
+    ##  8 Mexico                               64494154813.
+    ##  9 France                               54814406063.
+    ## 10 Italy                                52107916912.
+
+TOP 10 PESCETARIAN
+
+``` r
+reduction_modeling_data %>% select(country,dec_pop_pescetarian_kg_co2e_total) %>% arrange(desc(dec_pop_pescetarian_kg_co2e_total)) %>% head(10)
+```
+
+    ## # A tibble: 10 × 2
+    ## # Rowwise: 
+    ##    country        dec_pop_pescetarian_kg_co2e_total
+    ##    <chr>                                      <dbl>
+    ##  1 Brazil                              28956322521.
+    ##  2 China                               15447403878.
+    ##  3 United States                       14252578510.
+    ##  4 Argentina                            6608052672.
+    ##  5 Russia                               3519432744.
+    ##  6 Mexico                               3129057112.
+    ##  7 Chile                                2784122864.
+    ##  8 Australia                            2748429787.
+    ##  9 Turkey                               2575245953.
+    ## 10 United Kingdom                       2200877112.
+
+``` r
+reduction_modeling_data %>% select(country,dec_pop_pescetarian_l_blue_wf_total) %>% arrange(desc(dec_pop_pescetarian_l_blue_wf_total)) %>% head(10)
+```
+
+    ## # A tibble: 10 × 2
+    ## # Rowwise: 
+    ##    country     dec_pop_pescetarian_l_blue_wf_total
+    ##    <chr>                                     <dbl>
+    ##  1 Egypt                             504201849204.
+    ##  2 Turkey                            249200282136.
+    ##  3 Iran                              216076006430.
+    ##  4 Spain                              68922590854.
+    ##  5 Mexico                             63379792023.
+    ##  6 South Korea                        49890537764.
+    ##  7 Greece                             40619031771.
+    ##  8 Italy                              37738504091.
+    ##  9 Morocco                            36903387836.
+    ## 10 Kazakhstan                         36586137570.
+
+TOP 10 VEGETARIAN
+
+``` r
+reduction_modeling_data %>% select(country,dec_pop_lacto_ovo_vegetarian_kg_co2e_total) %>% arrange(desc(dec_pop_lacto_ovo_vegetarian_kg_co2e_total)) %>% head(10)
+```
+
+    ## # A tibble: 10 × 2
+    ## # Rowwise: 
+    ##    country       dec_pop_lacto_ovo_vegetarian_kg_co2e_total
+    ##    <chr>                                              <dbl>
+    ##  1 Brazil                                      20591407483.
+    ##  2 China                                       14299915464.
+    ##  3 United States                               10425744570.
+    ##  4 Argentina                                    5828690866.
+    ##  5 Russia                                       2682845024.
+    ##  6 Mexico                                       2472190175.
+    ##  7 Chile                                        2422231296.
+    ##  8 South Korea                                  2050340693.
+    ##  9 Australia                                    2027206211.
+    ## 10 France                                       1749257441.
+
+``` r
+reduction_modeling_data %>% select(country,dec_pop_lacto_ovo_vegetarian_l_blue_wf_total) %>% arrange(desc(dec_pop_lacto_ovo_vegetarian_l_blue_wf_total)) %>% head(10)
+```
+
+    ## # A tibble: 10 × 2
+    ## # Rowwise: 
+    ##    country       dec_pop_lacto_ovo_vegetarian_l_blue_wf_total
+    ##    <chr>                                                <dbl>
+    ##  1 China                                              1.01e12
+    ##  2 United States                                      6.45e11
+    ##  3 Egypt                                              4.89e11
+    ##  4 India                                              3.52e11
+    ##  5 Brazil                                             2.60e11
+    ##  6 Turkey                                             2.33e11
+    ##  7 Iran                                               2.23e11
+    ##  8 Indonesia                                          1.65e11
+    ##  9 Russia                                             1.15e11
+    ## 10 Japan                                              8.89e10
+
+TOP 10 2/3 VEGAN
+
+``` r
+reduction_modeling_data %>% select(country,dec_pop_X2.3_vegan_kg_co2e_total) %>% arrange(desc(dec_pop_X2.3_vegan_kg_co2e_total)) %>% head(10)
+```
+
+    ## # A tibble: 10 × 2
+    ## # Rowwise: 
+    ##    country       dec_pop_X2.3_vegan_kg_co2e_total
+    ##    <chr>                                    <dbl>
+    ##  1 Brazil                            25986564015.
+    ##  2 United States                     15895367845.
+    ##  3 China                             14904640478.
+    ##  4 Argentina                          5648012143.
+    ##  5 India                              5070889628.
+    ##  6 Russia                             4049741473.
+    ##  7 Turkey                             3237588190.
+    ##  8 Mexico                             3045424068.
+    ##  9 Germany                            2756152325.
+    ## 10 Australia                          2735292949.
+
+``` r
+reduction_modeling_data %>% select(country,dec_pop_X2.3_vegan_l_blue_wf_total) %>% arrange(desc(dec_pop_X2.3_vegan_l_blue_wf_total)) %>% head(10)
+```
+
+    ## # A tibble: 10 × 2
+    ## # Rowwise: 
+    ##    country       dec_pop_X2.3_vegan_l_blue_wf_total
+    ##    <chr>                                      <dbl>
+    ##  1 China                              882477533725.
+    ##  2 Egypt                              582138600732.
+    ##  3 India                              576091975386.
+    ##  4 United States                      491749082471.
+    ##  5 Turkey                             292249411580.
+    ##  6 Brazil                             229558227587.
+    ##  7 Iran                               222011067283.
+    ##  8 Russia                             119200766038.
+    ##  9 Mexico                             114666891891.
+    ## 10 Spain                              101961096862.
+
+TOP 10 VEGAN
+
+``` r
+reduction_modeling_data %>% select(country,dec_pop_vegan_kg_co2e_total) %>% arrange(desc(dec_pop_vegan_kg_co2e_total)) %>% head(10)
+```
+
+    ## # A tibble: 10 × 2
+    ## # Rowwise: 
+    ##    country       dec_pop_vegan_kg_co2e_total
+    ##    <chr>                               <dbl>
+    ##  1 Brazil                       34847788634.
+    ##  2 China                        21871238023.
+    ##  3 United States                21626881750.
+    ##  4 India                        16401526704.
+    ##  5 Argentina                     7551041800.
+    ##  6 Russia                        5744411407.
+    ##  7 Turkey                        4339457474.
+    ##  8 Mexico                        4321383315.
+    ##  9 Australia                     3869783490.
+    ## 10 Germany                       3816080800.
+
+``` r
+reduction_modeling_data %>% select(country,dec_pop_vegan_l_blue_wf_total) %>% arrange(desc(dec_pop_vegan_l_blue_wf_total)) %>% head(10)
+```
+
+    ## # A tibble: 10 × 2
+    ## # Rowwise: 
+    ##    country       dec_pop_vegan_l_blue_wf_total
+    ##    <chr>                                 <dbl>
+    ##  1 China                               1.27e12
+    ##  2 India                               1.00e12
+    ##  3 Egypt                               6.96e11
+    ##  4 United States                       5.69e11
+    ##  5 Turkey                              3.39e11
+    ##  6 Brazil                              2.68e11
+    ##  7 Indonesia                           2.44e11
+    ##  8 Iran                                2.24e11
+    ##  9 Russia                              1.63e11
+    ## 10 Mexico                              1.42e11
+
 Now, we will use the `count` function to see how many countries fall
 into each group of observations. \*\*\* EDIT \*\*\*
 
@@ -1015,7 +1375,7 @@ inclusion_income <- left_join(impact_modeling_data,reduction_modeling_data,by="c
 inclusion_income
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-60-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-78-1.png)<!-- -->
 
 ggtitle(“Figure X. Choropleth map highlighting the 123 countries
 included in our analyses.”) +
@@ -1330,7 +1690,7 @@ pop_dec_cf_wf_vp <- ggarrange(meatless_day_cf_dec_pop_vp,meatless_day_wf_dec_pop
 pop_dec_cf_wf_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-79-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-97-1.png)<!-- -->
 %\>% annotate_figure(top=text_grob(“Figure X. Violin plot array
 comparing the anticipated mitigation and savings potential associated
 with each of the eight modeled dietary scenarios across the four
@@ -1606,7 +1966,7 @@ pop_dec_cf_wf_bp <- ggarrange(meatless_day_cf_dec_pop_bp,meatless_day_wf_dec_pop
 pop_dec_cf_wf_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-97-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-115-1.png)<!-- -->
 
 ``` r
 ggsave("figure-3.tiff",device="tiff",plot=pop_dec_cf_wf_bp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=120*(14/5),height=180*(14/5))
@@ -1956,7 +2316,7 @@ pop_dec_cf_wf_rank <- ggarrange(meatless_day_cf_dec_pop_rank,meatless_day_wf_dec
 pop_dec_cf_wf_rank
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-115-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-133-1.png)<!-- -->
 
 %\>% annotate_figure(top=text_grob(“Figure X. Bar plot array comparing
 the anticipated mitigationsavings potential associated with the 10 most
@@ -2104,7 +2464,7 @@ uni_enr_tot_prop_choro_vp <- ggarrange(uni_enr_tot_choro_vp,uni_enr_prop_choro_v
 uni_enr_tot_prop_choro_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-125-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-143-1.png)<!-- -->
 
 ``` r
 ggsave("figure-2.tiff",device="tiff",plot=uni_enr_tot_prop_choro_vp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=90*(14/5))
@@ -2137,7 +2497,7 @@ uni_enr_tot_prop_choro_bp <- ggarrange(uni_enr_tot_prop_choro,uni_enr_tot_prop_b
 uni_enr_tot_prop_choro_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-129-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-147-1.png)<!-- -->
 
 Alternative visualization option ^
 
@@ -2238,7 +2598,7 @@ pc_baseline_total_cf_wf_choro_vp <- ggarrange(pc_baseline_total_cf_choro_vp,pc_b
 pc_baseline_total_cf_wf_choro_vp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-136-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-154-1.png)<!-- -->
 
 ``` r
 ggsave("figure-5.tiff",device="tiff",plot=pc_baseline_total_cf_wf_choro_vp,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=90*(14/5))
@@ -2273,7 +2633,7 @@ pc_baseline_total_cf_wf_choro_bp <- ggarrange(pc_baseline_total_cf_wf_choro,pc_b
 pc_baseline_total_cf_wf_choro_bp
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-140-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-158-1.png)<!-- -->
 
 Alternative visualization option ^
 
@@ -2323,7 +2683,7 @@ xy_pcgnni_cf_wf <- ggarrange(xy_pcgni_cf,xy_pcgni_wf,
 xy_pcgnni_cf_wf
 ```
 
-![](analysis-script_files/figure-gfm/unnamed-chunk-143-1.png)<!-- -->
+![](analysis-script_files/figure-gfm/unnamed-chunk-161-1.png)<!-- -->
 
 ``` r
 ggsave("figure-6.tiff",device="tiff",plot=xy_pcgnni_cf_wf,path=("/Users/kenjinchang/github/university-dining-impact-model/figures/"),dpi=300,units="mm",width=200*(14/5),height=40*(14/5))

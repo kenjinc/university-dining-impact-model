@@ -641,8 +641,95 @@ sum(reduction_modeling_data$dec_pop_vegan_kg_co2e_total)
 sum(reduction_modeling_data$dec_pop_vegan_l_blue_green_wf)
 ```
 
-Now, we will use the `count` function to see how many countries fall into each group of observations. *** EDIT ***
+TOP 10 MOST IMPACT OVERALL ACROSS SCENARIOS FOR BOTH SETS OF INDICATORS
 
+```{r}
+reduction_modeling_data %>% select(country,mean_dec_pop_kg_co2e_total) %>% arrange(desc(mean_dec_pop_kg_co2e_total)) %>% head(10)
+```
+
+
+```{r}
+reduction_modeling_data %>% select(country,mean_dec_pop_l_blue_green_wf) %>% arrange(desc(mean_dec_pop_l_blue_green_wf)) %>% head(10)
+```
+
+TOP 10 Meatless Day
+
+```{r}
+reduction_modeling_data %>% select(country,dec_pop_meatless_day_kg_co2e_total) %>% arrange(desc(dec_pop_meatless_day_kg_co2e_total)) %>% head(10)
+```
+```{r}
+reduction_modeling_data %>% select(country,dec_pop_meatless_day_l_blue_wf_total) %>% arrange(desc(dec_pop_meatless_day_l_blue_wf_total)) %>% head(10)
+```
+TOP 10 No Dairy
+
+```{r}
+reduction_modeling_data %>% select(country,dec_pop_no_dairy_kg_co2e_total) %>% arrange(desc(dec_pop_no_dairy_kg_co2e_total)) %>% head(10)
+```
+
+```{r}
+reduction_modeling_data %>% select(country,dec_pop_no_dairy_l_blue_wf_total) %>% arrange(desc(dec_pop_no_dairy_l_blue_wf_total)) %>% head(10)
+```
+TOP 10 LOW RED MEAT
+
+```{r}
+reduction_modeling_data %>% select(country,dec_pop_low_red_meat_kg_co2e_total) %>% arrange(desc(dec_pop_low_red_meat_kg_co2e_total)) %>% head(10)
+```
+
+```{r}
+reduction_modeling_data %>% select(country,dec_pop_low_red_meat_l_blue_wf_total) %>% arrange(desc(dec_pop_low_red_meat_l_blue_wf_total)) %>% head(10)
+```
+TOP 10 NO RED MEAT
+
+```{r}
+reduction_modeling_data %>% select(country,dec_pop_no_red_meat_kg_co2e_total) %>% arrange(desc(dec_pop_no_red_meat_kg_co2e_total)) %>% head(10)
+```
+
+```{r}
+reduction_modeling_data %>% select(country,dec_pop_no_red_meat_l_blue_wf_total) %>% arrange(desc(dec_pop_no_red_meat_l_blue_wf_total)) %>% head(10)
+```
+TOP 10 PESCETARIAN
+
+```{r}
+reduction_modeling_data %>% select(country,dec_pop_pescetarian_kg_co2e_total) %>% arrange(desc(dec_pop_pescetarian_kg_co2e_total)) %>% head(10)
+```
+
+```{r}
+reduction_modeling_data %>% select(country,dec_pop_pescetarian_l_blue_wf_total) %>% arrange(desc(dec_pop_pescetarian_l_blue_wf_total)) %>% head(10)
+```
+TOP 10 VEGETARIAN
+
+```{r}
+reduction_modeling_data %>% select(country,dec_pop_lacto_ovo_vegetarian_kg_co2e_total) %>% arrange(desc(dec_pop_lacto_ovo_vegetarian_kg_co2e_total)) %>% head(10)
+```
+
+
+```{r}
+reduction_modeling_data %>% select(country,dec_pop_lacto_ovo_vegetarian_l_blue_wf_total) %>% arrange(desc(dec_pop_lacto_ovo_vegetarian_l_blue_wf_total)) %>% head(10)
+```
+
+TOP 10 2/3 VEGAN
+
+```{r}
+reduction_modeling_data %>% select(country,dec_pop_X2.3_vegan_kg_co2e_total) %>% arrange(desc(dec_pop_X2.3_vegan_kg_co2e_total)) %>% head(10)
+```
+
+```{r}
+reduction_modeling_data %>% select(country,dec_pop_X2.3_vegan_l_blue_wf_total) %>% arrange(desc(dec_pop_X2.3_vegan_l_blue_wf_total)) %>% head(10)
+```
+
+
+TOP 10 VEGAN
+
+```{r}
+reduction_modeling_data %>% select(country,dec_pop_vegan_kg_co2e_total) %>% arrange(desc(dec_pop_vegan_kg_co2e_total)) %>% head(10)
+```
+
+```{r}
+reduction_modeling_data %>% select(country,dec_pop_vegan_l_blue_wf_total) %>% arrange(desc(dec_pop_vegan_l_blue_wf_total)) %>% head(10)
+```
+
+
+Now, we will use the `count` function to see how many countries fall into each group of observations. *** EDIT ***
 
 
 asdkjfhsadlkjfhlksajdfhdsakfhjsk *** Ejdshfjklahfdlks
