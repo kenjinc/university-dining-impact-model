@@ -776,6 +776,35 @@ reduction_modeling_data %>% select(country,mean_dec_pop_l_blue_green_wf) %>% arr
 ```
 
 
+TOP 10 ACROSS SCENARIOS - ALL COUNTRIES (N=123) 
+
+
+Need to generate global impact dataset using mean scenario-specific anticipated reductions in kg co2e & l
+
+ggplot(global.impact.dataset,aes(x=ghg_red,y=scenario,fill=scenario)) + 
+    geom_col(color="black",size=0.25,alpha=0.66) + 
+    xlab(bquote('Billion Kilograms CO'[2]*'e')) + 
+    ylab("") +
+    scale_fill_manual(values=c("salmon","salmon","peachpuff1","salmon","salmon","salmon","salmon","salmon","salmon")) +
+    scale_y_discrete(limits=c("Mean","Meatless Day","Low Red Meat","Vegetarian","No Dairy","No Red Meat","Pescetarian","2/3 Vegan","Vegan")) +
+    scale_x_continuous(,breaks=c(0,35000000000,70000000000,105000000000,140000000000,175000000000),labels=function(x)x/1000000000) +
+    ggtitle("Emissions Reductions Across Scenarios") +
+    theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none")
+
+ggplot(global.impact.dataset,aes(x=water_red,y=scenario,fill=scenario)) + 
+    geom_col(color="black",size=0.25,alpha=0.66) + 
+    xlab("Trillion Liters") + 
+    ylab("") +
+    scale_fill_manual(values=c("lightskyblue3","lightskyblue3","paleturquoise3","lightskyblue3","lightskyblue3","lightskyblue3","lightskyblue3","lightskyblue3","lightskyblue3")) +
+    scale_y_discrete(limits=c("Mean","Low Red Meat","Meatless Day","No Dairy","No Red Meat","Vegetarian","2/3 Vegan","Pescetarian","Vegan")) +
+    scale_x_continuous(labels=function(x)x/1000000000000) +
+    ggtitle("Reductions in Water Use Across Scenarios") +
+    theme(panel.background=element_rect(fill="white"),panel.border=element_rect(fill=NA),legend.title=element_blank(),legend.position="none")
+
+
+
+
+
 TOP 10 Meatless Day
 
 ```{r}
